@@ -1,0 +1,5 @@
+mysql-server
+phpmyadmin 
+python-django
+libapache2-mod-wsgi
+python-mysqldb

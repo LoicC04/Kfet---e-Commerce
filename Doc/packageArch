@@ -1,0 +1,8 @@
+Tuto Django Apache
+https://docs.djangoproject.com/en/1.3/howto/deployment/modwsgi/
+
+Install wsgi
+http://code.google.com/p/modwsgi/wiki/QuickInstallationGuide
+
+mysql-python
+django

@@ -1,0 +1,16 @@
+cmd : python manage.py syncdb
+username : root
+email : root@localhost.fr
+Password : root
+
+
+     Petites commandes à se rappeler :
++ Démarrer l'appli en dev : python2 manage.py runserver
++ Synchroniser la base de données pour les applications du framework : python manage.py syncdb
++ Créer une application appelé polls : python manage.py startapp polls
+   - polls/
+       __init__.py
+       models.py
+       views.py
++ Ajouter une application  au site : Éditer la variable INSTALLED_APPS du fichier settings.py et python manage.py syncdb pour maj la bdd
+                 

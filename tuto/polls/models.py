@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 import datetime
 
@@ -10,6 +12,7 @@ class Poll(models.Model):
 
     def was_published_today(self):
        return self.pub_date.date() == datetime.datetime.today().date()
+    was_published_today.short_description = "Publié aujourd'hui ?"
 
 class Choice(models.Model):
     poll = models.ForeignKey(Poll)

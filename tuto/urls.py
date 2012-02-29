@@ -6,5 +6,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^polls/', include('tuto.polls.urls')),
+    (r'^Stock/', 'tuto.Stock.views.index'),
     (r'^admin/', include(admin.site.urls)),
 )

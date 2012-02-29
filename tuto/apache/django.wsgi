@@ -1,13 +1,13 @@
 import os
 import sys
 
-path = '/srv/http'
+path = '/var/www/Kfet---e-Commerce'
 if path not in sys.path:
-    sys.path.insert(0, '/srv/http')
+    sys.path.insert(0, path)
 
-path = '/srv/http/tuto'
+path = '/var/www/Kfet---e-Commerce/tuto'
 if path not in sys.path:
-    sys.path.insert(0, '/srv/http/tuto')
+    sys.path.insert(0, path)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'tuto.settings'
 

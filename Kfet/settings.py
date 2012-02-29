@@ -1,4 +1,4 @@
-# Django settings for tuto project.
+# Django settings for Kfet project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,10 +12,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'tuto',                      # Or path to database file if using sqlite3.
-        'USER': 'tuto',                      # Not used with sqlite3.
-        'PASSWORD': 'tuto',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'Kfet',                      # Or path to database file if using sqlite3.
+        'USER': 'Kfet',                      # Not used with sqlite3.
+        'PASSWORD': 'Kfet',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -31,7 +31,7 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'FR-fr'
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '_og#y-)apjc7a=s)%&#(*d=l+$helaobq4w0cqn$$99f-*t(op'
+SECRET_KEY = 'bhg5r92)bn_j+egvpu9jx!+uk7q%#$ty)1(k3h)880psa-0%l1'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -100,29 +100,29 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'tuto.urls'
+ROOT_URLCONF = 'Kfet.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    #"/srv/http/Kfet---e-Commerce/tuto/templates"
 )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
-    'polls',
-    'Stock',
+    #'django.contrib.sites',
+    #'django.contrib.messages',
+    #'django.contrib.staticfiles',
     'django.contrib.admin',
-#'django.contrib.messages',
-#'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'Commandes',
+    'GestionStock',
+    'Ventes',
 )
 
 # A sample logging configuration. The only tangible logging

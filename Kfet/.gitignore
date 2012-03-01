@@ -1,2 +1,6 @@
 settings.py
 *.pyc
+*.log
+*.pot
+*~
+nbProject/

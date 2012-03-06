@@ -1,0 +1,251 @@
+
+* {
+padding : 0;
+margin : 0;
+}
+body {
+font-family : Arial, Helvetica, sans-serif;
+color : #666666;
+font-size : 12px;
+background-image : url(/static/css/no36/images/bg.jpg);
+background-repeat : repeat-x;
+}
+img {
+padding : 3px;
+border : 1px solid #d0660a;
+border : 1px solid #9cf449;
+}
+img.floatTL {
+float : left;
+margin-right : 7px;
+margin-bottom : 2px;
+margin-top : 12px;
+margin-left : 10px;
+}
+#wrapper {
+width : 770px;
+margin : 0 auto;
+}
+nav {
+background-color : #99ff34;
+margin-top : 10px;
+}
+nav ul {
+margin : 0;
+padding : 0;
+list-style : none;
+margin-left : 50px;
+}
+nav li {
+display : inline;
+}
+nav a {
+text-transform : uppercase;
+text-decoration : none;
+font-size : 12px;
+font-weight : bold;
+padding : 5px 10px 5px 10px;
+color : #656565;
+}
+nav a:hover {
+color : #ffd;
+padding : 5px 10px 5px 10px;
+}
+nav {
+height : 100px;
+background-color : #fff;
+}
+header h1#lineone {
+font-size : 1.7em;
+font-weight : lighter;
+font-family : helvetica, arial, sans-serif;
+padding-top : 10px;
+padding-left : 5px;
+color : #99ff32;
+border : none;
+top : 0;
+left : 14px;
+letter-spacing : -1px;
+}
+header h1#lineone span {
+color : #7e7e7e;
+}
+header h2#linetwo {
+padding-left : 5px;
+font-size : 0.9em;
+font-family : helvetica, arial, sans-serif;
+text-transform : none;
+top : 25px;
+left : 14px;
+color : #7e7e7e;
+}
+#leftcolumn {
+display : inline;
+width : 560px;
+margin-top : 45px;
+float : left;
+min-height : 300px;
+background-color : #fff;
+}
+* html #leftcolumn {
+height : 300px;
+}
+.content {
+margin-top : 15px;
+}
+.content p {
+color : #274563;
+line-height : 1.6em;
+letter-spacing : 0.05em;
+padding : 0 16px 8px 16px;
+}
+.content a {
+color : #99ff31;
+}
+img.product, .product img {
+border : 1px solid #7e7e7e;
+margin : 12px 8px 4px 8px;
+}
+.content .product {
+text-align : center;
+}
+.prod {
+width : 33%;
+float : left;
+text-align : center;
+padding-bottom : 25px;
+}
+#leftcolumn h2 {
+font-family : helvetica, arial, sans-serif;
+font-weight : lighter;
+word-spacing : -1px;
+letter-spacing : -1px;
+margin-bottom : 20px;
+font-size : 1.8em;
+}
+#productbox1 {
+margin-top : 5px;
+margin-bottom : 10px;
+}
+#productbox1 a {
+text-align : right;
+float : right;
+color : #99ff33;
+font-weight : bolder;
+}
+.content_right {
+margin : 0 auto;
+display : inline;
+float : right;
+width : 255px;
+text-align : justify;
+margin-right : 5px;
+padding-left : 5px;
+padding-bottom : 5px;
+padding-right : 5px;
+padding-top : 2px;
+line-height : 1.5em;
+}
+.content_left {
+margin : 0 auto;
+padding : 5px;
+display : inline;
+float : left;
+width : 255px;
+text-align : justify;
+line-height : 1.5em;
+}
+.content_left h3 {
+padding-left : 5px;
+font-size : 1.2em;
+margin-bottom : 5px;
+font-family : Arial, Helvetica, sans-serif;
+color : #99ff33;
+}
+.content_right h3 {
+font-size : 1.2em;
+margin-bottom : 2px;
+margin-top : 5px;
+font-family : Arial, Helvetica, sans-serif;
+color : #99ff33;
+}
+#productbox2 {
+margin-top : 5px;
+margin-bottom : 10px;
+}
+#rightcolumn {
+display : inline;
+margin-top : -125px;
+width : 208px;
+float : left;
+background-color : #fff;
+min-height : 300px;
+background-image : url(/static/css/no36/images/logo.jpg);
+background-repeat : no-repeat;
+background-position : 10px 35px;
+}
+* html #rightcolumn {
+height : 300px;
+}
+.righttop {
+text-align : center;
+padding-top : 15px;
+}
+.righttop a {
+color : #7e7e7d;
+padding-top : 15px;
+padding-left : 15px;
+padding-right : 15px;
+}
+.featuredproduct {
+margin-top : 200px;
+margin-left : 5px;
+text-align : center;
+width : 198px;
+border : 1px solid #7f7f76;
+padding-bottom : 10px;
+}
+.featuredproduct h3 {
+font-family : Arial, Helvetica, sans-serif;
+font-size : 1.3em;
+font-weight : lighter;
+padding-top : 3px;
+padding-bottom : 5px;
+background-color : #7f7f7e;
+color : #b3ff66;
+text-transform : uppercase;
+letter-spacing : -1px;
+}
+.fp {
+margin-top : 15px;
+}
+.fp h4 {
+font-size : 1.2em;
+font-weight : lighter;
+padding-top : 5px;
+padding-bottom : 5px;
+}
+.fp p {
+font-size : 1em;
+font-weight : lighter;
+padding-bottom : 5px;
+}
+.fp a {
+color : #99ff33;
+font-weight : bolder;
+padding-bottom : 10px;
+}
+footer {
+background-color : #7e7e7f;
+display : block;
+float : left;
+width : 100%;
+text-align : center;
+}
+footer p {
+padding : 5px;
+color : #ffe;
+}
+footer a {
+color : #99ff32;
+}

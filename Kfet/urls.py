@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'Kfet.views.home', name='home'),
+    #url(r'^$', 'Kfet.views.home', name='home'),
     # url(r'^Kfet/', include('Kfet.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^ventes/', include('Kfet.Ventes.urls')),
     (r'^commandes/', include('Kfet.Commandes.urls')),
     (r'^gestionStock/', include('Kfet.GestionStock.urls')),
+    url(r'^$', 'Kfet.views.home'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -2,23 +2,23 @@ from django.db import models
 
 # Create your models here.
 class Date(models.Model):
-    models.DateTimeField('date vente')
+        models.DateTimeField('date vente')
 
 class Menu(models.Model):
-    nom = models.CharField(max_length=200)
+        nom = models.CharField(max_length=200)
 
 class Information(models.Model):
-    info = models.CharField(max_length=200)
+        info = models.CharField(max_length=200)
 
 class Categorie(models.Model):
-    nom = models.CharField(max_length=200)
+        nom = models.CharField(max_length=200)
 
 class Produit(models.Model):
-    nom = models.CharField(max_length=200)
-    prix = models.FloatField(blank=True, null=True)
-    menu = models.ForeignKey(Menu)
-    info = models.ForeignKey(Information)
-    categorie = models.ForeignKey(Categorie)
+        nom = models.CharField(max_length=200)
+        prix = models.FloatField(blank=True, null=True)
+        menu = models.ForeignKey(Menu)
+        info = models.ForeignKey(Information)
+        categorie = models.ForeignKey(Categorie)
 
 class Panier(models.Model):
         date = models.ForeignKey(Date)
@@ -33,15 +33,15 @@ class Commentaire(models.Model):
         produit = models.ForeignKey(Produit)
 
 class Vente(models.Model):
-    produit = models.ForeignKey(Produit)
-    date = models.ForeignKey(Date)
-    quantite = models.IntegerField()
+        produit = models.ForeignKey(Produit)
+        date = models.ForeignKey(Date)
+        quantite = models.IntegerField()
 
 class Fournisseur(models.Model):
-    nom = models.CharField(max_length=200)
-    adresse = models.CharField(max_length=200)
-    tel = models.CharField(max_length=10)
-    mail = models.CharField(max_length=200)
+        nom = models.CharField(max_length=200)
+        adresse = models.CharField(max_length=200)
+        tel = models.CharField(max_length=10)
+        mail = models.CharField(max_length=200)
 
 class Personne(models.Model):
         nom = models.CharField(max_length=200)

@@ -1,58 +1,50 @@
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <!-- meta -->
-        <meta charset="utf-8" />
-        <meta name="keywords" content="mots-clés" />
-        <meta name="description" content="description" />
-        <meta name="author" content="auteur">
-
-        <script src="/static/css/T_Shirt/js/jquery-1.6.2.min.js" type="text/javascript" charset="utf-8"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+	<title>CSS Free Templates with jQuery Slider</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="css/images/favicon.ico" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<script src="js/jquery-1.6.2.min.js" type="text/javascript" charset="utf-8"></script>
 	<!--[if IE 6]>
-		<script src="/static/css/T_Shirt/js/DD_belatedPNG-min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/DD_belatedPNG-min.js" type="text/javascript" charset="utf-8"></script>
 	<![endif]-->
-	<script src="/static/css/T_Shirt/js/jquery.jcarousel.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/static/css/T_Shirt/js/functions.js" type="text/javascript" charset="utf-8"></script>
-
-        <!-- include -->
-        <link rel="stylesheet" href="/static/css/T_Shirt/css/style.css" />
-
-	  <title>{% block title %}Kfet{% endblock %}</title>
-    </head>
-
-    <body>
-        <!-- Begin Wrapper -->
+	<script src="js/jquery.jcarousel.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/functions.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<!-- Begin Wrapper -->
 	<div id="wrapper">
 		<!-- Begin Inner -->
 		<div class="inner">
 			<!-- Begin Header -->
-			<header>
-                            <div class="header-inner">
-                                <!-- Begin Shell -->
-                                <div class="shell">
-                                        <h1 id="logo"><a class="notext" href="#">World of TShirts</a></h1>
-                                        <div id="account">
-                                                <a class="view-account" title="View Account" href="#">Your Shopping Cart</a>
-                                                <span>Articles: 4</span><span>Cost: <strong>$250.90</strong></span>
-                                                <div class="cl">&nbsp;</div>
-                                        </div>
-                                        <!-- Begin Navigation -->
-                                        <nav>
-                                                <ul>
-                                                        <li><a href="#" title="Home Page"><span>Home</span></a></li>
-                                                        <li><a href="#" title="Support Page"><span>Support</span></a></li>
-                                                        <li><a href="#" title="My Account Page"><span>My Account</span></a></li>
-                                                        <li><a href="#" title="Store Page"><span>The Store</span></a></li>
-                                                        <li><a href="#" title="Contact Page"><span>Contact</span></a></li>
-                                                </ul>
-                                                <div class="cl">&nbsp;</div>
-                                        </nav>
-                                        <!-- End Navigation -->
-                                        <div class="cl">&nbsp;</div>
-                                </div>
-                                <!-- End Shell -->
-                            </div>
-			</header>
+			<div id="header">
+				<div class="header-inner">
+					<!-- Begin Shell -->
+					<div class="shell">
+						<h1 id="logo"><a class="notext" href="#">World of TShirts</a></h1>
+						<div id="account">
+							<a class="view-account" title="View Account" href="#">Your Shopping Cart</a>
+							<span>Articles: 4</span><span>Cost: <strong>$250.90</strong></span>
+							<div class="cl">&nbsp;</div>
+						</div>
+						<!-- Begin Navigation -->
+						<div id="navigation">
+							<ul>
+								<li><a href="#" title="Home Page"><span>Home</span></a></li>
+								<li><a href="#" title="Support Page"><span>Support</span></a></li>
+								<li><a href="#" title="My Account Page"><span>My Account</span></a></li>
+								<li><a href="#" title="Store Page"><span>The Store</span></a></li>
+								<li><a href="#" title="Contact Page"><span>Contact</span></a></li>
+							</ul>
+							<div class="cl">&nbsp;</div>
+						</div>
+						<!-- End Navigation -->
+						<div class="cl">&nbsp;</div>
+					</div>
+					<!-- End Shell -->
+				</div>
+			</div>
 			<!-- End Header -->
 			<!-- Begin Shell -->
 			<div class="shell">
@@ -153,11 +145,11 @@
 						<div id="slider">
 							<div class="slider-frame">&nbsp;</div>
 							<ul class="slider-items">
-								<li><img src="/static/css/T_Shirt/css/images/slide1.jpg" alt="Slide 1" /></li>
-								<li><img src="/static/css/T_Shirt/css/images/slide1.jpg" alt="Slide 1" /></li>
-								<li><img src="/static/css/T_Shirt/css/images/slide1.jpg" alt="Slide 1" /></li>
-								<li><img src="/static/css/T_Shirt/css/images/slide1.jpg" alt="Slide 1" /></li>
-								<li><img src="/static/css/T_Shirt/css/images/slide1.jpg" alt="Slide 1" /></li>
+								<li><img src="css/images/slide1.jpg" alt="Slide 1" /></li>
+								<li><img src="css/images/slide1.jpg" alt="Slide 1" /></li>
+								<li><img src="css/images/slide1.jpg" alt="Slide 1" /></li>
+								<li><img src="css/images/slide1.jpg" alt="Slide 1" /></li>
+								<li><img src="css/images/slide1.jpg" alt="Slide 1" /></li>
 							</ul>
 							<div class="cl">&nbsp;</div>
 							<div class="slider-controls">
@@ -167,14 +159,15 @@
 						</div>
 						<!-- End Slider -->
 						<!-- Begin Post -->
-                                                <div class="post">
-                                                    {% block content %}{% endblock %}
+						<div class="post">
+							<h2>Some Tittle Gose Here</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et lectus aliquam nisi convallis pretium. Aliquam posuere com-modo sagittis. In sed massa eu felis pharetra hendrerit. Morbi aliquam arcu quis nulla pulvinar eget molestie nisl posuere. Praesent vitae lorem lacus. Phasellus ullamcorper condimentum sollicitudin. Sed nec mi ligula. Suspendisse potenti. Donec ac odio est, eget lobortis turpis. Mauris est ipsum, commodo et egestas ac, semper non felis.</p>
 						</div>
 						<!-- End Post -->
 						<!-- Begin Products -->
 						<div id="products">
 							<div class="product">
-								<img src="/static/css/T_Shirt/css/images/product-img1.jpg" alt="First TShirt Product" />
+								<img src="css/images/product-img1.jpg" alt="First TShirt Product" />
 								<div class="pr-info">
 									<h4>Lorem Ipsum</h4>
 									<p>Ut varius lobortis ante, at bibendum quis. </p>
@@ -182,7 +175,7 @@
 								</div>
 							</div>
 							<div class="product">
-								<img src="/static/css/T_Shirt/css/images/product-img2.jpg" alt="Second TShirt Product" />
+								<img src="css/images/product-img2.jpg" alt="Second TShirt Product" />
 								<div class="pr-info">
 									<h4>Lorem Ipsum</h4>
 									<p>Ut varius lobortis ante, at bibendum quis. </p>
@@ -190,7 +183,7 @@
 								</div>
 							</div>
 							<div class="product last">
-								<img src="/static/css/T_Shirt/css/images/product-img3.jpg" alt="Third TShirt Product" />
+								<img src="css/images/product-img3.jpg" alt="Third TShirt Product" />
 								<div class="pr-info">
 									<h4>Lorem Ipsum</h4>
 									<p>Ut varius lobortis ante, at bibendum quis. </p>
@@ -206,20 +199,20 @@
 					<!-- Begin Products Slider -->
 					<div id="pr-slider">
 						<ul>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img1.jpg" alt="Slide TShirt 1" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img2.jpg" alt="Slide TShirt 2" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img3.jpg" alt="Slide TShirt 3" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img4.jpg" alt="Slide TShirt 4" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img5.jpg" alt="Slide TShirt 5" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img6.jpg" alt="Slide TShirt 6" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img7.jpg" alt="Slide TShirt 7" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img1.jpg" alt="Slide TShirt 1" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img2.jpg" alt="Slide TShirt 2" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img3.jpg" alt="Slide TShirt 3" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img4.jpg" alt="Slide TShirt 4" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img5.jpg" alt="Slide TShirt 5" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img6.jpg" alt="Slide TShirt 6" /></a></li>
-							<li><a href="#"><img src="/static/css/T_Shirt/css/images/slide-img7.jpg" alt="Slide TShirt 7" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img1.jpg" alt="Slide TShirt 1" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img2.jpg" alt="Slide TShirt 2" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img3.jpg" alt="Slide TShirt 3" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img4.jpg" alt="Slide TShirt 4" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img5.jpg" alt="Slide TShirt 5" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img6.jpg" alt="Slide TShirt 6" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img7.jpg" alt="Slide TShirt 7" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img1.jpg" alt="Slide TShirt 1" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img2.jpg" alt="Slide TShirt 2" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img3.jpg" alt="Slide TShirt 3" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img4.jpg" alt="Slide TShirt 4" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img5.jpg" alt="Slide TShirt 5" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img6.jpg" alt="Slide TShirt 6" /></a></li>
+							<li><a href="#"><img src="css/images/slide-img7.jpg" alt="Slide TShirt 7" /></a></li>
 						</ul>
 						<div class="cl">&nbsp;</div>
 					</div>
@@ -229,7 +222,7 @@
 						<!-- Begin Box -->
 						<div class="box first">
 							<div class="box-title">
-								<img src="/static/css/T_Shirt/css/images/box-img1.png" alt="First Box Image" />
+								<img src="css/images/box-img1.png" alt="First Box Image" />
 								<h4>Donec imperdiet</h4>
 								<div class="cl">&nbsp;</div>
 							</div>
@@ -242,7 +235,7 @@
 						<!-- Begin Box -->
 						<div class="box">
 							<div class="box-title">
-								<img src="/static/css/T_Shirt/css/images/box-img2.png" alt="Second Box Image" />
+								<img src="css/images/box-img2.png" alt="Second Box Image" />
 								<h4>Donec imperdiet</h4>
 								<div class="cl">&nbsp;</div>
 							</div>
@@ -255,7 +248,7 @@
 						<!-- Begin Box -->
 						<div class="box">
 							<div class="box-title">
-								<img src="/static/css/T_Shirt/css/images/box-img3.png" alt="Third Box Image" />
+								<img src="css/images/box-img3.png" alt="Third Box Image" />
 								<h4>Donec imperdiet</h4>
 								<div class="cl">&nbsp;</div>
 							</div>
@@ -268,7 +261,7 @@
 						<!-- Begin Box -->
 						<div class="box">
 							<div class="box-title">
-								<img src="/static/css/T_Shirt/css/images/box-img4.png" alt="Fourth Box Image" />
+								<img src="css/images/box-img4.png" alt="Fourth Box Image" />
 								<h4>Donec imperdiet</h4>
 								<div class="cl">&nbsp;</div>
 							</div>
@@ -284,11 +277,11 @@
 				</div>
 				<!-- End Main -->
 				<!-- Begin Footer -->
-				<footer>
+				<div id="footer">
 					<p class="bottom-menu"><a href="#" title="Home Page">Home</a><span>|</span><a href="#" title="Support Page">Support</a><span>|</span><a href="#" title="My Account Page">My Account</a><span>|</span><a href="#" title="Store Page">The Store</a><span>|</span><a href="#" title="Contact Page">Contact</a></p>
 					<p>&copy; 2011 WORLD of T-shirts. Design by <a href="http://css-free-templates.com/">CSS-FREE-TEMPLATES.COM</a></p>
 					<div class="cl">&nbsp;</div>
-				</footer>
+				</div>
 				<!-- End Footer -->
 			</div>
 			<!-- End Shell -->
@@ -296,6 +289,5 @@
 		<!-- End Inner -->
 	</div>
 	<!-- End Wrapper -->
-        </div>
-    </body>
-</html>  
+</body>
+</html>

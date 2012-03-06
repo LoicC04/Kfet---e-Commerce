@@ -1,0 +1,169 @@
+@font-face {
+    font-family: 'Museo500';
+    src: url('/static/css/T_Shirt/css/fonts/museo500-regular-webfont.eot');
+    src: url('/static/css/T_Shirt/css/fonts/museo500-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/css/T_Shirt/css/fonts/museo500-regular-webfont.woff') format('woff'),
+         url('/static/css/T_Shirt/css/fonts/museo500-regular-webfont.ttf') format('truetype'),
+         url('/static/css/T_Shirt/css/fonts/museo500-regular-webfont.svg#Museo500') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaInseratRoman';
+    src: url('/static/css/T_Shirt/css/fonts/helveticainserat-roman-webfont.eot');
+    src: url('/static/css/T_Shirt/css/fonts/helveticainserat-roman-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/css/T_Shirt/css/fonts/helveticainserat-roman-webfont.woff') format('woff'),
+         url('/static/css/T_Shirt/css/fonts/helveticainserat-roman-webfont.ttf') format('truetype'),
+         url('/static/css/T_Shirt/css/fonts/helveticainserat-roman-webfont.svg#HelveticaInseratRoman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Museo300';
+    src: url('/static/css/T_Shirt/css/fonts/museo300-regular-webfont.eot');
+    src: url('/static/css/T_Shirt/css/fonts/museo300-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/css/T_Shirt/css/fonts/museo300-regular-webfont.woff') format('woff'),
+         url('/static/css/T_Shirt/css/fonts/museo300-regular-webfont.ttf') format('truetype'),
+         url('/static/css/T_Shirt/css/fonts/museo300-regular-webfont.svg#Museo300') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { margin: 0; padding: 0; outline: 0; }
+
+body {
+    font-size: 12px;
+    line-height: 20px;
+    font-family: "Trebuchet MS", arial, sans-serif;
+    color: #375970;
+}
+
+.shell {
+	width: 979px; 
+	margin: 0 auto;
+}
+
+a { color: #0252aa; text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: underline; }
+a img { border: 0; }
+
+input, textarea, select { font-size: 12px; font-family: arial, sans-serif; }
+textarea { overflow: auto; }
+
+.cl { display: block; height: 0; font-size: 0; line-height: 0; text-indent: -4000px; clear: both; }
+.notext { font-size: 0; line-height: 0; text-indent: -4000px; }
+.left, .alignleft { float: left; display: inline; }
+.right, .alignright { float: right; display: inline; }
+
+#wrapper { background: url('/static/css/T_Shirt/css/images/body-top.png') no-repeat center 0; }
+.inner { background: url('/static/css/T_Shirt/css/images/body-bottom.png') no-repeat center bottom; }
+
+/* Header */
+header { background: url('/static/css/T_Shirt/css/images/header-bg.png') repeat-x 0 0; height: 81px; z-index: 100; position: relative; }
+header .header-inner { background: url('/static/css/T_Shirt/css/images/header-inner.png') no-repeat center 0; }
+header .shell { padding-left: 25px; padding-right: 6px; width: 949px; }
+
+h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; }
+h1#logo a { width: 189px; height: 38px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat 0 0; }
+
+#account { float: right; display: inline; padding-top: 24px; width: 173px;  }
+#account a.view-account { padding-left: 33px; display: block; line-height: 17px; background: url('/static/css/T_Shirt/css/images/shop.png') no-repeat 0 0; color: #ffe75f; margin-bottom: 2px; }
+#account span { float: left; display: inline; padding-left: 1px; padding-right: 18px; color: #ffe75f; }
+
+nav { float: right; display: inline; padding-right: 20px; }
+nav ul { float: right; display: inline; }
+nav li { float: left; display: inline; margin-left: 5px; }
+nav li a { position: relative; display: inline; float: left; font-family: 'Museo500', arial, sans-serif; font-size: 14px; color: #fff; background: url('/static/css/T_Shirt/css/images/nav-hover-left.png') no-repeat 0 0; }
+nav li a span { padding: 33px 17px 16px 17px; display: inline; float: left; margin-right: -6px; position: relative; background: url('/static/css/T_Shirt/css/images/nav-hover-right.png') no-repeat right 0; }
+nav li a:hover { background-position: 0 -69px; color: #1c7dbf; text-decoration: none; margin-left: -8px; }
+nav li a:hover span { padding-left: 25px; background-position: right -69px; }
+
+/* Main */
+#main { background: #fff; padding: 0 9px 28px 10px; height: 100%; }
+
+/* Sidebar */
+#sidebar { width: 226px; float: left; display: inline; padding-top: 2px; background: #deeaee url('/static/css/T_Shirt/css/images/sidebar-bg.png') repeat-x 0 bottom; color: #7f7f7f; }
+#sidebar li { list-style: none; }
+
+.widget { padding-bottom: 16px; }
+.widget h2 { height: 37px; line-height: 37px; background: url('/static/css/T_Shirt/css/images/widget-title.png') no-repeat 0 0; font-family: 'Museo500', arial, sans-serif; font-size: 18px; color: #fff; font-weight: normal; padding: 0 9px 5px 22px; }
+.widget li a { line-height: 26px; height: 26px; padding-left: 23px; font-size: 13px; border-bottom: 1px solid #fff; color: #7f7f7f; display: block; }
+.widget li.last a { border: none; }
+.widget li a:hover { color: #375970; background: #fff; text-decoration: none; font-weight: bold; }
+
+#search { padding: 2px 9px 2px 8px; }
+#search label { display: block; padding-bottom: 1px; }
+#search input,
+#search select { width: 197px; line-height: 18px; padding: 2px 4px; border: 1px solid #dedede; margin-bottom: 8px; margin-left: 2px; font-family: "Trebuchet MS", arial, sans-serif; }
+#search select { width: 207px; height: 26px; padding-left: 0; padding-right: 2px; }
+#search .price { padding-top: 2px; padding-bottom: 15px; }
+#search .price label,
+#search .price select { float: left; display: inline; }
+#search .price label { line-height: 26px; }
+#search .price select { width: 50px; margin: 0 4px; padding-left: 1px; }
+#search .button { float: left; display: inline; background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; }
+#search .button input { margin-right: -7px; position: relative; height: 29px; line-height: 27px; background: url('/static/css/T_Shirt/css/images/button-right.png') no-repeat right 0; float: left; display: inline; width: auto; border: none; cursor: pointer; padding-left: 15px; padding-right: 13px; color: #fff; font-weight: bold; letter-spacing: 1px; }
+#search .options li a { text-decoration: underline; padding-left: 13px; background: url('/static/css/T_Shirt/css/images/arrow-right.png') no-repeat 2px 6px; color: #399adb; font-size: 12px; line-height: 16px; height: auto; border: none; }
+#search .options li a:hover { text-decoration: none; font-weight: normal; }
+
+/* Content */
+#content { float: right; display: inline; width: 724px; padding-top: 3px; padding-bottom: 30px; }
+
+#slider { width: 723px; height: 246px; position: relative; margin-right: 1px; padding-bottom: 26px; }
+#slider li { list-style: none; }
+#slider .jcarousel-container { z-index: 10; position: relative; }
+#slider .jcarousel-clip ,
+#slider ul.slider-items,
+#slider ul.slider-items li { width: 723px; height: 246px; overflow: hidden; position: relative; }
+#slider ul.slider-items li { float: left; display: inline; }
+#slider .slider-frame { font-size: 0; line-height: 0; text-indent: -4000px; position: absolute; top: 0; left: 0; width: 723px; height: 246px; background: url('/static/css/T_Shirt/css/images/slider-frame.png') no-repeat 0 0; z-index: 50; }
+#slider .slider-controls { position: absolute; left: 50%; bottom: 28px; z-index: 100; }
+#slider .slider-controls { float: left; display: inline; }
+#slider .slider-controls li { float: left; display: inline; padding-right: 5px; }
+#slider .slider-controls li a { background: url('/static/css/T_Shirt/css/images/slider-nav-item.png') no-repeat 0 0; width: 15px; height: 16px; display: block; font-size: 0; line-height: 0; text-indent: -4000px; }
+#slider .slider-controls li a:hover,
+#slider .slider-controls li.active a { background-position: 0 -16px; }
+
+.post { padding-left: 9px; padding-bottom: 29px; }
+.post h2 { font-family: 'Museo500', arial, sans-serif; font-size: 26px; padding-bottom: 7px; font-weight: normal; word-spacing: 3px; }
+.post p { word-spacing: -1px; }
+
+#products .product { float: left; display: inline; width: 234px; margin-right: 8px; border: 1px solid #dedede; position: relative; }
+#products .last { margin-right: 0; }
+#products .product img { padding-bottom: 68px; }
+#products .product .pr-info { position: absolute; bottom: 15px; left: 0; background: url('/static/css/T_Shirt/css/images/products-info-bar.png') no-repeat 0 0; padding: 11px 118px 11px 12px; }
+#products .product .pr-info h4 { text-transform: uppercase; font-size: 14px; color: #375970; line-height: 18px; }
+#products .product .pr-info p { font-size: 10px; color: #000; line-height: 12px; }
+#products .product .pr-price { position: absolute; top: -10px; right: 5px; background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0; width: 82px; height: 82px; line-height: 72px; color: #fff; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center; }
+#products .product .pr-price span { font-size: 26px; }
+#products .product .pr-price sup { font-size: 17px; padding-left: 1px; }
+
+#pr-slider { width: 896px; height: 146px; position: relative; border: 1px solid #dedede; padding: 0 31px; margin-bottom: 29px; }
+#pr-slider .jcarousel-clip ,
+#pr-slider ul,
+#pr-slider ul li { width: 896px; height: 146px; overflow: hidden; position: relative; }
+#pr-slider ul li { float: left; display: inline; text-align: left; width: 128px; }
+#pr-slider .jcarousel-prev,
+#pr-slider .jcarousel-next { font-size: 0; line-height: 0; text-indent: -4000px; width: 31px; height: 144px; display: block; position: absolute; top: 1px; cursor: pointer; padding-top: 2px; }
+#pr-slider .jcarousel-prev { background: url('/static/css/T_Shirt/css/images/slider-left.png') no-repeat center center; left: 1px; }
+#pr-slider .jcarousel-next { background: url('/static/css/T_Shirt/css/images/slider-right.png') no-repeat center center; right: 1px; }
+
+#home-boxes { padding-left: 8px; }
+#home-boxes .box { float: left; display: inline; width: 237px; }
+#home-boxes .box .box-title img,
+#home-boxes .box .box-title h4 { float: left; display: inline; }
+#home-boxes .box .box-title h4 { color: #000; font-size: 12px; height: 32px; line-height: 32px; padding-left: 7px; text-transform: uppercase; background: url('/static/css/T_Shirt/css/images/box-title.png') no-repeat 0 0; width: 180px; }
+#home-boxes .first .box-title h4 { width: 176px; }
+#home-boxes .box .box-entry { padding: 11px 13px; color: #7f7f7f; line-height: 16px; }
+#home-boxes .box .box-entry p { padding-bottom: 7px; }
+#home-boxes .box .box-entry p.more { text-align: right; }
+#home-boxes .box .box-entry p.more a { padding-left: 13px; background: url('/static/css/T_Shirt/css/images/more.png') no-repeat 0 4px; color: #c74b00; font-family: 'Museo300', arial, sans-serif; font-size: 14px; padding-right: 7px; }
+
+/* Footer */
+footer { background: #fff url('/static/css/T_Shirt/css/images/footer-bg.png') no-repeat 0 0; color: #aac6e2; padding: 16px 27px 31px 33px;  }
+footer p { float: right; display: inline; }
+footer p.bottom-menu { float: left; }
+footer a { color: #aac6e2; }
+footer span { padding-left: 3px; padding-right: 4px; }

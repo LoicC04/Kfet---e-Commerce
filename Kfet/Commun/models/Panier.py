@@ -6,4 +6,4 @@ class Panier(models.Model):
         date = models.ForeignKey(Date)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

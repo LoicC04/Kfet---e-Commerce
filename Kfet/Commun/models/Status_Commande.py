@@ -5,4 +5,4 @@ class Status_Commande(models.Model):
         label = models.CharField(max_length=200)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

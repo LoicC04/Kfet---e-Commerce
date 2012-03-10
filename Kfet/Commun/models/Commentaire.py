@@ -7,4 +7,4 @@ class Commentaire(models.Model):
         produit = models.ForeignKey(Produit)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

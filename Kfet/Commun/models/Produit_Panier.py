@@ -9,4 +9,4 @@ class Produit_Panier(models.Model):
         panier = models.ForeignKey(Panier)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

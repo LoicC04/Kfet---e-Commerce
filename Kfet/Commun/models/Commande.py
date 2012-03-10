@@ -10,4 +10,4 @@ class Commande(models.Model):
         reglement = models.ForeignKey(Reglement)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

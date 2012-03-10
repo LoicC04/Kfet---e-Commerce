@@ -12,4 +12,4 @@ class Produit(models.Model):
         categorie = models.ForeignKey(Categorie)
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

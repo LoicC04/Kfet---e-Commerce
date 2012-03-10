@@ -9,4 +9,4 @@ class Vente(models.Model):
         quantite = models.IntegerField()
 
 	class Meta:
-            app_label = 'Comm'
+            app_label = 'Commun'

@@ -23,4 +23,10 @@
 
 <p>Voici la page d'accueil</p>
 
+{% if categories %}
+    {{ categories }}
+{% else %}
+    <p>merde</p>
+{% endif %}
+
 {% endblock %}

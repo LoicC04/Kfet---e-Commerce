@@ -5,7 +5,6 @@ from Categorie import *
 from Commentaire import *
 from Date import *
 from Fournisseur import *
-from Information import *
 from Menu import *
 from Panier import *
 from Personne import *

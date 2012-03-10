@@ -66,7 +66,7 @@ header .header-inner { background: url('/static/css/T_Shirt/css/images/header-in
 header .shell { padding-left: 25px; padding-right: 6px; width: 949px; }
 
 h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; }
-h1#logo a { width: 189px; height: 38px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat 0 0; }
+h1#logo a { width: 100px; height: 50px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat; background-size : 50px; padding-left:74px; background-position: center;}
 
 #account { float: right; display: inline; padding-top: 24px; width: 173px;  }
 #account a.view-account { padding-left: 33px; display: block; line-height: 17px; background: url('/static/css/T_Shirt/css/images/shop.png') no-repeat 0 0; color: #ffe75f; margin-bottom: 2px; }

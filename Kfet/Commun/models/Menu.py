@@ -5,3 +5,6 @@ class Menu(models.Model):
 
 	class Meta:
             app_label = 'Commun'
+
+        def __unicode__(self):
+                   return self.nom;

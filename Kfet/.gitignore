@@ -3,4 +3,5 @@ settings.py
 *.log
 *.pot
 *~
+*.swp
 nbproject/

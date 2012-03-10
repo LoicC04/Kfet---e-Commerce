@@ -9,4 +9,14 @@
 
 <h2>Gestion des produits</h2>
 
+{% if produits %}
+    <ul>
+        {% for p in produits %}
+        <li>{{ p.nom }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun produit disponible</p>
+{% endif %}
+
 {% endblock %}

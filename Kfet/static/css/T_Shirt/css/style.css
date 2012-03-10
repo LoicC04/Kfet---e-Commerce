@@ -128,7 +128,7 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 
 .post { padding-left: 9px; padding-bottom: 29px; }
 .post h2 { font-family: 'Museo500', arial, sans-serif; font-size: 26px; padding-bottom: 7px; font-weight: normal; word-spacing: 3px; }
-.post p { word-spacing: -1px; }
+.post p { word-spacing: -1px; margin-bottom: 1.5em}
 
 #products .product { float: left; display: inline; width: 234px; margin-right: 8px; border: 1px solid #dedede; position: relative; }
 #products .last { margin-right: 0; }

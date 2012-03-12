@@ -65,9 +65,12 @@
 							<li class="widget">
 								<h2>Categories</h2>
 								<ul>
-									<li><a href="#" title="Category 1">Category 1</a></li>
-									<li><a href="#" title="Category 2">Category 2</a></li>
-									<li class="last"><a href="#" title="Category 3">Category 3</a></li>
+                                                                        {% if categories_list %}
+                                                                            {% for c in categories_list %}
+                                                                                <li><a href="#" title="{{ c.nom }}">{{ c.nom }}</a></li>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+									<li class="last"><a href="#" title="Category 3">Category</a></li>
 								</ul>
 							</li>
 							<!-- End Widget -->
@@ -80,10 +83,12 @@
 										<input type="text" class="blink" name="keyword" />
 										<label>Category</label>
 										<select size="1" name="category">
-											<option value="default">-- Select Category --</option>
-											<option value="category1">Category 1</option>
-											<option value="category2">Category 2</option>
-											<option value="category3">Category 3</option>
+                                                                                        <option value="default">-- Select Category --</option>
+                                                                                        {% if categories_list %}
+                                                                                            {% for c in categories_list %}
+                                                                                                <option value="{{ c.nom }}">{{ c.nom }}</option>
+                                                                                            {% endfor %}
+                                                                                        {% endif %}
 										</select>
 										<div class="price">
 											<label>Price</label>

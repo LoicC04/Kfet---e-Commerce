@@ -67,10 +67,9 @@
 								<ul>
                                                                         {% if categories_list %}
                                                                             {% for c in categories_list %}
-                                                                                <li><a href="#" title="{{ c.nom }}">{{ c.nom }}</a></li>
+                                                                                <li {% if forloop.last %} class='last'{% endif %}><a href="#" title="{{ c.nom }}">{{ c.nom }}</a></li>
                                                                             {% endfor %}
                                                                         {% endif %}
-									<li class="last"><a href="#" title="Category 3">Category</a></li>
 								</ul>
 							</li>
 							<!-- End Widget -->

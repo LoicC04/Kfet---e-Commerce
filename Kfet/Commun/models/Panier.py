@@ -1,9 +1,8 @@
 from django.db import models
-from Date import *
 
 
 class Panier(models.Model):
-        date = models.ForeignKey(Date)
+        date = models.DateTimeField('date vente')
 
 	class Meta:
             app_label = 'Commun'

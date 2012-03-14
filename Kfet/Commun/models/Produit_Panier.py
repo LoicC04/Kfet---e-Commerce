@@ -1,7 +1,7 @@
 from django.db import models	
-
 from Produit import *
 from Panier import *
+
 
 class Produit_Panier(models.Model):
         quantite = models.IntegerField()

@@ -1,7 +1,7 @@
 from django.db import models
-
 from Produit import *
 from Date import *
+
 
 class Vente(models.Model):
         produit = models.ForeignKey(Produit)
@@ -10,3 +10,6 @@ class Vente(models.Model):
 
 	class Meta:
             app_label = 'Commun'
+
+        def __unicode__(self):
+                   return self.produit;

@@ -1,8 +1,8 @@
 from django.db import models
-
 from Personne import *
 from Reglement import *
 from Status_Commande import *
+
 
 class Commande(models.Model):
         personne = models.ForeignKey(Personne)
@@ -11,3 +11,6 @@ class Commande(models.Model):
 
 	class Meta:
             app_label = 'Commun'
+
+        def __unicode__(self):
+                   return unicode(self.id);

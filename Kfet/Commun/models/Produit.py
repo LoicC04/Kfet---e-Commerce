@@ -3,6 +3,7 @@ from Menu import *
 from Categorie import *	
 from Image import *
 
+
 class Produit(models.Model):
         nom = models.CharField(max_length=200)
         prix = models.FloatField()

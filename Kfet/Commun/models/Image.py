@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Image(models.Model):
         nom = models.CharField(max_length=200)
         nomFichier =  models.CharField(max_length=200)

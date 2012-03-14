@@ -1,6 +1,6 @@
 from django.db import models
-
 from Produit import *
+
 
 class Commentaire(models.Model):
         commentaire = models.TextField()
@@ -8,3 +8,6 @@ class Commentaire(models.Model):
 
 	class Meta:
             app_label = 'Commun'
+
+        def __unicode__(self):
+                   return unicode(self.id);

@@ -30,7 +30,7 @@
                             <div class="header-inner">
                                 <!-- Begin Shell -->
                                 <div class="shell">
-                                        <h1 id="logo"><a class="notext" href="#">Kfet du DI</a></h1>
+                                        <h1 id="logo"><a class="notext" href="/">Kfet du DI</a></h1>
                                         <div id="account">
                                                 <a class="view-account" title="View Account" href="#">Votre panier d'achats</a>
                                                 <span>Articles: 4</span><span>Cost: <strong>5.00€</strong></span>
@@ -39,7 +39,7 @@
                                         <!-- Begin Navigation -->
                                         <nav>
                                                 <ul>
-                                                        <li><a href="#" title="Page d'accueil"><span>Accueil</span></a></li>
+                                                        <li><a href="/" title="Page d'accueil"><span>Accueil</span></a></li>
                                                         <li><a href="#" title="Page des services"><span>Services</span></a></li>
                                                         <li><a href="#" title="Page de mon compte"><span>Mon compte</span></a></li>
                                                         <li><a href="#" title="Page de la boutique"><span>La boutique</span></a></li>
@@ -67,7 +67,7 @@
 								<ul>
                                                                         {% if categories_list %}
                                                                             {% for c in categories_list %}
-                                                                                <li {% if forloop.last %} class='last'{% endif %}><a href="#" title="{{ c.nom }}">{{ c.nom }}</a></li>
+                                                                            <li {% if forloop.last %} class='last'{% endif %}><a href="/ventes/categorie/{{c.id}}" title="{{ c.nom }}">{{ c.nom }}</a></li>
                                                                             {% endfor %}
                                                                         {% endif %}
 								</ul>

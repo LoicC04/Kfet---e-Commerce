@@ -11,7 +11,7 @@ def categorie(request, cat_id):
 #    p = get_object_or_404(Poll, pk=poll_id)
     categorie = Categorie.objects.get(pk=cat_id)
     produit = Produit.objects.filter(categorie=cat_id)
-    return render_to_response('Ventes/categorie.html', {'produit':produit , 'categorie':categorie} )
+    return render_to_response('Ventes/categorie.html', {'produit':produit , 'categorie':categorie}, context_instance=RequestContext(request) )
 
 
 #def index(request):

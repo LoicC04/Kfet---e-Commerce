@@ -6,9 +6,9 @@
 <h1>{{categorie.nom}}</h1>
 <br/><br/>
 <table>
-    <th>Nom</th>
+    <th>Nom</th><th>Prix</th>
     {% for pro in produit %}
-        <tr><td>{{ pro.nom }}</td></tr>
+    <tr><td>{{ pro.nom }}</td><td>{{pro.prix}}</td></tr>
     {% endfor %}
 </table>
 

@@ -7,5 +7,6 @@ urlpatterns = patterns('Kfet.Ventes.views',
     #url(r'^$', 'home'),
     #(r'^$', 'index'),
     url(r'^(?P<produit_id>\d+)/$', 'produit'),
+    url(r'^panier/$', 'panier'),
     url(r'^categorie/(?P<cat_id>\d+)/$', 'categorie'),
 )

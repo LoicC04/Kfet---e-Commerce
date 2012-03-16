@@ -9,6 +9,7 @@ from Menu import *
 from Panier import *
 from Personne import *
 from Produit_Panier import *
+from Promo import *
 from Produit import *
 from Reglement import *
 from Status_Commande import *

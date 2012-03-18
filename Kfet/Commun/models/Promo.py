@@ -8,4 +8,4 @@ class Promo(models.Model):
             app_label = 'Commun'
 
         def __unicode__(self):
-                   return promo;
+                   return self.promo;

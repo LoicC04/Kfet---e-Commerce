@@ -1,17 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}Création compte Utilisateur - Kfet{% endblock %}
 
 {% block content %}
-<h1>{{categorie.nom}}</h1>
+<h1>Création d'un compte utilisateur</h1>
 <br/><br/>
-<table>
-    <th>Nom</th><th>Prix</th>
-    {% for pro in produit %}
-    <tr><td>{{ pro.nom }}</td><td>{{pro.prix}}</td></tr>
-    {% endfor %}
-</table>
 
-<p></p>
+<form action="/comptes/ajout/" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td><label for="nom">Nom : </label></td>
+            <td><input type="text" name="nom"></td>
+        </tr>
+        <tr>
+            <td><label for="prenom">Prénom : </label></td>
+            <td><input type="text" name="prenom"></td>
+        </tr>
+        <tr>
+            <td><label for="etu">(1) Numéro étudiant :</label></td>
+            <td><input type="text" name="etu"></td>
+        </tr>
+        <tr>
+            <td><label for="pass">(2) Mot de passe :</label></td>
+            <td><input type="password" name="pass"><input type="password" name="pass2"> </td>
+        </tr>
+        <tr>
+            <td><label for="mail">(3) Adresse email :</label></td>
+            <td><input type="text" name="mail"><input type="text" name="mail2"> </td>
+        </tr>
+        <tr>
+            <td><label for="promo">Promotion :</label></td>
+            <td>
+                <select default="3A">
+                    {% if promo %}
+                        {% for p in promo %}
+                            <option selected value="{{p.id}}">{{p.promo}}</option>
+                        {% endfor %}
+                    {% endif %}
+               </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Send"><input type="reset"></td>
+        </tr>
+
+    </table>
+    <br/><br/>
+    (1) : Numéro identifiant sans le t. Facultatif seulement pour les professeurs.<br/>
+    (2) : Minimum 6 caractères.<br/>
+    (3) : Adresse @etu.univ-tours.fr ou @univ-tours.fr uniquement.<br/>
+ </form>
+
 
 {% endblock %}

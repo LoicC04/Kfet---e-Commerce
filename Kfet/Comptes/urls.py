@@ -5,4 +5,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = patterns('Kfet.Comptes.views',
 
     url(r'^creation/$', 'creation'),
+    url(r'^ajout/$', 'ajout'),
+    url(r'^ok/$', 'ok'),
 )

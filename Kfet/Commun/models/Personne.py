@@ -10,7 +10,7 @@ class Personne(models.Model):
         password = models.CharField(max_length=200)
         mail = models.CharField(max_length=200)
         promo = models.ForeignKey(Promo)
-        panier = models.ForeignKey(Panier)
+        panier = models.ForeignKey(Panier, blank=True, null=True)
 
 	class Meta:
             app_label = 'Commun'

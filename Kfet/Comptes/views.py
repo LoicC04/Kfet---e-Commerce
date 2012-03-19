@@ -10,32 +10,32 @@ def ajout(request):
     try: 
         etu_post = request.POST['etu']
     except MultiValueDictKeyError:
-/bin/bash: :q : commande introuvable
+        etu_post = "FUCK"
 
     try: 
         nom_post = request.POST['nom']
     except MultiValueDictKeyError:
-            nom_post = "FUCK"
+        nom_post = "FUCK"
 
     try: 
         prenom_post = request.POST['prenom']
     except MultiValueDictKeyError:
-            prenom_post = "FUCK"
+        prenom_post = "FUCK"
 
     try: 
         pass_post = request.POST['pass']
     except MultiValueDictKeyError:
-            pass_post = "FUCK"
+        pass_post = "FUCK"
 
     try: 
         mail_post = request.POST['mail']
     except MultiValueDictKeyError:
-            mail_post = "FUCK"
+        mail_post = "FUCK"
 
     try: 
         promo_post = request.POST['promo']
     except MultiValueDictKeyError:
-            promo_post = 2
+        promo_post = 2
 
     personne = Personne(
         num_etu=etu_post,

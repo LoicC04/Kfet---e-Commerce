@@ -5,37 +5,54 @@
 {% block content %}
 <h1>Création d'un compte utilisateur</h1>
 <br/><br/>
+{% if erreur == "1" %}
+    <center><font color="red">Merci de spécifier un Nom.</font></center>
+    <br/><br/>
+{% else %} {% if erreur == "2" %}
+    <center><font color="red">Merci de spécifier un Prénom.</font></center>
+    <br/><br/>
+{% else %} {% if erreur == "3" %}
+    <center><font color="red">Merci de spécifier un numéro d'étudiant.</font></center>
+    <br/><br/>
+{% else %} {% if erreur == "4" %}
+    <center><font color="red">Merci de vérifier votre mot de passe.</font></center>
+    <br/><br/>
+{% else %} {% if erreur == "5" %}
+    <center><font color="red">Merci de vérifier votre adresse email.</font></center>
+    <br/><br/>
+{% endif %} {% endif %} {% endif %} {% endif %} {% endif %}
 
 <form action="/comptes/ajout/" method="post">
     {% csrf_token %}
-    <table>
+    <table style="width:100%">
         <tr>
-            <td><label for="nom">Nom : </label></td>
-            <td><input type="text" name="nom"></td>
+            <td><label for="nom">{% if erreur == "1" %} <font color="red"> {% endif %} Nom : </font></label></td>
+            <td><input type="text" name="nom" value="{{personne.nom}}"></td>
         </tr>
         <tr>
-            <td><label for="prenom">Prénom : </label></td>
-            <td><input type="text" name="prenom"></td>
+            <td><label for="prenom">{% if erreur == "2" %} <font color="red"> {% endif %}Prénom : </font></label></td>
+            <td><input type="text" name="prenom" value="{{personne.prenom}}"></td>
         </tr>
         <tr>
-            <td><label for="etu">(1) Numéro étudiant :</label></td>
-            <td><input type="text" name="etu"></td>
+            <td><label for="etu">{% if erreur == "3" %} <font color="red"> {% endif %}(1) Numéro étudiant : </font></label></td>
+            <td><input type="text" name="etu" value="{{personne.num_etu}}"></td>
         </tr>
         <tr>
-            <td><label for="pass">(2) Mot de passe :</label></td>
-            <td><input type="password" name="pass"><input type="password" name="pass2"> </td>
+            <td style="width:30%"><label for="pass">{% if erreur == "4" %} <font color="red"> {% endif %}(2) Mot de passe : </font></label></td>
+            <td style="width:30%"><input type="password" name="pass"></td><td style="width=30%"><input type="password" name="pass2"></td>
         </tr>
         <tr>
-            <td><label for="mail">(3) Adresse email :</label></td>
-            <td><input type="text" name="mail"><input type="text" name="mail2"> </td>
+            <td><label for="mail">{% if erreur == "5" %} <font color="red"> {% endif %}(3) Adresse email : </font></label></td>
+            <td><input type="text" name="mail" value="{{personne.mail}}"></td><td><input type="text" name="mail2"></td>
         </tr>
         <tr>
             <td><label for="promo">Promotion :</label></td>
             <td>
-                <select default="3A">
-                    {% if promo %}
+                <select name="promo">
+                    <option selected value="">Choisir</option> 
+                    {% if promo %}                        
                         {% for p in promo %}
-                            <option selected value="{{p.id}}">{{p.promo}}</option>
+                            <option {% if promo.id == personne.promo %} selected {% endif %}value="{{p.id}}">{{p.promo}}</option>
                         {% endfor %}
                     {% endif %}
                </select>
@@ -43,7 +60,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Send"><input type="reset"></td>
+            <td><input type="submit" value="S'inscrire"></td>
         </tr>
 
     </table>

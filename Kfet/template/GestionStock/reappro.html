@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block content %}
+
+<h1>Réapprovisionnement</h1>
+
+{% if fournisseurs %}
+     <table border="1" width=100%>
+        <tr>
+            <th width=10%>Nom</th>
+            <th width=10%>Adresse</th>
+            <th width=10%>Téléphone</th>
+            <th width=10%>Mail</th>
+            <th width=20%>Description</th>
+        </tr>
+    {% for f in fournisseurs %}
+        <tr>
+            <td{{ f.nom }}></td>
+            <td{{ f.adresse }}></td>
+            <td{{ f.telephone }}></td>
+            <td{{ f.mail }}></td>
+            <td{{ f.description }}></td>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>Aucun founisseur n'est défini. Pour en définir un <a href="/gestionStock/creerFournisseur/">cliquer ici</a></p>
+{% endif %}
+
+
+{% endblock %}

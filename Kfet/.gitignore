@@ -5,3 +5,4 @@ settings.py
 *~
 *.swp
 nbproject/
+*.save

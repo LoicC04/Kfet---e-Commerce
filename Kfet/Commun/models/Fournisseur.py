@@ -6,6 +6,7 @@ class Fournisseur(models.Model):
         adresse = models.CharField(max_length=200)
         tel = models.CharField(max_length=10)
         mail = models.CharField(max_length=200)
+        description = models.TextField()
 
 	class Meta:
             app_label = 'Commun'

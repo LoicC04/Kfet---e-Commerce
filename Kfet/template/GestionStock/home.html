@@ -5,18 +5,59 @@
 {% block content %}
 <h1>Gestion des stocks</h1>
 
-<p>Module gérant les stocks (Ajout d'un produit, réapprovisionné les stocks, enregistrer les commandes fournisseurs)</p>
+<p>Module gérant les stocks (Ajout d'un produit, réapprovisionner les stocks, enregistrer les commandes fournisseurs)</p>
 
-<h2>Gestion des produits</h2>
+<h2 style="color:red">Produits en rupture</h2>
 
-{% if produits %}
-    <ul>
-        {% for p in produits %}
-        <li>{{ p.nom }}</li>
+{% if produits_out %}
+     <table border="1" width=100%>
+        <tr>
+            <th width=20%>Nom</th>
+            <th width=10%>Quantite</th>
+            <th width=10%>Catégorie</th>
+            <th width=10%>Prix (€)</th>
+            <th width=10%>Quantité commandée</th>
+        </tr>
+        {% for p in produits_out %}
+        <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.quantite }}</td>
+            <td>{{ p.categorie }}</td>
+            <td>{{ p.prix }}</td>
+            <td>{{ p.quantiteCommandeFournisseur }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
-    <p>Aucun produit disponible</p>
+    <p>Aucun produit en rupture</p>
+{% endif %}
+<div id="reappro"><a href="/gestionStock/reapprovisionnement/">Réapprovisionnement</a></div>
+<br/>
+
+<h2 style="color:blue">Produits en stock</h2>
+
+
+{% if produits_in %}
+     <table border="1" width=100%>
+        <tr>
+            <th width=20%>Nom</th>
+            <th width=10%>Quantite</th>
+            <th width=10%>Catégorie</th>
+            <th width=10%>Prix (€)</th>
+            <th width=10%>Quantité commandée</th>
+        </tr>
+        {% for p in produits_in %}
+        <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.quantite }}</td>
+            <td>{{ p.categorie }}</td>
+            <td>{{ p.prix }}</td>
+            <td>{{ p.quantiteCommandeFournisseur }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Aucun produit en stock</p>
 {% endif %}
 
 {% endblock %}

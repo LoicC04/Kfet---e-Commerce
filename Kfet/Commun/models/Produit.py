@@ -2,6 +2,7 @@ from django.db import models
 from Menu import *
 from Categorie import *	
 from Image import *
+from Fournisseur import *
 
 
 class Produit(models.Model):
@@ -11,9 +12,13 @@ class Produit(models.Model):
         info = models.TextField()
         categorie = models.ForeignKey(Categorie)
         image = models.ForeignKey(Image)
+        quantite = models.IntegerField()
+        quantiteCommandeFournisseur = models.IntegerField()
+        fournisseur = models.ForeignKey(Fournisseur,blank=False, null=False)
 
 	class Meta:
             app_label = 'Commun'
 
         def __unicode__(self):
-           return self.nom;
+            representation = "{0}, quantite={1}".format(self.nom,self.quantite)
+            return representation

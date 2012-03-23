@@ -126,7 +126,7 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 #slider .slider-controls li a:hover,
 #slider .slider-controls li.active a { background-position: 0 -16px; }
 
-.post { padding-left: 9px; padding-bottom: 29px; }
+.post { padding-left: 9px; padding-bottom: 29px; min-height:360px }
 .post h2 { font-family: 'Museo500', arial, sans-serif; font-size: 26px; padding-bottom: 7px; font-weight: normal; word-spacing: 3px; }
 .post p { word-spacing: -1px; margin-bottom: 1.5em}
 
@@ -167,3 +167,27 @@ footer p { float: right; display: inline; }
 footer p.bottom-menu { float: left; }
 footer a { color: #aac6e2; }
 footer span { padding-left: 3px; padding-right: 4px; }
+
+/* ++++++++++++++++++++++++++++++++++++++++ */
+
+/* Bouton de réapprovisionnement */
+#reappro {
+    border : outset 1px yellow;
+    color :red;
+    font-weight:bold;
+    width : 250px;
+    text-align:center;
+    margin:auto;
+    background-color : darkorange; 
+    border-radius: 10px;
+    font-size:1.5em;
+}
+#reappro > a {
+    text-decoration : none;
+}
+#reappro :hover {
+    border:inset 1px yellow;
+    border-radius: 10px;
+    width : 250px;
+    background-color:orange;
+}

@@ -5,26 +5,13 @@
 {% block content %}
 <h1>Création d'un compte utilisateur</h1>
 <br/><br/>
-{% if erreur == "1" %}
-    <center><font color="red">Merci de spécifier un Nom.</font></center>
-    <br/><br/>
-{% else %} {% if erreur == "2" %}
-    <center><font color="red">Merci de spécifier un Prénom.</font></center>
-    <br/><br/>
-{% else %} {% if erreur == "3" %}
-    <center><font color="red">Merci de spécifier un numéro d'étudiant.</font></center>
-    <br/><br/>
-{% else %} {% if erreur == "4" %}
-    <center><font color="red">Merci de vérifier votre mot de passe.</font></center>
-    <br/><br/>
-{% else %} {% if erreur == "5" %}
-    <center><font color="red">Merci de vérifier votre adresse email.</font></center>
-    <br/><br/>
-{% endif %} {% endif %} {% endif %} {% endif %} {% endif %}
-
-<form action="/comptes/creation/" method="post">
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+<form action="{% url Kfet.Comptes.views.creation %}" method="post">{% csrf_token %}    
+    <table border=0 style=width:100%>
+    {% for field in form %}
+    <tr><td>{{field.label_tag}}</td><td>{{ field }}</td><td>{{ field.errors }}</td></tr>
+    {% endfor  %}
+    </table>
+    <input type="submit" value="Créer un compte" />
 </form>
 
 {% endblock %}

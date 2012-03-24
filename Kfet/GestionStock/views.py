@@ -1,7 +1,8 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from Kfet.Commun.models import Produit
-from Kfet.Commun.models import Fournisseur
+from Kfet.Commun.models import Fournisseur, CreationForm
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 
 def index(request):
@@ -13,5 +14,19 @@ def reappro(request):
     list_Fournisseur = Fournisseur.objects.all()
     return render_to_response('GestionStock/reappro.html', { 'fournisseurs':list_Fournisseur, }, context_instance=RequestContext(request))
 
-def creerFournisseur(request):
-    return render_to_response('GestionStock/creerFournisseur.html', { }, context_instance=RequestContext(request))
+def creerFournisseur(request, id=None):
+    if id!=None:
+        fournisseur = get_object_or_404(Fournisseur, pk=id)
+        id=int(fournisseur.id)
+    else:
+        fournisseur = Fournisseur()
+    
+    if request.method=='POST':
+        form = CreationForm(data=request.POST, instance=fournisseur)
+        if form.is_valid():
+            form.save()
+            return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.reappro'))
+    else:
+        form = CreationForm(instance=fournisseur)
+
+    return render_to_response('GestionStock/creerFournisseur.html', {'form':form , 'id':id}, context_instance=RequestContext(request))

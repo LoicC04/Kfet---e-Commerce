@@ -5,6 +5,22 @@
 {% block content %}
 
 <h1>Créer un fournisseur</h1>
-
+{% if id %}
+    <form action="{% url Kfet.GestionStock.views.creerFournisseur id %}" method="post">
+{% else %}
+    <form action="{% url Kfet.GestionStock.views.creerFournisseur %}" method="post">
+{% endif %}
+    {% csrf_token %}
+    <table border=0 style=width:100%>
+    {% for field in form %}
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+        <td>{{ field.errors }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <p><input type="submit" value="Valider" /></p>
+</form>
 
 {% endblock %}

@@ -31,7 +31,7 @@
 {% else %}
     <p>Aucun produit en rupture</p>
 {% endif %}
-<div id="reappro"><a href="/gestionStock/reapprovisionnement/">Réapprovisionnement</a></div>
+<div id="reappro"><a href="{% url Kfet.GestionStock.views.reappro %}">Réapprovisionnement</a></div>
 <br/>
 
 <h2 style="color:blue">Produits en stock</h2>

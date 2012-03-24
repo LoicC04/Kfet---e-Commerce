@@ -65,6 +65,11 @@ header { background: url('/static/css/T_Shirt/css/images/header-bg.png') repeat-
 header .header-inner { background: url('/static/css/T_Shirt/css/images/header-inner.png') no-repeat center 0; }
 header .shell { padding-left: 25px; padding-right: 6px; width: 949px; }
 
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1em;
+}
+
 h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; }
 h1#logo a { width: 100px; height: 38px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat; background-size : 38px; padding-left:74px; background-position: center;}
 
@@ -126,7 +131,7 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 #slider .slider-controls li a:hover,
 #slider .slider-controls li.active a { background-position: 0 -16px; }
 
-.post { padding-left: 9px; padding-bottom: 29px; min-height:360px }
+.post { padding-left: 9px; padding-bottom: 29px; min-height:360px ; margin-top:1.5em}
 .post h2 { font-family: 'Museo500', arial, sans-serif; font-size: 26px; padding-bottom: 7px; font-weight: normal; word-spacing: 3px; }
 .post p { word-spacing: -1px; margin-bottom: 1.5em}
 

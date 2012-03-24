@@ -4,28 +4,30 @@
 
 {% block content %}
 
+<p style="float:right"><a href="{% url Kfet.GestionStock.views.creerFournisseur %}">Ajouter un fournisseur</a></p>
+
 <h1>Réapprovisionnement</h1>
 
 {% if fournisseurs %}
      <table border="1" width=100%>
         <tr>
             <th width=10%>Nom</th>
-            <th width=10%>Adresse</th>
             <th width=10%>Téléphone</th>
             <th width=10%>Mail</th>
             <th width=20%>Description</th>
+            <th width=5%>Actions</th>
         </tr>
     {% for f in fournisseurs %}
         <tr>
-            <td{{ f.nom }}></td>
-            <td{{ f.adresse }}></td>
-            <td{{ f.telephone }}></td>
-            <td{{ f.mail }}></td>
-            <td{{ f.description }}></td>
+            <td>{{ f.nom }}</td>
+            <td>{{ f.tel }}</td>
+            <td>{{ f.mail }}</td>
+            <td>{{ f.description }}</td>
+            <td><a href="{% url Kfet.GestionStock.views.creerFournisseur f.id %}">Modifier</a>, <a href="">Commander</a></td>
     {% endfor %}
     </table>
 {% else %}
-    <p>Aucun founisseur n'est défini. Pour en définir un <a href="/gestionStock/creerFournisseur/">cliquer ici</a></p>
+<p>Aucun founisseur n'est défini. Pour en définir un <a href="{% url Kfet.GestionStock.views.creerFournisseur %}">cliquer ici</a></p>
 {% endif %}
 
 

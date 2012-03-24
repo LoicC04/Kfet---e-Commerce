@@ -33,4 +33,5 @@ def creerFournisseur(request, id=None):
 
 def commander(request, fournisseur_id):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
-    return render_to_response('GestionStock/commander.html', {'fournisseur':fournisseur}, context_instance=RequestContext(request))
+    form = CreationForm()
+    return render_to_response('GestionStock/commander.html', {'form':form, 'fournisseur':fournisseur}, context_instance=RequestContext(request))

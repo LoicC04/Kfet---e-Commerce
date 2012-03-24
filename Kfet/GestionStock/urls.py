@@ -5,5 +5,6 @@ urlpatterns = patterns('Kfet.GestionStock.views',
     (r'^reapprovisionnement/', 'reappro'),
     (r'^creerFournisseur/$', 'creerFournisseur'),
     (r'^editerFournisseur/(?P<id>\d+)/$', 'creerFournisseur'),
+    (r'^commander/(?P<fournisseur_id>\d+)/$', 'commander'),
     #(r'^(?P<poll_id>\d+)/$', 'detail'),
 )

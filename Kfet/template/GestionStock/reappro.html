@@ -23,7 +23,7 @@
             <td>{{ f.tel }}</td>
             <td>{{ f.mail }}</td>
             <td>{{ f.description }}</td>
-            <td><a href="{% url Kfet.GestionStock.views.creerFournisseur f.id %}">Modifier</a>, <a href="">Commander</a></td>
+            <td><a href="{% url Kfet.GestionStock.views.creerFournisseur f.id %}">Modifier</a>, <a href="{% url Kfet.GestionStock.views.commander f.id %}">Commander</a></td>
     {% endfor %}
     </table>
 {% else %}

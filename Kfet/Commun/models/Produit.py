@@ -23,6 +23,7 @@ class Produit(models.Model):
             representation = "{0}, quantite={1}".format(self.nom,self.quantite)
             return representation
 
-class CreationForm(forms.ModelForm):
+class CreationProduitForm(forms.ModelForm):
     class Meta:
         model = Produit
+        exclude=('fournisseur')

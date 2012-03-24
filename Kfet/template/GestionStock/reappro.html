@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<p style="float:right"><a href="{% url Kfet.GestionStock.views.creerFournisseur %}">Ajouter un fournisseur</a></p>
+<p style="float:right"><a href="{% url Kfet.GestionStock.views.creerFournisseur %}"><img src="/static/icon/icon_addlink.gif"/>Ajouter un fournisseur</a></p>
 
 <h1>Réapprovisionnement</h1>
 
@@ -27,7 +27,7 @@
     {% endfor %}
     </table>
 {% else %}
-<p>Aucun founisseur n'est défini. Pour en définir un <a href="{% url Kfet.GestionStock.views.creerFournisseur %}">cliquer ici</a></p>
+<p>Aucun founisseur n'est défini. <a href="{% url Kfet.GestionStock.views.creerFournisseur %}"><img src="/static/icon/icon_addlink.gif" title="Ajouter un fournisseur"/>Ajouter un fournisseur</a></p>
 {% endif %}
 
 

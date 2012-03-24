@@ -65,6 +65,7 @@
 							<li class="widget">
 								<h2>Categories</h2>
 								<ul>
+                                                                        <li><a href="/gestionStock/" title="Gestion des Stocks">Gestion des Stocks</a></li>
                                                                         {% if categories_list %}
                                                                             {% for c in categories_list %}
                                                                             <li {% if forloop.last %} class='last'{% endif %}><a href="/ventes/categorie/{{c.id}}" title="{{ c.nom }}">{{ c.nom }}</a></li>

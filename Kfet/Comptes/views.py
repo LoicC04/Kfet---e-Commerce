@@ -13,21 +13,29 @@ class CompteForm(forms.Form):
         numero = forms.CharField(max_length=9, label="Numéro", required=True)
         nom = forms.CharField(max_length=200, label="Nom", required=True)
         prenom = forms.CharField(max_length=200, label="Prenom", required=True)
-        password = forms.CharField(max_length=200, label="Mot de passe", required=True)
+        password = forms.CharField(label=('Mot de passe'),widget=forms.PasswordInput(render_value=False), required=True) 
         mail = forms.EmailField(label="Adresse email", required=True)
-        promo = forms.ChoiceField(label="Promotion", required=True)
+        promo = forms.ModelChoiceField(queryset=Promo.objects.all())
 
 def creation(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = CompteForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
-            return HttpResponse('Hey') # Redirect after POST
-    else:
-        form = CompteForm() # An unbound form
+    if request.method == 'POST': 
+        form = CompteForm(request.POST)
+        if form.is_valid():
+            numero = form.cleaned_data['numero']
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
+            password = form.cleaned_data['password']
+            mail = form.cleaned_data['mail']
+            promo = form.cleaned_data['promo']
+            
+            personne = Personne(num_etu=numero, nom=nom, prenom=prenom, password=password, mail=mail, promo=promo)
+            personne.save()
 
-    return render_to_response('Comptes/creation.html', {'form': form,})
+            return HttpResponseRedirect('/comptes/ok/')
+    else:
+        form = CompteForm()
+
+    return render_to_response('Comptes/creation.html', {'form': form,}, context_instance=RequestContext(request))
 
 def ok(request):
     return HttpResponse('Hey')

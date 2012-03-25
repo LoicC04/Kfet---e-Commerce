@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des stocks{% endblock %}
+
+{% block content %}
+
+<h1>Enregistrer une commander de produits chez : <span style="color:blue">{{ fournisseur.nom }}</span></h1>
+
+<h3>Produits actuellement en commande</h3>
+
+
+{% if produits_commande %}
+     <table border="1" width=100%>
+        <tr>
+            <th width=20%>Nom</th>
+            <th width=10%>Quantite</th>
+            <th width=10%>Catégorie</th>
+            <th width=10%>Prix (€)</th>
+            <th width=10%>Quantité commandée</th>
+            <th width=10%>Actions</th>
+        </tr>
+        {% for p in produits_commande %}
+        <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.quantite }}</td>
+            <td>{{ p.categorie }}</td>
+            <td>{{ p.prix }}</td>
+            <td>{{ p.quantiteCommandeFournisseur }}</td>
+            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/><a href=""><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Aucun produit actuellement en commande chez ce fournisseur </p>
+{% endif %}
+
+<h3>Tous les produits chez ce fournisseur</h3>
+
+{% if produits.object_list %}
+     <table border="1" width=100%>
+        <tr>
+            <th width=20%>Nom</th>
+            <th width=10%>Quantite</th>
+            <th width=10%>Catégorie</th>
+            <th width=10%>Prix (€)</th>
+            <th width=10%>Quantité commandée</th>
+            <th width=10%>Actions</th>
+        </tr>
+        {% for p in produits.object_list %}
+        <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.quantite }}</td>
+            <td>{{ p.categorie }}</td>
+            <td>{{ p.prix }}</td>
+            <td>{{ p.quantiteCommandeFournisseur }}</td>
+            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/><a href=""><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if produits.has_previous %}
+                <a href="?page={{ produits.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ produits.number }} / {{ produits.paginator.num_pages }}.
+            </span>
+
+            {% if produits.has_next %}
+                <a href="?page={{ produits.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% else %}
+    <p>Aucun produit chez ce fournisseur </p>
+{% endif %}
+
+<h3><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id %}"><img src="/static/icon/icon_addlink.gif" title="Ajouter un produit"/>Ajouter un produit</a></h3>
+
+
+{% endblock %}

@@ -65,6 +65,7 @@
 							<li class="widget">
 								<h2>Categories</h2>
 								<ul>
+                                                                        <li><a href="/gestionStock/" title="Gestion des Stocks">Gestion des Stocks</a></li>
                                                                         {% if categories_list %}
                                                                             {% for c in categories_list %}
                                                                             <li {% if forloop.last %} class='last'{% endif %}><a href="/ventes/categorie/{{c.id}}" title="{{ c.nom }}">{{ c.nom }}</a></li>
@@ -137,36 +138,24 @@
                         <div class="post">
                             {% block content %}{% endblock %}
 						</div>
-						<!-- End Post -->
+                                                <!-- End Post -->
+                                                {% if publicites_produit %}
 						<!-- Begin Products -->
-						<div id="products">
-							<div class="product">
-								<img src="/static/css/T_Shirt/css/images/product-img1.jpg" alt="First Product" height="238px" width="234px"/>
-								<div class="pr-info">
-									<h4>Menu 1</h4>
-									<p>Le menu de la mort avec 2 articles, 1 boisson et 1 plat </p>
-									<span class="pr-price"><span>€</span>3.<sup>50</sup></span>
-								</div>
-							</div>
-							<div class="product">
-								<img src="/static/css/T_Shirt/css/images/product-img2.jpg" alt="Second Product" height="238px" width="234px" />
-								<div class="pr-info">
-                                                                        <h4>Menu 2</h4>
-                                                                        <p>Le menu des petites faims</p>
-									<span class="pr-price"><span>€</span>3.<sup>00</sup></span>
-								</div>
-							</div>
-							<div class="product last">
-								<img src="/static/css/T_Shirt/css/images/product-img3.jpg" alt="Third Product" height="238px" width=234px" />
-								<div class="pr-info">
-									<h4>Pizza</h4>
-									<p>Pizza seule</p>
-									<span class="pr-price"><span>€</span>2.<sup>00</sup></span>
-								</div>
-							</div>
-							<div class="cl">&nbsp;</div>
+                                                <div id="products">
+                                                    {% for produit in publicites_produit %}
+                                                    <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%}>
+                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" height="238px" width="234px"/>
+							<div class="pr-info">
+                                                            <h4>{{ produit.nom }}</h4>
+                                                            <p>{{ produit.info }}</p>
+                                                            <span class="pr-price">{{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup></span>
+						    	</div>
+                                                    </div>
+                                                    {% endfor %}
+						    <div class="cl">&nbsp;</div>
 						</div>
-						<!-- End Products -->
+                                                <!-- End Products -->
+                                                {% endif %}
 					</div>
 					<!-- End Content -->
 					<div class="cl">&nbsp;</div>

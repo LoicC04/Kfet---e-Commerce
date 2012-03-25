@@ -9,7 +9,7 @@
 
 <h2 style="color:red">Produits en rupture</h2>
 
-{% if produits_out %}
+{% if produits_out.object_list %}
      <table border="1" width=100%>
         <tr>
             <th width=20%>Nom</th>
@@ -18,7 +18,7 @@
             <th width=10%>Prix (€)</th>
             <th width=10%>Quantité commandée</th>
         </tr>
-        {% for p in produits_out %}
+        {% for p in produits_out.object_list %}
         <tr>
             <td>{{ p.nom }}</td>
             <td>{{ p.quantite }}</td>
@@ -28,16 +28,31 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if produits_out.has_previous %}
+                <a href="?pageRupture={{ produits_out.previous_page_number }}&pageStock={{ produits_in.number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ produits_out.number }} of {{ produits_out.paginator.num_pages }}.
+            </span>
+
+            {% if produits_out.has_next %}
+                <a href="?pageRupture={{ produits_out.next_page_number }}&pageStock={{ produits_in.number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 {% else %}
     <p>Aucun produit en rupture</p>
 {% endif %}
-<div id="reappro"><a href="/gestionStock/reapprovisionnement/">Réapprovisionnement</a></div>
+<div id="reappro"><a href="{% url Kfet.GestionStock.views.reappro %}">Réapprovisionnement</a></div>
 <br/>
 
 <h2 style="color:blue">Produits en stock</h2>
 
 
-{% if produits_in %}
+{% if produits_in.object_list %}
      <table border="1" width=100%>
         <tr>
             <th width=20%>Nom</th>
@@ -46,7 +61,7 @@
             <th width=10%>Prix (€)</th>
             <th width=10%>Quantité commandée</th>
         </tr>
-        {% for p in produits_in %}
+        {% for p in produits_in.object_list %}
         <tr>
             <td>{{ p.nom }}</td>
             <td>{{ p.quantite }}</td>
@@ -56,6 +71,21 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if produits_in.has_previous %}
+                <a href="?pageStock={{ produits_in.previous_page_number }}&pageRupture={{ produits_out.number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ produits_in.number }} of {{ produits_in.paginator.num_pages }}.
+            </span>
+
+            {% if produits_in.has_next %}
+                <a href="?pageStock={{ produits_in.next_page_number }}&pageRupture={{ produits_out.number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 {% else %}
     <p>Aucun produit en stock</p>
 {% endif %}

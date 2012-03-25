@@ -1,7 +1,6 @@
 from django.db import models
 from Menu import *
 from Categorie import *	
-from Image import *
 from Fournisseur import *
 
 
@@ -11,9 +10,9 @@ class Produit(models.Model):
         menu = models.ForeignKey(Menu, blank=True, null=True)
         info = models.TextField()
         categorie = models.ForeignKey(Categorie)
-        image = models.ForeignKey(Image)
-        quantite = models.IntegerField()
-        quantiteCommandeFournisseur = models.IntegerField()
+        image = models.ImageField(upload_to="images/produits/", help_text="image 238x234px")
+        quantite = models.IntegerField(default=0)
+        quantiteCommandeFournisseur = models.IntegerField(default=0)
         fournisseur = models.ForeignKey(Fournisseur,blank=False, null=False)
 
 	class Meta:
@@ -26,4 +25,4 @@ class Produit(models.Model):
 class CreationProduitForm(forms.ModelForm):
     class Meta:
         model = Produit
-        exclude=('fournisseur')
+        exclude=('fournisseur', 'quantite', 'quantiteCommandeFournisseur')

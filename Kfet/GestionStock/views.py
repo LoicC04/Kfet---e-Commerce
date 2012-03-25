@@ -10,8 +10,8 @@ def index(request):
     list_produit_rupture = Produit.objects.all().filter(quantite=0)
     list_produit_en_stock = Produit.objects.all().filter(quantite__gte=1)
 
-    paginator_rupture = Paginator(list_produit_rupture, 1) # Show 10 items per page
-    paginator_stock = Paginator(list_produit_en_stock, 1) # Show 10 items per page
+    paginator_rupture = Paginator(list_produit_rupture, 10) # Show 10 items per page
+    paginator_stock = Paginator(list_produit_en_stock, 10) # Show 10 items per page
 
     page_rupture = request.GET.get('pageRupture',1)
     page_stock = request.GET.get('pageStock',1)
@@ -46,8 +46,7 @@ def creerFournisseur(request, id=None):
             form.save()
             return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.reappro'))
     else:
-        form = CreationForm(instance=fournisseur
-                )
+        form = CreationForm(instance=fournisseur)
     return render_to_response('GestionStock/creerFournisseur.html', {'form':form , 'id':id}, context_instance=RequestContext(request))
 
 def commander(request, fournisseur_id):
@@ -55,7 +54,7 @@ def commander(request, fournisseur_id):
     list_produits = Produit.objects.all().filter(fournisseur=fournisseur_id).order_by('quantite')
     list_produits_commande = Produit.objects.all().filter(fournisseur=fournisseur_id).filter(quantiteCommandeFournisseur__gte=1).order_by('quantite')
 
-    paginator = Paginator(list_produits, 10) # Show 25 items per page
+    paginator = Paginator(list_produits, 10) # Show 10 items per page
     page = request.GET.get('page',1)
     try:
         produits = paginator.page(page)
@@ -78,7 +77,7 @@ def creerProduit(request, fournisseur_id, produit_id=None):
         produit.fournisseur_id = fournisseur_id
     
     if request.method=='POST':
-        form = CreationProduitForm(data=request.POST, instance=produit)
+        form = CreationProduitForm(request.POST, request.FILES, instance=produit)
         if form.is_valid():
             form.save()
             return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]))

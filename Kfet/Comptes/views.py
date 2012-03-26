@@ -29,34 +29,39 @@ def creation(request):
             numero = form.cleaned_data['numero']
             nom = form.cleaned_data['nom']
             prenom = form.cleaned_data['prenom']
-            if len( form.cleaned_data['password'] ) < 5:
-                raise form.ValidationError( 'You have to type at least five characters')
+            password = form.cleaned_data['password']
+            password2 = form.cleaned_data['password2']
             mail = form.cleaned_data['mail']
             promo = form.cleaned_data['promo']
 
-            if User.objects.filter(email=mail).count() == 0:                        
-                user = User()
-                user.username = numero           
-                user.first_name = nom
-                user.last_name = prenom                   
-                user.email = mail
-                user.set_password(password)
+            if password == password2:                
 
-                try:
-                    user.save()
-                except IntegrityError:
-                    form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                   
-                else:
-                    return HttpResponse('Hey')
+                if User.objects.filter(email=mail).count() == 0:                        
+                    user = User()
+                    user.username = numero           
+                    user.first_name = nom
+                    user.last_name = prenom                   
+                    user.email = mail
+                    user.set_password(password)
 
-                try:
-                    create_user_profile(sender=User, instance=user,created=True,promo=promo)
-                except IntegrityError:
-                    form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                    
-                else:
-                    return HttpResponse('Hey')
-            else: 
-                form.erreurMail = "Votre adresse email existe déjà veuillez vous connecter."
+                    try:
+                        user.save()
+                    except IntegrityError:
+                        form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                   
+                    else:
+                        return HttpResponse('Hey')
+
+                    try:
+                        create_user_profile(sender=User, instance=user,created=True,promo=promo)
+                    except IntegrityError:
+                        form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                    
+                    else:
+                        return HttpResponse('Hey')
+                else: 
+                    form.erreurMail = "Votre adresse email existe déjà veuillez vous connecter."
+
+            else:
+                form.erreurPass = "Les champs mot de passe ne correspondent pas."
 
     return render_to_response('Comptes/creation.html', {'form': form,}, context_instance=RequestContext(request))
 

@@ -30,6 +30,10 @@
                         <br/> LIEN LOGIN 
                     {% endif %}
                 {% endifequal %}
+                {% ifequal field.name "password" %} 
+                    {{ form.erreurPass }} 
+                {% endifequal %}
+
             </center>
         </td>
     </tr>

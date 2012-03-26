@@ -10,6 +10,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
 
 
 class CompteForm(forms.Form):
@@ -48,8 +50,6 @@ def creation(request):
                         user.save()
                     except IntegrityError:
                         form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                   
-                    else:
-                        return HttpResponse('Hey')
 
                     try:
                         create_user_profile(sender=User, instance=user,created=True,promo=promo)
@@ -67,3 +67,28 @@ def creation(request):
 
 def ok(request):
     return HttpResponse('Hey')
+
+def login(request):
+    if request.method == 'POST':        
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                return HttpResponse('Hey')
+            else:
+                return HttpResponse('User inactif')                
+                # Return a 'disabled account' error message
+        else:
+            return render_to_response('Comptes/login.html', context_instance=RequestContext(request)) 
+            # Return an 'invalid login' error message.
+    
+    return render_to_response('Comptes/login.html', context_instance=RequestContext(request))
+
+@login_required
+def gestion(request):
+    user=request.user
+    profile = user.get_profile()
+    return render_to_response('Comptes/gestion.html', {'user':user,'profile':profile}, context_instance=RequestContext(request))
+

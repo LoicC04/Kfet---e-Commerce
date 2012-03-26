@@ -143,8 +143,8 @@
 						<!-- Begin Products -->
                                                 <div id="products">
                                                     {% for produit in publicites_produit %}
-                                                    <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%}>
-                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" height="238px" width="234px"/>
+                                                    <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%} style="text-align:center">
+                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" height="238px" />
 							<div class="pr-info">
                                                             <h4>{{ produit.nom }}</h4>
                                                             <p>{{ produit.info }}</p>

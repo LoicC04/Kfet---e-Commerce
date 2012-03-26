@@ -2,6 +2,7 @@ from django.db import models
 from Menu import *
 from Categorie import *	
 from Fournisseur import *
+from PIL import Image
 
 
 class Produit(models.Model):
@@ -21,6 +22,19 @@ class Produit(models.Model):
         def __unicode__(self):
             representation = "{0}, quantite={1}".format(self.nom,self.quantite)
             return representation
+
+        def save(self, size=(234,238)):
+            super(Produit, self).save() 
+            if self.image: 
+                imagename = self.image.path
+                image = Image.open(imagename)
+                wpercent = (size[1]/float(image.size[1]))
+                wsize = int((float(image.size[0])*float(wpercent)))
+                image.thumbnail((wsize,size[1]))
+                image.save(imagename)
+                #out = image.resize(size)
+                #out.save(imagename)
+
 
 class CreationProduitForm(forms.ModelForm):
     class Meta:

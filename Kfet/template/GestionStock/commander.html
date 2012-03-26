@@ -26,7 +26,9 @@
             <td>{{ p.categorie }}</td>
             <td>{{ p.prix }}</td>
             <td>{{ p.quantiteCommandeFournisseur }}</td>
-            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/><a href=""><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a></td>
+            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/>
+                <a href="{% url Kfet.GestionStock.views.supprimerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a>
+            </td>
         </tr>
         {% endfor %}
     </table>
@@ -53,7 +55,8 @@
             <td>{{ p.categorie }}</td>
             <td>{{ p.prix }}</td>
             <td>{{ p.quantiteCommandeFournisseur }}</td>
-            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/><a href=""><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a></td>
+            <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/>
+                <a href="{% url Kfet.GestionStock.views.supprimerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a>
         </tr>
         {% endfor %}
     </table>

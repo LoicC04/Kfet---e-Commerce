@@ -4,6 +4,7 @@ from Kfet.Commun.models import Fournisseur, CreationForm
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import os
 
 
 def index(request):
@@ -85,4 +86,10 @@ def creerProduit(request, fournisseur_id, produit_id=None):
         form = CreationProduitForm(instance=produit)
 
     return render_to_response('GestionStock/creerProduit.html', {'form':form, 'fournisseur':fournisseur, 'produit_id':produit.id}, context_instance=RequestContext(request))
+
+def supprimerProduit(request, fournisseur_id, produit_id):
+    produit = get_object_or_404(Produit, pk=produit_id)
+    produit.delete()
+    os.remove(produit.image.path)
+    return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]))
 

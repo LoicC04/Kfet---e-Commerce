@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from Kfet.Commun.models import Produit, CreationProduitForm
 from Kfet.Commun.models import Fournisseur, CreationForm
+from Kfet.Commun.models import Categorie, CreationCategorieForm
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -93,3 +94,17 @@ def supprimerProduit(request, fournisseur_id, produit_id):
     os.remove(produit.image.path)
     return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]))
 
+def creerCategorie(request, categorie_id=None):
+    if categorie_id!=None:
+        categorie = get_object_or_404(Categorie, pk=categorie_id)
+    else:
+        categorie = Categorie()
+    
+    if request.method=='POST':
+        form = CreationCategorieForm(data=request.POST, instance=categorie)
+        if form.is_valid():
+            form.save()
+            return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.reappro'))
+    else:
+        form = CreationCategorieForm(instance=categorie)
+    return render_to_response('GestionStock/creerCategorie.html', {'form':form , 'categorie_id':categorie_id}, context_instance=RequestContext(request))

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Créer une catégorie{% endblock %}
+
+{% block content %}
+
+<h1>Créer une catégorie</h1>
+{% if categorie_id %}
+    <form action="{% url Kfet.GestionStock.views.creerCategorie categorie_id %}" method="post">
+{% else %}
+    <form action="{% url Kfet.GestionStock.views.creerCategorie %}" method="post">
+{% endif %}
+    {% csrf_token %}
+    <table border=0 style=width:100%>
+    {% for field in form %}
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+        <td>{{ field.errors }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <p><input type="submit" value="Valider" /></p>
+</form>
+
+{% endblock %}

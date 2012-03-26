@@ -16,7 +16,16 @@
     {% for field in form %}
     <tr>
         <td>{{ field.label_tag }}</td>
-        <td>{{ field }} {% if field.help_text %}<span style="color:grey;padding-left:1em"> - {{ field.help_text }}</span>{% endif %}</td>
+        <td>{{ field }}
+            {% ifequal field.name "categorie" %}
+            <a href="{% url Kfet.GestionStock.views.creerCategorie %}" class="add-another" id="add_id_categorie" onclick="return showAddAnotherPopup(this);">
+                <img src="/static/icon/icon_addlink.gif" title="Ajouter une Catégorie"/>
+            </a>
+            {% endifequal %}
+            {% if field.help_text %}
+                <span style="color:grey;padding-left:1em"> - {{ field.help_text }}</span>
+            {% endif %}
+        </td>
         <td>{{ field.errors }}</td>
     </tr>
     {% endfor %}

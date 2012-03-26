@@ -8,10 +8,37 @@
 <form action="{% url Kfet.Comptes.views.creation %}" method="post">{% csrf_token %}    
     <table border=0 style=width:100%>
     {% for field in form %}
-    <tr><td>{{field.label_tag}}</td><td>{{ field }}</td><td>{{ field.errors }}</td></tr>
+    <tr>
+        <td>
+            {{field.label_tag}}
+        </td>
+        <td>
+            {{ field }}
+        </td>
+        <td style=width:50%;>
+            <center>
+                {{ field.errors }} 
+                {% ifequal field.name "mail" %} 
+                    {{ form.erreurMail }} 
+                    {% if form.erreurMail%}
+                        <br/> LIEN LOGIN 
+                    {% endif %} 
+                {% endifequal %}  
+                {% ifequal field.name "numero" %} 
+                    {{ form.erreurNum }} 
+                    {% if form.erreurNum %}
+                        <br/> LIEN LOGIN 
+                    {% endif %}
+                {% endifequal %}
+            </center>
+        </td>
+    </tr>
     {% endfor  %}
     </table>
-    <input type="submit" value="Créer un compte" />
+    <center>
+        <br/>
+        <input type="submit" value="Créer un compte" />
+    </center>
 </form>
 
 {% endblock %}

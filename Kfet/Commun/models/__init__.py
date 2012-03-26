@@ -13,5 +13,6 @@ from Promo import *
 from Produit import *
 from Reglement import *
 from Status_Commande import *
+from UserProfile import *
 from Vente import *
 

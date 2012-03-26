@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1em;
 }
 
-h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; }
+h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; margin-bottom:0 }
 h1#logo a { width: 100px; height: 38px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat; background-size : 38px; padding-left:74px; background-position: center;}
 
 #account { float: right; display: inline; padding-top: 24px; width: 173px;  }

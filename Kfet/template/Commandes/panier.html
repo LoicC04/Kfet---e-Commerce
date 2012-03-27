@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Panier - Kfet{% endblock %}
+
+{% block content %}
+<h1>Panier de Mr {{user.first_name}}</h1>
+<br/><br/>
+<table style=width:100%;text-align:center>
+    <th>Nom</th><th>Quantité</th><th>Actions disponible</th>
+    {% for pan in panier %}
+    <tr><td>{{ pan.produit.nom }}</td><td>{{pan.quantite}}</td></tr>
+    {% endfor %}
+</table>
+
+<p></p>
+
+{% endblock %}

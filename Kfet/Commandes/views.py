@@ -16,7 +16,10 @@ def categorie(request, cat_id):
 
 
 def panier(request):
-    return HttpResponse("Hello, world. You're at the Ventes index.")
+    user = request.user
+    profil = user.get_profile()
+    panier = Produit_Panier.objects.filter(panier_id=profil.panier_id)
+    return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
 
 def panier_ajout(request, quantite, produit_id):
     user = request.user

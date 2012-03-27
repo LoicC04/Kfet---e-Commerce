@@ -41,7 +41,12 @@
                                                 <span>{{ user }}</span><span><a style=color:#ffe75f href="{% url Kfet.Comptes.views.logout %}">Logout</a></span>
                                                 <div class="cl">&nbsp;</div>
                                             {% else %}
-                                                <a class="view-account" title="View Account" href="{% url Kfet.Comptes.views.login %}">Login</a>
+                                                <a class="view-account">Bienvenue</a>
+                                                <form action="{% url Kfet.Comptes.views.login %}" method="post">{% csrf_token %}    
+                                                    <input type="text" name="username" size=5>
+                                                    <input type="password" name="password" size=5>
+                                                    <input type="submit" value="Ok">
+                                                </form>
                                             {% endif %}
                                         </div>
                                         <!-- Begin Navigation -->

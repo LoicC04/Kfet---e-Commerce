@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}{{categorie.categorie}} - Kfet{% endblock %}
 
 {% block content %}
-<h1>{{categorie.nom}}</h1>
+<h1>{{categorie.categorie}}</h1>
 <br/><br/>
-<table>
-    <th>Nom</th><th>Prix</th>
+<table style=width:100%>
+    <th>Nom</th><th>Prix</th><th>Menus disponible</th><th>Photos</th>
     {% for pro in produit %}
-    <tr><td>{{ pro.nom }}</td><td>{{pro.prix}}</td></tr>
+    <tr><td>{{ pro.nom }}</td><td>{{pro.prix}}</td><td></td><td><center><img src="{{pro.image.url}}" height="50"></center></td></tr>
     {% endfor %}
 </table>
 

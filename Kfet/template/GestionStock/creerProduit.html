@@ -2,6 +2,11 @@
 
 {% block title %}Gestion des stocks{% endblock %}
 
+<script type="text/javascript">
+function dismissAddAnotherPopup(win) {
+    win.close();
+}</script>
+
 {% block content %}
 
 <h1>Ajouter un produit chez <span style="color:blue">{{ fournisseur.nom }}</span></h1>
@@ -17,10 +22,12 @@
     <tr>
         <td>{{ field.label_tag }}</td>
         <td>{{ field }}
-            {% ifequal field.name "categorie" %}
-            <a href="{% url Kfet.GestionStock.views.creerCategorie %}" class="add-another" id="add_id_categorie" onclick="return showAddAnotherPopup(this);">
+            {% ifequal field.name "ategorie" %}
+            <a onClick="window.open('http://kfet/admin/Commun/categorie/add/?_popup=1','My admin page',  'width=800,height=800, scrollbars=yes');" href="javascript: void(0)"  >
                 <img src="/static/icon/icon_addlink.gif" title="Ajouter une Catégorie"/>
             </a>
+            
+            
             {% endifequal %}
             {% if field.help_text %}
                 <span style="color:grey;padding-left:1em"> - {{ field.help_text }}</span>

@@ -5,6 +5,7 @@ from Menu import *
 from Categorie import *	
 from Fournisseur import *
 from PIL import Image
+from Kfet.widgets import SelectWithPopUp 
 
 
 class Produit(models.Model):
@@ -40,4 +41,6 @@ class CreationProduitForm(forms.ModelForm):
     class Meta:
         model = Produit
         exclude=('fournisseur', 'quantite', 'quantiteCommandeFournisseur')
+
+    categorie = forms.ModelChoiceField(Categorie.objects, widget=SelectWithPopUp) 
 

@@ -1,6 +1,6 @@
 from Kfet.Commun.models import Categorie
 from Kfet.Commun.models import Produit
-import random
+from django.conf import settings
 
 
 def categories(request):
@@ -14,3 +14,6 @@ def publicites(request):
     for p in list:
         p.decimal=str(p.prix%1).split(".")[1]
     return { 'publicites_produit': list }
+
+def admin_media_prefix(request):
+    return {'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX } 

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Création compte Utilisateur - Kfet{% endblock %}
+{% block title %}Authentification - Kfet{% endblock %}
 
 {% block content %}
-<h1>Création d'un compte utilisateur</h1>
+<h1>Authentification</h1>
 <br/><br/>
 <form action="{% url Kfet.Comptes.views.login %}" method="post">{% csrf_token %}    
     <table border=0 style=width:100%>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion compte Utilisateur - Kfet{% endblock %}
+
+{% block content %}
+<h1>Gestion compte utilisateur</h1>
+
+<table style=width:100%>
+    <tr>
+        <td>Nom</td><td>{{user.first_name}}</td>
+    </tr>
+    <tr>
+        <td>Prénom</td><td>{{user.last_name}}</td>
+    </tr>
+    <tr>
+        <td>Numéro étudiant</td><td>{{user.username}}</td>
+    </tr>
+    <tr>
+        <td>Adresse email</td><td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <td>Promo</td><td>{{profile.promo}}</td>
+    </tr>
+</table>
+{% endblock %}

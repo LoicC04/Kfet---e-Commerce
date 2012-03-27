@@ -4,31 +4,36 @@ from Kfet.Commun.models import Fournisseur, CreationForm
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 import os
 
-
+@login_required
 def index(request):
-    list_produit_rupture = Produit.objects.all().filter(quantite=0)
-    list_produit_en_stock = Produit.objects.all().filter(quantite__gte=1)
+    user = request.user
+    if user.is_staff:
+        list_produit_rupture = Produit.objects.all().filter(quantite=0)
+        list_produit_en_stock = Produit.objects.all().filter(quantite__gte=1)
 
-    paginator_rupture = Paginator(list_produit_rupture, 10) # Show 10 items per page
-    paginator_stock = Paginator(list_produit_en_stock, 10) # Show 10 items per page
+        paginator_rupture = Paginator(list_produit_rupture, 10) # Show 10 items per page
+        paginator_stock = Paginator(list_produit_en_stock, 10) # Show 10 items per page
 
-    page_rupture = request.GET.get('pageRupture',1)
-    page_stock = request.GET.get('pageStock',1)
-    try:
-        produits_rupture = paginator_rupture.page(page_rupture)
-        produits_stock = paginator_stock.page(page_stock)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        produits_rupture = paginator_rupture.page(1)
-        produits_stock = paginator_stock.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        produits_rupture = paginator_rupture.page(paginator_rupture.num_pages)
-        produits_stock = paginator_stock.page(paginator_stock.num_pages)
+        page_rupture = request.GET.get('pageRupture',1)
+        page_stock = request.GET.get('pageStock',1)
+        try:
+            produits_rupture = paginator_rupture.page(page_rupture)
+            produits_stock = paginator_stock.page(page_stock)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            produits_rupture = paginator_rupture.page(1)
+            produits_stock = paginator_stock.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            produits_rupture = paginator_rupture.page(paginator_rupture.num_pages)
+            produits_stock = paginator_stock.page(paginator_stock.num_pages)
 
-    return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
+        return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect('/')
 
 def reappro(request):
     list_Fournisseur = Fournisseur.objects.all()

@@ -35,9 +35,14 @@
                                 <div class="shell">
                                         <h1 id="logo"><a class="notext" href="/">Kfet du DI</a></h1>
                                         <div id="account">
-                                                <a class="view-account" title="View Account" href="#">Votre panier d'achats</a>
-                                                <span>Articles: 4</span><span>Cost: <strong>5.00€</strong></span>
+                                            {% if user.first_name %}                                                                                           
+                                                <a class="view-account" title="View Account" href="#">NB ARTICLE</a>
+                                                <!--                                                <span>Articles: 4</span><span>Cost: <strong>5.00€</strong></span> -->
+                                                <span>{{ user }}</span><span><a style=color:#ffe75f href="{% url Kfet.Comptes.views.logout %}">Logout</a></span>
                                                 <div class="cl">&nbsp;</div>
+                                            {% else %}
+                                                <a class="view-account" title="View Account" href="{% url Kfet.Comptes.views.login %}">Login</a>
+                                            {% endif %}
                                         </div>
                                         <!-- Begin Navigation -->
                                         <nav>

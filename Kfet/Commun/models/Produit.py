@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*- 
 from django.db import models
+from django import forms
 from Menu import *
 from Categorie import *	
 from Fournisseur import *
 from PIL import Image
+from Kfet.widgets import SelectWithPopUp 
 
 
 class Produit(models.Model):
@@ -32,11 +35,12 @@ class Produit(models.Model):
                 wsize = int((float(image.size[0])*float(wpercent)))
                 image.thumbnail((wsize,size[1]))
                 image.save(imagename)
-                #out = image.resize(size)
-                #out.save(imagename)
 
 
 class CreationProduitForm(forms.ModelForm):
     class Meta:
         model = Produit
         exclude=('fournisseur', 'quantite', 'quantiteCommandeFournisseur')
+
+    categorie = forms.ModelChoiceField(Categorie.objects, widget=SelectWithPopUp) 
+

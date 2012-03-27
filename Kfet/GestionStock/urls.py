@@ -9,5 +9,7 @@ urlpatterns = patterns('Kfet.GestionStock.views',
     (r'^creerProduit/(?P<fournisseur_id>\d+)/$', 'creerProduit'),
     (r'^editerProduit/(?P<fournisseur_id>\d+)/(?P<produit_id>\d+)/$', 'creerProduit'),
     (r'^supprimerProduit/(?P<fournisseur_id>\d+)/(?P<produit_id>\d+)/$', 'supprimerProduit'),
+    (r'^creerCategorie/(?P<model_name>[a-zA-Z]+)/$', 'add_new_model'),
+    (r'^editerCategorie/(?P<categorie_id>\d+)/$', 'editerCategorie'),
     #(r'^(?P<poll_id>\d+)/$', 'detail'),
 )

@@ -24,12 +24,8 @@
 <p>Voici la page d'accueil</p>
 
 <h3>Categories</h3>
-{% if categories_list %}
-    <p>{{ categories_list }}</p>
-{% else %}
-    <p>Pas de catégories</p>
-{% endif %}
-
+{{ user }}
+{{ user.first_name }}
 
 
 {% endblock %}

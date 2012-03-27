@@ -12,7 +12,7 @@ from django.db.models.loading import get_models, get_app, get_apps
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.html import escape
 from django.forms.models import modelform_factory
 from django.db.models.loading import get_models, get_app, get_apps
@@ -43,12 +43,14 @@ def index(request):
 
         return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
     else:
-        return HttpResponseRedirect('/')
+        return  HttpResponseRedirect(reverse('Kfet.Comptes.views.login'))
 
+@login_required
 def reappro(request):
     list_Fournisseur = Fournisseur.objects.all()
     return render_to_response('GestionStock/reappro.html', { 'fournisseurs':list_Fournisseur, }, context_instance=RequestContext(request))
 
+@login_required
 def creerFournisseur(request, id=None):
     if id!=None:
         fournisseur = get_object_or_404(Fournisseur, pk=id)
@@ -65,6 +67,7 @@ def creerFournisseur(request, id=None):
         form = CreationForm(instance=fournisseur)
     return render_to_response('GestionStock/creerFournisseur.html', {'form':form , 'id':id}, context_instance=RequestContext(request))
 
+@login_required
 def commander(request, fournisseur_id):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
     list_produits = Produit.objects.all().filter(fournisseur=fournisseur_id).order_by('quantite')
@@ -84,6 +87,7 @@ def commander(request, fournisseur_id):
     form=None
     return render_to_response('GestionStock/commander.html', {'form':form, 'fournisseur':fournisseur,'produits':produits, 'produits_commande':list_produits_commande}, context_instance=RequestContext(request))
 
+@login_required
 def creerProduit(request, fournisseur_id, produit_id=None):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
     if produit_id!=None:
@@ -102,12 +106,14 @@ def creerProduit(request, fournisseur_id, produit_id=None):
 
     return render_to_response('GestionStock/creerProduit.html', {'form':form, 'fournisseur':fournisseur, 'produit_id':produit.id}, context_instance=RequestContext(request))
 
+@login_required
 def supprimerProduit(request, fournisseur_id, produit_id):
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.delete()
     os.remove(produit.image.path)
     return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]))
 
+@login_required
 def editerCategorie(request, categorie_id=None):
     if categorie_id!=None:
         categorie = get_object_or_404(Categorie, pk=categorie_id)
@@ -123,6 +129,7 @@ def editerCategorie(request, categorie_id=None):
         form = CreationCategorieForm(instance=categorie)
     return render_to_response('GestionStock/creerCategorie.html', {'form':form , 'categorie_id':categorie_id}, context_instance=RequestContext(request))
 
+@login_required
 def add_new_model(request, model_name):
     if (model_name.lower() == model_name):
         normal_model_name = model_name.capitalize()

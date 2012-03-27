@@ -16,4 +16,8 @@ def publicites(request):
     return { 'publicites_produit': list }
 
 def admin_media_prefix(request):
-    return {'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX } 
+    return {'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX }
+
+def authentification(request):
+    user = request.user
+    return { 'user':user }

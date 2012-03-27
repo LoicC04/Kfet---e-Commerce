@@ -6,7 +6,7 @@ urlpatterns = patterns('Kfet.Comptes.views',
 
     url(r'^creation/$', 'creation'),
     url(r'^login/$', 'login'),
+    url(r'^logout/$', 'logout'),
     url(r'^gestion/$', 'gestion'),  
 #    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'comptes/login2.html'}),
-    url(r'^ok/$', 'ok'),
 )

@@ -10,7 +10,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
 
@@ -56,7 +56,7 @@ def creation(request):
                     except IntegrityError:
                         form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                    
                     else:
-                        return HttpResponse('Hey')
+                        return HttpResponseRedirect('/comptes/login')
                 else: 
                     form.erreurMail = "Votre adresse email existe déjà veuillez vous connecter."
 
@@ -64,9 +64,6 @@ def creation(request):
                 form.erreurPass = "Les champs mot de passe ne correspondent pas."
 
     return render_to_response('Comptes/creation.html', {'form': form,}, context_instance=RequestContext(request))
-
-def ok(request):
-    return HttpResponse('Hey')
 
 def login(request):
     if request.method == 'POST':        
@@ -76,7 +73,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                return HttpResponse('Hey')
+                return HttpResponseRedirect('/comptes/gestion')
             else:
                 return HttpResponse('User inactif')                
                 # Return a 'disabled account' error message
@@ -91,4 +88,8 @@ def gestion(request):
     user=request.user
     profile = user.get_profile()
     return render_to_response('Comptes/gestion.html', {'user':user,'profile':profile}, context_instance=RequestContext(request))
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect('/')
 

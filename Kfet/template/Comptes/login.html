@@ -4,7 +4,8 @@
 
 {% block content %}
 <h1>Authentification</h1>
-<br/><br/>
+<center>Créer un compte : <a href="{% url Kfet.Comptes.views.creation %}">Cliquez ici</a></center><br/><br/>
+<center>{{ erreur }}</center>
 <form action="{% url Kfet.Comptes.views.login %}" method="post">{% csrf_token %}    
     <table border=0 style=width:100%>
     <tr>

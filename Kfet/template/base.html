@@ -78,12 +78,13 @@
 							<!-- Begin Widget -->
 							<li class="widget">
 								<h2>Categories</h2>
-								<ul>
-                                                                        {% if categories_list %}
-                                                                            {% for c in categories_list %}
-                                                                            <li {% if forloop.last %} class='last'{% endif %}><a href="/commandes/categorie/{{c.id}}" title="{{ c.nom }}">{{ c.nom }}</a></li>
-                                                                            {% endfor %}
-                                                                        {% endif %}
+                                                                <ul>
+                                                                    <li><a href="{% url Kfet.views.listMenu %}">Les Menus</a></li>
+                                                                    {% if categories_list %}
+                                                                        {% for c in categories_list %}
+                                                                        <li {% if forloop.last %} class='last'{% endif %}><a href="{% url Kfet.Commandes.views.categorie c.id %}" title="{{ c.nom }}">{{ c.nom }}</a></li>
+                                                                        {% endfor %}
+                                                                    {% endif %}
 								</ul>
 							</li>
 							<!-- End Widget -->

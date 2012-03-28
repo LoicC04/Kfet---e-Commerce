@@ -6,9 +6,23 @@
 <h1>{{categorie.categorie}}</h1>
 <br/><br/>
 <table style=width:100%>
-    <th>Nom</th><th>Prix</th><th>Menus disponible</th><th>Photos</th>
+    <th>Nom</th><th>Prix</th><th>Menus disponible</th><th>Photos</th><th>Commander</th>
     {% for pro in produit %}
-    <tr><td>{{ pro.nom }}</td><td>{{pro.prix}}</td><td></td><td><center><img src="{{pro.image.url}}" height="50"></center></td></tr>
+    <tr>
+        <td><a href="/commandes/{{ pro.id }}">{{ pro.nom }}</a></td>
+        <td>{{pro.prix}}</td>
+        <td></td>
+        <td><center><img src="{{pro.image.url}}" height="50"></center></td>
+        <td>
+            <center>
+            <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
+                Quantité :<input type=text size=2 name="quantite"><br/>
+                <input type=hidden value="{{ pro.id }}" name="produit">
+                <input type=submit Value="Ajouter au panier">
+            </form>
+        </center>
+        </td>
+    </tr>
     {% endfor %}
 </table>
 

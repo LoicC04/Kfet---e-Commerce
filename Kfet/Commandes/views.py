@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Categorie
+from Kfet.Commun.models import Produit, Categorie, Produit_Panier
 from django.template import RequestContext
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 
 def produit(request, produit_id):
@@ -15,4 +16,14 @@ def categorie(request, cat_id):
 
 
 def panier(request):
-    return HttpResponse("Hello, world. You're at the Ventes index.")
+    user = request.user
+    profil = user.get_profile()
+    panier = Produit_Panier.objects.filter(panier_id=profil.panier_id)
+    return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
+
+def panier_ajout(request, quantite, produit_id):
+    user = request.user
+    profil = user.get_profile()
+    produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier_id=profil.panier_id)
+    produit_panier.save()
+    return HttpResponse('FUUU')

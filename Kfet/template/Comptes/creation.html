@@ -4,7 +4,6 @@
 
 {% block content %}
 <h1>Création d'un compte utilisateur</h1>
-<br/><br/>
 <form action="{% url Kfet.Comptes.views.creation %}" method="post">{% csrf_token %}    
     <table border=0 style=width:100%>
     {% for field in form %}
@@ -21,13 +20,13 @@
                 {% ifequal field.name "mail" %} 
                     {{ form.erreurMail }} 
                     {% if form.erreurMail%}
-                        <br/> LIEN LOGIN 
+                    <br/> <a href="{% url Kfet.Comptes.views.login %}">Login</a> 
                     {% endif %} 
                 {% endifequal %}  
                 {% ifequal field.name "numero" %} 
                     {{ form.erreurNum }} 
                     {% if form.erreurNum %}
-                        <br/> LIEN LOGIN 
+                        <br/> <a href="{% url Kfet.Comptes.views.login %}">Login</a> 
                     {% endif %}
                 {% endifequal %}
                 {% ifequal field.name "password" %} 

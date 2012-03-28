@@ -36,12 +36,17 @@
                                         <h1 id="logo"><a class="notext" href="/">Kfet du DI</a></h1>
                                         <div id="account">
                                             {% if user.first_name %}                                                                                           
-                                                <a class="view-account" title="View Account" href="#">NB ARTICLE</a>
+                                            <a class="view-account" title="View Account" href="{% url Kfet.Commandes.views.panier %}">{{ article }} articles dans le panier</a>
                                                 <!--                                                <span>Articles: 4</span><span>Cost: <strong>5.00€</strong></span> -->
                                                 <span>{{ user }}</span><span><a style=color:#ffe75f href="{% url Kfet.Comptes.views.logout %}">Logout</a></span>
                                                 <div class="cl">&nbsp;</div>
                                             {% else %}
-                                                <a class="view-account" title="View Account" href="{% url Kfet.Comptes.views.login %}">Login</a>
+                                                <a class="view-account">Bienvenue</a>
+                                                <form action="{% url Kfet.Comptes.views.login %}" method="post">{% csrf_token %}    
+                                                    <input type="text" name="username" size=5>
+                                                    <input type="password" name="password" size=5>
+                                                    <input type="submit" value="Ok">
+                                                </form>
                                             {% endif %}
                                         </div>
                                         <!-- Begin Navigation -->

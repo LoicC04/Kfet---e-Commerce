@@ -1,11 +1,20 @@
 from Kfet.Commun.models import Categorie
-from Kfet.Commun.models import Produit
+from Kfet.Commun.models import Produit, Produit_Panier
 from django.conf import settings
 
 
 def categories(request):
     list = Categorie.objects.all()
     return { 'categories_list': list }
+
+def articles(request):
+    user = request.user
+    if user == 'AnonymousUser':
+        profil = user.get_profile()
+        article = Produit_Panier.objects.filter(panier_id=profil.panier_id).count()
+    else:
+        article = 0
+    return { 'article':article }
 
 def publicites(request):
     sample_size = 3
@@ -17,7 +26,3 @@ def publicites(request):
 
 def admin_media_prefix(request):
     return {'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX }
-
-def authentification(request):
-    user = request.user
-    return { 'user':user }

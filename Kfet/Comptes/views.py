@@ -15,13 +15,13 @@ from django.contrib.auth.decorators import login_required
 
 
 class CompteForm(forms.Form):
-        numero = forms.CharField(max_length=9, label="Numéro", required=True)
-        nom = forms.CharField(max_length=200, label="Nom", required=True)
-        prenom = forms.CharField(max_length=200, label="Prenom", required=True)
-        password = forms.CharField(label=('Mot de passe'),widget=forms.PasswordInput(render_value=False), required=True) 
-        password2 = forms.CharField(label=('Mot de passe'),widget=forms.PasswordInput(render_value=False), required=True) 
-        mail = forms.EmailField(label="Adresse email", required=True)
-        promo = forms.ModelChoiceField(queryset=Promo.objects.all())
+    numero = forms.CharField(max_length=9, label="Numéro", required=True)
+    nom = forms.CharField(max_length=200, label="Nom", required=True)
+    prenom = forms.CharField(max_length=200, label="Prenom", required=True)
+    password = forms.CharField(label=('Mot de passe'),widget=forms.PasswordInput(render_value=False), required=True) 
+    password2 = forms.CharField(label=('Mot de passe'),widget=forms.PasswordInput(render_value=False), required=True) 
+    mail = forms.EmailField(label="Adresse email", required=True)
+    promo = forms.ModelChoiceField(queryset=Promo.objects.all())
 
 def creation(request):    
     form = CompteForm()
@@ -49,14 +49,14 @@ def creation(request):
                     try:
                         user.save()
                     except IntegrityError:
-                        form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                   
+                        form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                  
 
                     try:
                         create_user_profile(sender=User, instance=user,created=True,promo=promo)
                     except IntegrityError:
                         form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                    
                     else:
-                        return HttpResponseRedirect('/comptes/login')
+                        return HttpResponseRedirect(reverse('Kfet.Comptes.views.login'))
                 else: 
                     form.erreurMail = "Votre adresse email existe déjà veuillez vous connecter."
 
@@ -73,12 +73,13 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                return HttpResponseRedirect('/comptes/gestion')
+                return HttpResponseRedirect(reverse('Kfet.Comptes.views.gestion'))
             else:
                 return HttpResponse('User inactif')                
                 # Return a 'disabled account' error message
         else:
-            return render_to_response('Comptes/login.html', context_instance=RequestContext(request)) 
+            erreur = "Utilisateur et/ou mot de passe incorrect"
+            return render_to_response('Comptes/login.html', {'erreur':erreur}, context_instance=RequestContext(request)) 
             # Return an 'invalid login' error message.
     
     return render_to_response('Comptes/login.html', context_instance=RequestContext(request))
@@ -91,5 +92,5 @@ def gestion(request):
 
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('Kfet.views.home'))
 

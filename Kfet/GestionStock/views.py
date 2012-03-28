@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404, HttpResponse
 from Kfet.Commun.models import Produit, CreationProduitForm
 from Kfet.Commun.models import Fournisseur, CreationForm
 from Kfet.Commun.models import Categorie, CreationCategorieForm
@@ -8,14 +8,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 import os
 from django.utils.html import escape
-from django.db.models.loading import get_models, get_app, get_apps
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils.html import escape
+from django.db.models.loading import get_models, get_apps
 from django.forms.models import modelform_factory
-from django.db.models.loading import get_models, get_app, get_apps
 
 @login_required
 def index(request):

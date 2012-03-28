@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} Les menus - Kfet {% endblock %}
+
+{% block content %}
+<h1>Les menus de la Kfet</h1>
+
+<p>Choisissez un menu :</p>
+{% for menu in typeMenu %}
+    <div style="border:outset 1px blue;padding:5px;padding-left:20px">
+        <h3>{{ menu.nom}}</h3>
+        <ul>
+            <li>Nombre d'articles : {{ menu.nombreArticles }}</li>
+            <li>Prix : {{ menu.prix }} €</li>
+            <li>Description<br/>{{ menu.description }}</li>
+        </ul>
+        <a href="{% url Kfet.views.choisirMenu menu.id %}">
+            Choisir
+        </a>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -7,6 +7,7 @@ admin.site.register(Menu)
 admin.site.register(Categorie)
 admin.site.register(Commentaire)
 admin.site.register(Promo)
+admin.site.register(TypeMenu)
 
 def response_change(self, request, obj, *args, **kwargs):
     if request.REQUEST.has_key('_popup'):

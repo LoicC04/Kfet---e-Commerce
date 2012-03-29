@@ -6,7 +6,7 @@
 <h1>{{categorie.categorie}}</h1>
 <br/><br/>
 <table style=width:100%>
-    <th>Nom</th><th>Prix</th><th>Menus disponible</th><th>Photos</th><th>Commander</th>
+    <th>Nom</th><th>Prix</th><th>Photos</th><th>Commander</th>
     {% for pro in produit %}
     <tr>
         <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>

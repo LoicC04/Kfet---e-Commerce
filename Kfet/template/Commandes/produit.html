@@ -5,6 +5,7 @@
 {% block content %}
 <h1>{{produit.nom}}</h1>
 
-<p>{{produit.info}}</p>
-
+<p align="right"><img src="{{ produit.image.url }}"></p>
+<p><b>Description : </b>{{ produit.info }}</p>
+<p><b>Ingrédients : </b>{{ produit.ingredients }}</p>
 {% endblock %}

@@ -48,6 +48,12 @@ def panier_suppr(request, produit_panier_id):
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
 
 @login_required
+def panier_maj(request, produit_panier_id):
+    if request.method == 'POST':
+        produit = Produit_Panier.objects.filter(id=produit_panier_id).update(quantite=request.POST['quantite'])
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+
+@login_required
 def validerPanier(request):
     user = request.user
     profil = user.get_profile()

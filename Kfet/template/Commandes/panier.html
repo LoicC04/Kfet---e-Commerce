@@ -15,7 +15,10 @@
     <tr>
         <td>{{ pan.produit.nom }}</td>
         <td>
-            {{ pan.quantite }}
+            <form action="{% url Kfet.Commandes.views.panier_maj pan.id %}" method="POST">{% csrf_token %}
+                <input type="text" value="{{ pan.quantite }}" size=3 name="quantite">
+                <input type="submit" value="ok">
+            </form>
         </td>
         <td>
             <a href="{% url Kfet.Commandes.views.panier_suppr pan.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a><br/>

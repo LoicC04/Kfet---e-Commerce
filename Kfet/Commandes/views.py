@@ -32,7 +32,7 @@ def panier_ajout(request):
         produit_id = request.POST['produit']        
         user = request.user
         profil = user.get_profile()
-        if quantite == 0:
+        if quantite != 0:
             produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
             produit_panier.save()
         else:
@@ -40,7 +40,12 @@ def panier_ajout(request):
             return render_to_response('Commandes/panier.html', {'erreur':erreur}, context_instance=RequestContext(request) )
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
-        return HttpResponseRedirect(reverse('Kfet.Commande.views.panier'))
+        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+
+@login_required
+def panier_suppr(request, produit_panier_id):
+    Produit_Panier.objects.filter(id=produit_panier_id).delete()
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
 
 @login_required
 def validerPanier(request):

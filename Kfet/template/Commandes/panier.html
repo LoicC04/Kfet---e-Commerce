@@ -14,7 +14,12 @@
     {% for pan in panier %}
     <tr>
         <td>{{ pan.produit.nom }}</td>
-        <td>{{ pan.quantite }}</td>
+        <td>
+            {{ pan.quantite }}
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.panier_suppr pan.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a><br/>
+        </td>
     </tr>
     {% endfor %}
 </table>

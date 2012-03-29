@@ -11,7 +11,7 @@ def articles(request):
     user = request.user
     if user != 'AnonymousUser':
         profil = user.get_profile()
-        article = Produit_Panier.objects.filter(panier_id=profil.panier_id).count()
+        article = Produit_Panier.objects.filter(panier=profil.panier_id).count()
     else:
         article = 0
     return { 'article':article }

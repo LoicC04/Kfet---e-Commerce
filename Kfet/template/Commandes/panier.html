@@ -6,9 +6,16 @@
 <h1>Panier de Mr {{user.first_name}}</h1>
 <br/><br/>
 <table style=width:100%;text-align:center>
-    <th>Nom</th><th>Quantité</th><th>Actions disponible</th>
+    <tr>
+        <th>Nom</th>
+        <th>Quantité</th>
+        <th>Actions disponible</th>
+    </tr>
     {% for pan in panier %}
-    <tr><td>{{ pan.produit.nom }}</td><td>{{pan.quantite}}</td></tr>
+    <tr>
+        <td>{{ pan.produit.nom }}</td>
+        <td>{{ pan.quantite }}</td>
+    </tr>
     {% endfor %}
 </table>
 

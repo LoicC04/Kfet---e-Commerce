@@ -1,6 +1,6 @@
 from django.db import models
-from Personne import *
 from Reglement import *
+from Panier import *
 from Status_Commande import *
 from django.contrib.auth.models import User
 

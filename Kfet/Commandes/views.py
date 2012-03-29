@@ -43,7 +43,7 @@ def validerPanier(request):
     produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id)
     prix_panier=0
     for elt in produits_a_valider:
-        prix_panier += elt.produit.prix
+        prix_panier += elt.produit.prix*elt.quantite
 
     commande = Commande()
     commande.prix = prix_panier

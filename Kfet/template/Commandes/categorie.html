@@ -6,12 +6,16 @@
 <h1>{{categorie.categorie}}</h1>
 <br/><br/>
 <table style=width:100%>
-    <th>Nom</th><th>Prix</th><th>Photos</th><th>Commander</th>
+    <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Photos</th>
+        <th>Commander</th>
+    </tr>
     {% for pro in produit %}
     <tr>
         <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>
         <td>{{pro.prix}}</td>
-        <td></td>
         <td><center><img src="{{pro.image.url}}" height="50"></center></td>
         <td>
             <center>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Promo, Personne, UserProfile, Panier
+from Kfet.Commun.models import Promo, UserProfile, Panier
 from Kfet.Commun.models.UserProfile import create_user_profile
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect

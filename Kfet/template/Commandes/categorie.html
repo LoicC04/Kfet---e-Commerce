@@ -9,7 +9,7 @@
     <th>Nom</th><th>Prix</th><th>Menus disponible</th><th>Photos</th><th>Commander</th>
     {% for pro in produit %}
     <tr>
-        <td><a href="/commandes/{{ pro.id }}">{{ pro.nom }}</a></td>
+        <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>
         <td>{{pro.prix}}</td>
         <td></td>
         <td><center><img src="{{pro.image.url}}" height="50"></center></td>

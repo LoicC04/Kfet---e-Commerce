@@ -14,9 +14,9 @@
             <li>Prix : {{ menu.prix }} €</li>
             <li>Description<br/>{{ menu.description }}</li>
         </ul>
-        <a href="{% url Kfet.views.choisirMenu menu.id %}">
-            Choisir
-        </a>
+        <span class="button">
+            <input type="button" value="Choisir" OnClick="window.location.href='{% url Kfet.views.choisirMenu menu.id %}'"/>
+        </span>
     </div>
 {% endfor %}
 

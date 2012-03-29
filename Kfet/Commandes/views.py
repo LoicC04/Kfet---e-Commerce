@@ -1,8 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Categorie, Produit_Panier
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
@@ -35,3 +34,30 @@ def panier_ajout(request):
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
         return HttpResponseRedirect(reverse('Kfet.Commande.views.panier'))
+
+@login_required
+def validerPanier(request):
+    user = request.user
+    profil = user.get_profile()
+    panier_a_valider = profil.panier
+    produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id)
+    prix_panier=0
+    for elt in produits_a_valider:
+        prix_panier += elt.produit.prix
+
+    commande = Commande()
+    commande.prix = prix_panier
+    commande.user = user
+    commande.panier = panier_a_valider
+    commande.reglement = Reglement.objects.get(type="Liquide")
+    commande.status_commande = Status_Commande.objects.get(label="En cours")
+
+    commande.save()
+
+    nouveau_panier = Panier()
+    nouveau_panier.save()
+
+    profil.panier = nouveau_panier
+    profil.save()
+
+    return HttpResponse("Valider! {0}".format(prix_panier))

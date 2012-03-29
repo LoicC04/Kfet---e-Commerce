@@ -7,7 +7,6 @@ from Fournisseur import *
 from Image import *
 from Menu import *
 from Panier import *
-from Personne import *
 from Produit_Panier import *
 from Promo import *
 from Produit import *

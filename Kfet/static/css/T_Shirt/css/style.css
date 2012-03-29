@@ -142,8 +142,8 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 #products .product img { padding-bottom: 68px; }
 #products .product .pr-info { position: absolute; bottom: 15px; left: 0; background: url('/static/css/T_Shirt/css/images/products-info-bar.png') no-repeat 0 0; padding: 11px 118px 11px 12px; }
 #products .product .pr-info h4 { text-transform: uppercase; font-size: 14px; color: #375970; line-height: 18px; }
-#products .product .pr-info p { font-size: 10px; color: #000; line-height: 12px; }
-#products .product .pr-price { position: absolute; top: -10px; right: 5px; background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0; width: 82px; height: 82px; line-height: 72px; color: #fff; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center; }
+#products .product .pr-info p { font-size: 11px; color: #000; line-height: 12px; }
+#products .product .pr-price { position: absolute; top: -10px; right: 5px; background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0; width: 82px; height: 82px; line-height: 72px; color: #fff; font-size: 31px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center; }
 #products .product .pr-price span { font-size: 26px; }
 #products .product .pr-price sup { font-size: 17px; padding-left: 1px; }
 

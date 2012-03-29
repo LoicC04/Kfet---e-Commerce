@@ -7,3 +7,4 @@ settings.py
 nbproject/
 *.save
 /static/
+bug

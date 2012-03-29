@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement
 from django.template import RequestContext
@@ -8,6 +10,7 @@ from django.core.urlresolvers import reverse
 
 def produit(request, produit_id):
     produit = get_object_or_404(Produit, pk=produit_id)
+    produit.decimal=str(produit.prix%1).split(".")[1]
     return render_to_response('Commandes/produit.html', {'produit':produit}, context_instance=RequestContext(request))
 
 def categorie(request, cat_id):
@@ -26,11 +29,15 @@ def panier(request):
 def panier_ajout(request):
     if request.method == 'POST':
         quantite = request.POST['quantite']
-        produit_id = request.POST['produit']
+        produit_id = request.POST['produit']        
         user = request.user
         profil = user.get_profile()
-        produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
-        produit_panier.save()
+        if quantite == 0:
+            produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
+            produit_panier.save()
+        else:
+            erreur = "Vous ne pouvez pas ajouter une quantité de 0."
+            return render_to_response('Commandes/panier.html', {'erreur':erreur}, context_instance=RequestContext(request) )
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
         return HttpResponseRedirect(reverse('Kfet.Commande.views.panier'))

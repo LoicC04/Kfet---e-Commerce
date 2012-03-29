@@ -19,11 +19,15 @@
         <td><center><img src="{{pro.image.url}}" height="50"></center></td>
         <td>
             <center>
+            {% ifnotequal pro.quantite 0 %}
             <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
                 Quantité :<input type=text size=2 name="quantite"><br/>
                 <input type=hidden value="{{ pro.id }}" name="produit">
                 <input type=submit Value="Ajouter au panier">
             </form>
+            {% else %}
+                <p>Produit épuisé</p>
+            {% endifnotequal %}
         </center>
         </td>
     </tr>

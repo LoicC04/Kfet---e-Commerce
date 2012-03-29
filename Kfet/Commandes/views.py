@@ -20,7 +20,7 @@ def categorie(request, cat_id):
 def panier(request):
     user = request.user
     profil = user.get_profile()
-    panier = Produit_Panier.objects.filter(panier_id=profil.panier_id)
+    panier = Produit_Panier.objects.filter(panier=profil.panier_id)
     return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
 
 @login_required

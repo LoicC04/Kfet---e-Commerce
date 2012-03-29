@@ -30,7 +30,7 @@ def panier_ajout(request):
         produit_id = request.POST['produit']
         user = request.user
         profil = user.get_profile()
-        produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier_id=profil.panier_id)
+        produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
         produit_panier.save()
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:

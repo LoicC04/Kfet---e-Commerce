@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Promo, Personne, UserProfile
+from Kfet.Commun.models import Promo, Personne, UserProfile, Panier
 from Kfet.Commun.models.UserProfile import create_user_profile
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
@@ -39,6 +39,8 @@ def creation(request):
             if password == password2:                
 
                 if User.objects.filter(email=mail).count() == 0:                        
+                    panier = Panier()
+                    panier.save()
                     user = User()
                     user.username = numero           
                     user.first_name = nom
@@ -52,7 +54,7 @@ def creation(request):
                         form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                  
 
                     try:
-                        create_user_profile(sender=User, instance=user,created=True,promo=promo)
+                        create_user_profile(sender=User, instance=user,created=True,promo=promo,panier=panier)
                     except IntegrityError:
                         form.erreurNum = "Votre nom d'utilisateur existe déjà, veuillez vous connecter."                    
                     else:

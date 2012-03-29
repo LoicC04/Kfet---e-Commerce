@@ -16,8 +16,8 @@ class UserProfile(models.Model):
     class Meta:
         app_label = 'Commun'
 
-def create_user_profile(sender, instance, promo, created, **kwargs):
+def create_user_profile(sender, instance, promo, panier, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance, promo=promo)
+        UserProfile.objects.create(user=instance, promo=promo, panier=panier)
 
 #post_save.connect(create_user_profile, sender=User)

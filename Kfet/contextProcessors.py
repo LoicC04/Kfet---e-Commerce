@@ -9,7 +9,7 @@ def categories(request):
 
 def articles(request):
     user = request.user
-    if user == 'AnonymousUser':
+    if user != 'AnonymousUser':
         profil = user.get_profile()
         article = Produit_Panier.objects.filter(panier_id=profil.panier_id).count()
     else:

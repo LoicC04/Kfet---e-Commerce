@@ -11,16 +11,24 @@
     <tr>
         <th>Nom</th>
         <th>Quantité</th>
+        <th>Quantité en stock</th>
         <th>Actions disponible</th>
     </tr>
     {% for pan in panier %}
     <tr>
-        <td>{{ pan.produit.nom }}</td>
+        <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.nom }}</a></td>
         <td>
             <form action="{% url Kfet.Commandes.views.panier_maj pan.id %}" method="POST">{% csrf_token %}
                 <input type="text" value="{{ pan.quantite }}" size=3 name="quantite">
                 <input type="submit" value="ok">
             </form>
+        </td>
+        <td>
+            {% ifnotequal pan.produit.quantite 0 %}
+                {{ pan.produit.quantite }}
+            {% else %}
+                Produit épuisé
+            {% endifnotequal %}
         </td>
         <td>
             <a href="{% url Kfet.Commandes.views.panier_suppr pan.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a><br/>

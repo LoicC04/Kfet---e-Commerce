@@ -41,6 +41,12 @@ def panier(request, erreur=None):
     elif erreur=="3":
         erreur = "<strong>Le panier est vide</strong>, veuillez ajoutez des articles dans le panier pour le valider"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="2":
+        erreur = "<strong>Un produit n'est plus en stock !</strong>. Veuillez le supprimer ou attendre un approvisionnement"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="1":
+        erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
@@ -82,7 +88,19 @@ def validerPanier(request):
     prix_panier=0
     if produits_a_valider.count()>0:
         for elt in produits_a_valider:
-            prix_panier += elt.produit.prix*elt.quantite
+            if elt.produit.quantite>=elt.quantite:
+                # stock suffisant pour commander
+                prix_panier += elt.produit.prix*elt.quantite
+                elt.produit.quantite -= elt.quantite
+                elt.produit.save()
+            elif elt.quantite<=0:
+                # Un produit dans le panier a une quantité à 0
+                erreur=1
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+            elif elt.produit.quantite<=0:
+                # stock pas suffisant pour un produit
+                erreur=2
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 
         commande = Commande()
         commande.prix = prix_panier
@@ -99,6 +117,7 @@ def validerPanier(request):
         profil.panier = nouveau_panier
         profil.save()
     else:
+        # Le panier est vide
         erreur=3
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 

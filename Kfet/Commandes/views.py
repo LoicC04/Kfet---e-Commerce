@@ -9,10 +9,10 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def produit(request, produit_id):
+def produit(request, produit_id, erreur=None):
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.decimal=str(produit.prix%1).split(".")[1]
-    return render_to_response('Commandes/produit.html', {'produit':produit}, context_instance=RequestContext(request))
+    return render_to_response('Commandes/produit.html', {'produit':produit, 'erreur':erreur}, context_instance=RequestContext(request))
 
 def categorie(request, cat_id):
     categorie = get_object_or_404(Produit, pk=cat_id)
@@ -52,19 +52,28 @@ def panier(request, erreur=None):
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
 
 @login_required
-def panier_ajout(request):
-    if request.method == 'POST':
+def panier_ajout(request):    
+    if request.method == 'POST':        
         quantite = request.POST['quantite']
-        produit_id = request.POST['produit']        
+        produit_id = request.POST['produit']
         user = request.user
         profil = user.get_profile()
-        if quantite == "0":
-            erreur = "Vous ne pouvez pas ajouter une quantité de 0."
-            return render_to_response('Commandes/produit.html', {'erreur':erreur}, context_instance=RequestContext(request) )
+        produit = get_object_or_404(Produit, pk=produit_id)
+        if quantite:
+            if produit.quantite > int(quantite):
+                if quantite == "0":
+                    erreur = 1
+                    return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit_id,erreur]), )
+                else:
+                    produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
+                    produit_panier.save()
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+            else:
+                erreur = 2
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit_id,erreur]), )
         else:
-            produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
-            produit_panier.save()
-        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+            erreur = 1
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit_id,erreur]), )
     else:
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
 

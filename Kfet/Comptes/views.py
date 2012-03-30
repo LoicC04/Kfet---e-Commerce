@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Promo, UserProfile, Panier
+from Kfet.Commun.models import Promo, UserProfile, Panier, Status_Commande, Commande
 from Kfet.Commun.models.UserProfile import create_user_profile
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
@@ -90,7 +90,9 @@ def login(request):
 def gestion(request):
     user=request.user
     profile = user.get_profile()
-    return render_to_response('Comptes/gestion.html', {'user':user,'profile':profile}, context_instance=RequestContext(request))
+    encours = Status_Commande.objects.get(code=1)
+    commandes_encours = Commande.objects.filter(status_commande=encours)
+    return render_to_response('Comptes/gestion.html', {'user':user,'profile':profile, 'commandes_encours':commandes_encours}, context_instance=RequestContext(request))
 
 def logout(request):
     auth_logout(request)

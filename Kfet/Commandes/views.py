@@ -54,9 +54,12 @@ def panier(request, erreur=None):
     elif erreur=="2":
         erreur = "<strong>Un produit n'est plus en stock !</strong>. Veuillez le supprimer ou attendre un approvisionnement"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
-    elif erreur=="1":
+    elif erreur=="4":
         erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
 >>>>>>> a8c25a6df646c9d3f5dd59b0b20ad5356fca873e
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="1":
+        erreur = "<strong>Un produit ne peut pas être commandé avec une quantité nulle!</strong>. Veuillez le supprimer ou changer la quantité commandée"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
@@ -71,7 +74,7 @@ def panier_ajout(request):
         profil = user.get_profile()
         produit = get_object_or_404(Produit, pk=produit_id)
         if quantite:
-            if produit.quantite > int(quantite):
+            if produit.quantite >= int(quantite):
                 if quantite == "0":
                     erreur = 1
                     return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit_id,erreur]), )
@@ -125,18 +128,22 @@ def validerPanier(request):
     prix_panier=0
     if produits_a_valider.count()>0:
         for elt in produits_a_valider:
-            if elt.produit.quantite>=elt.quantite:
-                # stock suffisant pour commander
-                prix_panier += elt.produit.prix*elt.quantite
-                elt.produit.quantite -= elt.quantite
-                elt.produit.save()
-            elif elt.quantite<=0:
+            if elt.quantite<=0:
                 # Un produit dans le panier a une quantité à 0
                 erreur=1
                 return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
             elif elt.produit.quantite<=0:
-                # stock pas suffisant pour un produit
+                # produit en rupture de stock
                 erreur=2
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+            elif elt.quantite<=elt.produit.quantite:
+                # stock suffisant pour commander
+                prix_panier += elt.produit.prix*elt.quantite
+                elt.produit.quantite -= elt.quantite
+                elt.produit.save()
+            else:
+                # stock du produit insuffisant
+                erreur=4
                 return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 
         commande = Commande()

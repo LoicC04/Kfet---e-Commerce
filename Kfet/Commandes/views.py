@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def produit(request, produit_id, erreur=None):
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.decimal=str(produit.prix%1).split(".")[1]
-    return render_to_response('Commandes/produit.html', {'produit':produit, 'erreur':erreur}, context_instance=RequestContext(request))
+
+    list_comms = get_list_or_404(Commentaire, produit_id=produit_id)
+
+    paginator = Paginator(list_comms, 4)
+    page = request.GET.get('page',1)
+    try:
+        comms = paginator.page(page)
+    except PageNotAnInteger
+        comms = paginator.page(1)
+    except EmptyPage:
+        comms = pagintor.page(paginator.num_pages)
+
+    return render_to_response('Commandes/produit.html', {'produit':produit, 'erreur':erreur, 'comms':comms}, context_instance=RequestContext(request))
 
 def categorie(request, cat_id):
     categorie = get_object_or_404(Produit, pk=cat_id)
@@ -58,6 +70,7 @@ def panier(request, erreur=None):
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="12":
         erreur = "<strong>La quantité ne peut être nulle</strong>, veuillez sélectionner une valeur positive."
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )

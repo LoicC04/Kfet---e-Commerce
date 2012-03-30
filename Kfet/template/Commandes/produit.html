@@ -42,7 +42,7 @@
 <div id="comms" style="position:absolute;left:35%;top:60%;width:600px;;z-index:0">
 
     <table style="width:100%;"> 
-    {% for com in comms %}
+    {% for com in comms.object_list %}
         <tr>
             <td>{{ com.user }}</td>
             <td>{{ com.commentaire }}</td>

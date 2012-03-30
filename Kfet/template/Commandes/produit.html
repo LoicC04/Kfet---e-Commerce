@@ -49,11 +49,12 @@
         </tr>
     {% endfor %}
     </table> 
-<!--    <form action="" method="POST">
-        <input name="com" type="Text" width=200 height=100>
+    {% if user.firstname %}
+    <form action="{% url Kfet.Commandes.views.produit produit.id %}" method="POST">{% csrf_token %}
+        <textarea name="com" cols=20 rows=10></textarea>
         <input type="submit" value="Ajouter un commentaire">
-    </form> -->
-        
+    </form>        
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -11,8 +11,14 @@ from django.http import Http404
 
 
 def produit(request, produit_id, erreur=None):
+    user = request.user
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.decimal=str(produit.prix%1).split(".")[1]
+
+    if not user.is_anonymous():
+        if request.method == 'POST':
+            Com = Commentaire(user_id=user.id,commentaire=request.POST['com'],produit_id=produit_id)
+            Com.save()
 
     list_comms = Commentaire.objects.filter(produit=produit_id)
 

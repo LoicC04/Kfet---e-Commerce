@@ -32,11 +32,18 @@ def categorie(request, cat_id):
     return render_to_response('Commandes/categorie.html', {'produit':produits , 'categorie':categorie}, context_instance=RequestContext(request) )
 
 @login_required
-def panier(request):
+def panier(request, erreur=None):
     user = request.user
     profil = user.get_profile()
     panier = Produit_Panier.objects.filter(panier=profil.panier_id)
-    return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
+    if erreur==None:
+        return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
+    elif erreur=="3":
+        erreur = "<strong>Le panier est vide</strong>, veuillez ajoutez des articles dans le panier pour le valider"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    else:
+        erreur = "Une erreur est survenue, merci de réessayer"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
 
 @login_required
 def panier_ajout(request):    
@@ -82,25 +89,29 @@ def validerPanier(request):
     panier_a_valider = profil.panier
     produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id)
     prix_panier=0
-    for elt in produits_a_valider:
-        prix_panier += elt.produit.prix*elt.quantite
+    if produits_a_valider.count()>0:
+        for elt in produits_a_valider:
+            prix_panier += elt.produit.prix*elt.quantite
 
-    commande = Commande()
-    commande.prix = prix_panier
-    commande.user = user
-    commande.panier = panier_a_valider
-    commande.reglement = Reglement.objects.get(type="Liquide")
-    commande.status_commande = Status_Commande.objects.get(label="En cours")
+        commande = Commande()
+        commande.prix = prix_panier
+        commande.user = user
+        commande.panier = panier_a_valider
+        commande.reglement = Reglement.objects.get(type="Liquide")
+        commande.status_commande = Status_Commande.objects.get(label="En cours")
 
-    commande.save()
+        commande.save()
 
-    nouveau_panier = Panier()
-    nouveau_panier.save()
+        nouveau_panier = Panier()
+        nouveau_panier.save()
 
-    profil.panier = nouveau_panier
-    profil.save()
+        profil.panier = nouveau_panier
+        profil.save()
+    else:
+        erreur=3
+        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 
-    return HttpResponse("Valider! {0}".format(prix_panier))
+    return HttpResponse("Valider! Prix à payer: {0} €".format(prix_panier))
 
 @login_required
 def choisirMenu(request,typeMenu_id, menu_id=None):

@@ -19,10 +19,10 @@ def produit(request, produit_id, erreur=None):
     page = request.GET.get('page',1)
     try:
         comms = paginator.page(page)
-    except PageNotAnInteger
+    except PageNotAnInteger:
         comms = paginator.page(1)
     except EmptyPage:
-        comms = pagintor.page(paginator.num_pages)
+        comms = paginator.page(paginator.num_pages)
 
     return render_to_response('Commandes/produit.html', {'produit':produit, 'erreur':erreur, 'comms':comms}, context_instance=RequestContext(request))
 

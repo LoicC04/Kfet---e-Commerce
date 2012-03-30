@@ -14,7 +14,7 @@ def produit(request, produit_id, erreur=None):
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.decimal=str(produit.prix%1).split(".")[1]
 
-    list_comms = get_list_or_404(Commentaire, produit_id=produit_id)
+    list_comms = get_list_or_404(Commentaire, produit=produit_id)
 
     paginator = Paginator(list_comms, 4)
     page = request.GET.get('page',1)

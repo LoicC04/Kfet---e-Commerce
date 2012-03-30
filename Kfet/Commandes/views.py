@@ -86,7 +86,7 @@ def panier_ajout(request):
         produit = get_object_or_404(Produit, pk=produit_id)
         if quantite:
             if produit.quantite >= int(quantite):
-                if quantite == "0":
+                if int(quantite) <= 0:
                     erreur = 1
                     return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit_id,erreur]), )
                 else:
@@ -115,7 +115,7 @@ def panier_maj(request, produit_panier_id):
         quantite = quantite=request.POST['quantite']
         if quantite:       
             if produit.quantite >= int(quantite):
-                if quantite == "0":
+                if int(quantite) <= 0:
                     erreur = 12
                     return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
                 else:
@@ -179,6 +179,7 @@ def validerPanier(request):
             erreur=4
             return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 
+    commande.prix = prix_panier
     # On sauvegarde la commande une fois les stocks mis à jour
     commande.save()
 

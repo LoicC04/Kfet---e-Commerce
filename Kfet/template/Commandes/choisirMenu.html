@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Menu : {{ typeMenu.nom }}</h1>
 
-<form action="{% url Kfet.views.choisirMenu typeMenu.id %}" method="post">
+<form action="{% url Kfet.Commandes.views.choisirMenu typeMenu.id %}" method="post">
     {% csrf_token %}
     <table border=0 style=width:100%>
         {% for field in form %}

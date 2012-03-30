@@ -15,7 +15,7 @@
             <li>Description<br/>{{ menu.description }}</li>
         </ul>
         <span class="button">
-            <input type="button" value="Choisir" OnClick="window.location.href='{% url Kfet.views.choisirMenu menu.id %}'"/>
+            <input type="button" value="Choisir" OnClick="window.location.href='{% url Kfet.Commandes.views.choisirMenu menu.id %}'"/>
         </span>
     </div>
 {% endfor %}

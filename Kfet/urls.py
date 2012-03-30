@@ -21,8 +21,6 @@ urlpatterns = patterns('',
     (r'^gestionStock/', include('Kfet.GestionStock.urls')),
     url(r'^$', 'Kfet.views.home'),
     url(r'^menus/$', 'Kfet.views.listMenu'),
-    url(r'^choisirMenu/(?P<typeMenu_id>\d+)/$', 'Kfet.views.choisirMenu'),
-    #url(r'^choisirMenu/(?P<typeMenu_id>\d+)/(?P<menu_id>\d+)/$', 'Kfet.views.choisirMenu'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

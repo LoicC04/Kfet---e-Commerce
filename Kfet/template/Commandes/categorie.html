@@ -12,7 +12,7 @@
         <th>Photos</th>
         <th>Commander</th>
     </tr>
-    {% for pro in produit %}
+    {% for pro in produit.object_list %}
     <tr>
         <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>
         <td>{{pro.prix}}</td>
@@ -33,6 +33,21 @@
     </tr>
     {% endfor %}
 </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if produit.has_previous %}
+                <a href="?page={{ produit.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ produit.number }} / {{ produit.paginator.num_pages }}.
+            </span>
+
+            {% if produit.has_next %}
+                <a href="?page={{ produit.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 
 <p></p>
 

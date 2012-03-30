@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def produit(request, produit_id):
@@ -15,8 +16,20 @@ def produit(request, produit_id):
 
 def categorie(request, cat_id):
     categorie = get_object_or_404(Produit, pk=cat_id)
-    produit = get_list_or_404(Produit, categorie=cat_id)
-    return render_to_response('Commandes/categorie.html', {'produit':produit , 'categorie':categorie}, context_instance=RequestContext(request) )
+    list_produit = get_list_or_404(Produit, categorie=cat_id)
+    
+    paginator = Paginator(list_produit, 10) # Show 10 items per page
+    page = request.GET.get('page',1)
+    try:
+        produits = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        produits = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        produits = paginator.page(paginator.num_pages)
+
+    return render_to_response('Commandes/categorie.html', {'produit':produits , 'categorie':categorie}, context_instance=RequestContext(request) )
 
 @login_required
 def panier(request):
@@ -79,3 +92,24 @@ def validerPanier(request):
     profil.save()
 
     return HttpResponse("Valider! {0}".format(prix_panier))
+
+@login_required
+def choisirMenu(request,typeMenu_id, menu_id=None):
+    typeMenu = get_object_or_404(TypeMenu, pk=typeMenu_id)
+    if menu_id!=None:
+        menu = get_object_or_404(Menu, pk=menu_id)
+        menu_id=int(menu.id)
+    else:
+        menu = Menu()
+        menu.typeMenu_id = typeMenu_id
+        menu.user = request.user
+    
+    if request.method=='POST':
+        form = ChoisirMenuForm(data=request.POST, instance=menu)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('Kfet.views.home'))
+    else:
+        form = ChoisirMenuForm(instance=menu)
+    return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
+

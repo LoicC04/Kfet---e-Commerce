@@ -13,4 +13,6 @@ urlpatterns = patterns('Kfet.Commandes.views',
     url(r'^panier/$', 'panier'),
     url(r'^categorie/(?P<cat_id>\d+)/$', 'categorie'),
     url(r'^validerPanier/$', 'validerPanier'),
+    url(r'^choisirMenu/(?P<typeMenu_id>\d+)/$', 'choisirMenu'),
+    #url(r'^choisirMenu/(?P<typeMenu_id>\d+)/(?P<menu_id>\d+)/$', 'Kfet.views.choisirMenu'),
 )

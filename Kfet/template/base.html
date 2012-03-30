@@ -162,6 +162,7 @@
 						<!-- Begin Products -->
                                                 <div id="products">
                                                     {% for produit in publicites_produit %}
+                                                    <a href="{% url Kfet.Commandes.views.produit produit.id %}">
                                                     <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%} style="text-align:center">
                                                         <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" height="238px" />
 							<div class="pr-info">
@@ -170,6 +171,7 @@
                                                             <span class="pr-price">{{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup></span>
 						    	</div>
                                                     </div>
+                                                    </a>
                                                     {% endfor %}
 						    <div class="cl">&nbsp;</div>
 						</div>

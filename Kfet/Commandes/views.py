@@ -32,12 +32,12 @@ def panier_ajout(request):
         produit_id = request.POST['produit']        
         user = request.user
         profil = user.get_profile()
-        if quantite != 0:
+        if quantite == "0":
+            erreur = "Vous ne pouvez pas ajouter une quantité de 0."
+            return render_to_response('Commandes/produit.html', {'erreur':erreur}, context_instance=RequestContext(request) )
+        else:
             produit_panier = Produit_Panier(quantite=quantite, produit_id=produit_id, panier=profil.panier)
             produit_panier.save()
-        else:
-            erreur = "Vous ne pouvez pas ajouter une quantité de 0."
-            return render_to_response('Commandes/panier.html', {'erreur':erreur}, context_instance=RequestContext(request) )
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))

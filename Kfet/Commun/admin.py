@@ -8,6 +8,9 @@ admin.site.register(Categorie)
 admin.site.register(Commentaire)
 admin.site.register(Promo)
 admin.site.register(TypeMenu)
+admin.site.register(Reglement)
+admin.site.register(Status_Commande)
+admin.site.register(Commande)
 
 def response_change(self, request, obj, *args, **kwargs):
     if request.REQUEST.has_key('_popup'):

@@ -27,21 +27,36 @@
 
 <h1>Mes commandes en cours</h1>
 
-{% if commande_encours %}
-<table style=width:100%>
+{% if commandes_encours %}
+<table style="width:100%;text-align:center">
     <tr>
         <th>Date</th>
         <th>Type de règlement</th>
         <th>Total</th>
     </tr>
-    {% for c in commandes_encours %}
+    {% for c in commandes_encours.object_list %}
     <tr>
         <td>{{ c.date }}</td>
         <td>{{ c.reglement.type }}</td>
-        <td>{{ c.prix }}</td>
+        <td><strong>{{ c.prix }}€</strong></td>
     </tr>
     {% endfor %}
 </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if commandes_encours.has_previous %}
+                <a href="?page={{ commandes_encours.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ commandes_encours.number }} / {{ commandes_encours.paginator.num_pages }}.
+            </span>
+
+            {% if commandes_encours.has_next %}
+                <a href="?page={{ commandes_encours.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 {% else %}
     <p>Vous n'avez aucune commande en cours</p>
 {% endif %}

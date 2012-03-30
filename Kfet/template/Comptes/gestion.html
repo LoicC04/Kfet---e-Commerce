@@ -27,6 +27,7 @@
 
 <h1>Mes commandes en cours</h1>
 
+{% if commande_encours %}
 <table style=width:100%>
     <tr>
         <th>Date</th>
@@ -35,12 +36,15 @@
     </tr>
     {% for c in commandes_encours %}
     <tr>
-        <td>date</td>
+        <td>{{ c.date }}</td>
         <td>{{ c.reglement.type }}</td>
         <td>{{ c.prix }}</td>
     </tr>
     {% endfor %}
 </table>
+{% else %}
+    <p>Vous n'avez aucune commande en cours</p>
+{% endif %}
 
 
 {% endblock %}

@@ -209,4 +209,3 @@ def choisirMenu(request,typeMenu_id, menu_id=None):
     else:
         form = ChoisirMenuForm(instance=menu)
     return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
-

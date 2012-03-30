@@ -39,4 +39,21 @@
     {% endifnotequal %}
 </div>
 
+<div id="comms" style="position:absolute;left:35%;top:60%;width:600px;;z-index:0">
+
+    <table style="width:100%;"> 
+    {% for com in comms %}
+        <tr>
+            <td>{{ com.user }}</td>
+            <td>{{ com.commentaire }}</td>
+        </tr>
+    {% endfor %}
+    </table> 
+<!--    <form action="" method="POST">
+        <input name="com" type="Text" width=200 height=100>
+        <input type="submit" value="Ajouter un commentaire">
+    </form> -->
+        
+</div>
+
 {% endblock %}

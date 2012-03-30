@@ -94,22 +94,27 @@ def gestion(request):
     context['user'] = user
     context['profile'] = profile
 
-    encours = Status_Commande.objects.get(code=1)
-    commandes = Commande.objects.filter(status_commande=encours)
-    
-    paginator = Paginator(commandes, 10) # Show 10 items per page
-    page = request.GET.get('page',1)
     try:
-        commandes_encours = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        commandes_encours = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        commandes_encours = paginator.page(paginator.num_pages)
+        encours = Status_Commande.objects.get(code=1)
+    except Status_Commande.DoesNotExist:
+        encours=None
+        #return HttpResponse("Aucun status de commande n'est défini n'est défini (En cours est celui par défaut)")
+    if encours!=None:
+        commandes = Commande.objects.filter(status_commande=encours)
+    
+        paginator = Paginator(commandes, 10) # Show 10 items per page
+        page = request.GET.get('page',1)
+        try:
+            commandes_encours = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            commandes_encours = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            commandes_encours = paginator.page(paginator.num_pages)
 
-    if commandes_encours.object_list.count()>0:
-        context['commandes_encours'] = commandes_encours
+        if commandes_encours.object_list.count()>0:
+            context['commandes_encours'] = commandes_encours
     return render_to_response('Comptes/gestion.html', context,  context_instance=RequestContext(request))
 
 def logout(request):

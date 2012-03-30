@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 
 
 def produit(request, produit_id, erreur=None):
@@ -66,7 +67,7 @@ def panier(request, erreur=None):
         erreur = "10"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="11":
-        erreur = "<strong>La quantité ne peut être supérieure au stock</strong>, veuillez chcoisir une valeur inférieur ou égale à la quantité restante."
+        erreur = "<strong>La quantité ne peut être supérieure au stock</strong>, veuillez choisir une valeur inférieure ou égale à la quantité restante."
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="12":
         erreur = "<strong>La quantité ne peut être nulle</strong>, veuillez sélectionner une valeur positive."
@@ -113,7 +114,7 @@ def panier_maj(request, produit_panier_id):
         produit = get_object_or_404(Produit, pk=produit_panier.produit_id)
         quantite = quantite=request.POST['quantite']
         if quantite:       
-            if produit.quantite > int(quantite):
+            if produit.quantite >= int(quantite):
                 if quantite == "0":
                     erreur = 12
                     return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
@@ -131,49 +132,61 @@ def panier_maj(request, produit_panier_id):
 
 @login_required
 def validerPanier(request):
-    user = request.user
-    profil = user.get_profile()
-    panier_a_valider = profil.panier
-    produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id)
+    user = request.user # On récupère l'utilisateur
+    profil = user.get_profile() # on récupère son profil
+    panier_a_valider = profil.panier # on récupère son panier
+    produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id) # Le panier liste les produits sélectionnés
     prix_panier=0
-    if produits_a_valider.count()>0:
-        for elt in produits_a_valider:
-            if elt.quantite<=0:
-                # Un produit dans le panier a une quantité à 0
-                erreur=1
-                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
-            elif elt.produit.quantite<=0:
-                # produit en rupture de stock
-                erreur=2
-                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
-            elif elt.quantite<=elt.produit.quantite:
-                # stock suffisant pour commander
-                prix_panier += elt.produit.prix*elt.quantite
-                elt.produit.quantite -= elt.quantite
-                elt.produit.save()
-            else:
-                # stock du produit insuffisant
-                erreur=4
-                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
 
-        commande = Commande()
-        commande.prix = prix_panier
-        commande.user = user
-        commande.panier = panier_a_valider
-        commande.reglement = Reglement.objects.get(type="Liquide")
-        commande.status_commande = Status_Commande.objects.get(label="En cours")
 
-        commande.save()
-
-        nouveau_panier = Panier()
-        nouveau_panier.save()
-
-        profil.panier = nouveau_panier
-        profil.save()
-    else:
+    if produits_a_valider.count()<=0:
         # Le panier est vide
         erreur=3
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+
+    # On créé la commande
+    commande = Commande()
+    commande.prix = prix_panier
+    commande.user = user
+    commande.panier = panier_a_valider
+    try:
+        reglement_liquide = Reglement.objects.get(type="Liquide")
+    except Reglement.DoesNotExist:
+        return HttpResponse("Aucun type de règlement n'est défini (Liquide est celui par défaut)")
+    commande.reglement = reglement_liquide
+    try:
+        status_encours = get_object_or_404(Status_Commande,label="En cours")
+    except Http404:
+        return HttpResponse("Aucun status de commande n'est défini (En Cours est celui par défaut)")
+    commande.status_commande = status_encours
+
+    for elt in produits_a_valider: # Pour chaque produit dans le panier on vérifie sa quantité par rapport au stock
+        if elt.quantite<=0:
+            # Un produit dans le panier a une quantité à 0
+            erreur=1
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+        elif elt.produit.quantite<=0:
+            # produit en rupture de stock
+            erreur=2
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+        elif elt.quantite<=elt.produit.quantite:
+            # stock suffisant pour commander
+            prix_panier += elt.produit.prix*elt.quantite # On ajoute le prix*quantité
+            elt.produit.quantite -= elt.quantite # on met à jour le stock
+            elt.produit.save()
+        else:
+            # stock du produit insuffisant
+            erreur=4
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+
+    # On sauvegarde la commande une fois les stocks mis à jour
+    commande.save()
+
+    # On créé un nouveau panier pour l'utilisateur et le rattache à son profil
+    nouveau_panier = Panier()
+    nouveau_panier.save()
+    profil.panier = nouveau_panier
+    profil.save()
 
     return HttpResponse("Valider! Prix à payer: {0} €".format(prix_panier))
 

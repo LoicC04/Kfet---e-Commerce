@@ -38,10 +38,18 @@ def panier(request, erreur=None):
     panier = Produit_Panier.objects.filter(panier=profil.panier_id)
     if erreur==None:
         return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
+    elif erreur=="1":
+        erreur = "<strong>Un produit ne peut pas être commandé avec une quantité nulle!</strong>. Veuillez le supprimer ou changer la quantité commandée"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="2":
+        erreur = "<strong>Un produit n'est plus en stock !</strong>. Veuillez le supprimer ou attendre un approvisionnement"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="3":
         erreur = "<strong>Le panier est vide</strong>, veuillez ajoutez des articles dans le panier pour le valider"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
-<<<<<<< HEAD
+    elif erreur=="4":
+        erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="10":
         erreur = "10"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
@@ -50,17 +58,6 @@ def panier(request, erreur=None):
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="12":
         erreur = "<strong>La quantité ne peut être nulle</strong>, veuillez sélectionner une valeur positive."
-=======
-    elif erreur=="2":
-        erreur = "<strong>Un produit n'est plus en stock !</strong>. Veuillez le supprimer ou attendre un approvisionnement"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
-    elif erreur=="4":
-        erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
->>>>>>> a8c25a6df646c9d3f5dd59b0b20ad5356fca873e
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
-    elif erreur=="1":
-        erreur = "<strong>Un produit ne peut pas être commandé avec une quantité nulle!</strong>. Veuillez le supprimer ou changer la quantité commandée"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )

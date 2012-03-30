@@ -4,42 +4,62 @@
 
 {% block content %}
 <h1>{{categorie.categorie}}</h1>
-<br/><br/>
-<table style=width:100%>
-    <tr>
-        <th>Nom</th>
-        <th>Prix</th>
-        <th>Photos</th>
-        <th>Quantité en stock</th>
-        <th>Commander</th>
-    </tr>
-    {% for pro in produit.object_list %}
-    <tr>
-        <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>
-        <td>{{pro.prix}}</td>
-        <td><center><img src="{{pro.image.url}}" height="50"></center></td>
-        <td>
-            <center>
-                {{ pro.quantite }}
-            </center>
-        </td>
-        <td>
-            <center>
+
+{% for pro in produit.object_list %}
+<div>
+    <div style="width=280px;height:100px;">
+        <div style="
+            position: relative;
+            padding: 10px;
+            margin-top: 10px;
+            width: 20%;
+            float: left; 
+        ">
+            <img src="{{ pro.image.url }}" height=70px>
+        </div>
+        <div style="
+            background-color: mediumslateblue;
+            position: relative;
+            padding: 2px;
+            width: 60%;
+            float: left;
+            margin-left: 5px;
+            margin-bottom: 10px;
+            margin-top : 20px;
+            color : white;
+        ">
+            <b>&nbsp {{ pro.nom }}</b></br>
+            &nbsp &nbsp &nbsp Quantité en stock : {{ pro.quantite }}
+        </div> 
+        <div style="
+            background-color: paleturquoise;
+            position: relative;
+            padding: 2px;
+            width: 60%;
+            margin-left: 5px;
+            margin-top: 2px;
+            float: left; 
+        ">
             {% ifnotequal pro.quantite 0 %}
             <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-                Quantité :<input type=text size=2 name="quantite"><br/>
+                <b>&nbsp Prix : {{ pro.prix }}</b>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
                 <input type=hidden value="{{ pro.id }}" name="produit">
-                <input type=submit Value="Ajouter au panier">
+                <span style="float: right; display: inline; background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; margin-right:10px;">
+                    <input
+                        style="margin-right: -7px; position: relative; height: 29px; line-height: 27px; background: url('/static/css/T_Shirt/css/images/button-right.png') no-repeat right 0; float: left; display: inline; width: auto; border: none; cursor: pointer; padding-left: 15px; padding-right: 13px; color: #fff; font-weight: bold; letter-spacing: 1px; "
+                        type="submit" value="Commander" />
+                </span>
             </form>
             {% else %}
                 <p>Produit épuisé</p>
             {% endifnotequal %}
         </center>
-        </td>
-
-    </tr>
-    {% endfor %}
-</table>
+           
+        </div>
+    </div>
+</div>
+{% endfor %}
+<br/><br/>
     <div class="pagination">
         <span class="step-links">
             {% if produit.has_previous %}
@@ -55,7 +75,5 @@
             {% endif %}
         </span>
     </div>
-
-<p></p>
 
 {% endblock %}

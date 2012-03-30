@@ -4,26 +4,36 @@
 
 {% block content %}
 <h1>{{produit.nom}}</h1>
-
+{% ifnotequal erreur None %}
+    <div style="position:absolute; left:35%; top:20%">
+    {% ifequal erreur "1" %}        
+             <p style="color:red"> La quantité ajoutée ne peut être nulle</p>
+    {% else %}
+        {%ifequal erreur "2" %}
+           <p style="color:red">La quantité demandée est supérieure au stock</p>
+        {% endifequal %}
+    {% endifequal %}
+    </div>
+{% endifnotequal %}
 <div id="image" style="position:absolute;left:65%;top:15%;width:200px;z-index:0">
     <img src="{{ produit.image.url }}" width=200px>
 </div>
 
-<div id="prix" style="position:absolute;left:78%;top:28%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
+<div id="prix" style="position:absolute;left:78%;top:30%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
     <center>
         <br/>
         {{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup>
     </center>
 </div>
 
-<div id="image" style="position:absolute;left:35%;top:20%;width:300px;z-index:0">
+<div id="image" style="position:absolute;left:35%;top:24%;width:300px;z-index:0">
     <p><b>Description : </b> {{ produit.info }}</b></p>
     <p><b>Ingrédients : </b> {{ produit.ingredients }}</b></p>
     <p><b>Quantité restante :</b> {{ produit.quantite }}</b></p>
     {% ifnotequal produit.quantite 0 %}
         <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-            Quantité :<input type=text size=2 name="quantite">
-            <input type=hidden value="{{ pro.id }}" name="produit">
+            Quantité :<input type=text size=2 name="quantite"><br/>
+            <input type=hidden value="{{ produit.id }}" name="produit">
             <input type=submit Value="Ajouter au panier">
         </form>
     {% endifnotequal %}

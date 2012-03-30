@@ -22,4 +22,25 @@
         <td>Promo</td><td>{{profile.promo}}</td>
     </tr>
 </table>
+
+<br/>
+
+<h1>Mes commandes en cours</h1>
+
+<table style=width:100%>
+    <tr>
+        <th>Date</th>
+        <th>Type de règlement</th>
+        <th>Total</th>
+    </tr>
+    {% for c in commandes_encours %}
+    <tr>
+        <td>date</td>
+        <td>{{ c.reglement.type }}</td>
+        <td>{{ c.prix }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
 {% endblock %}

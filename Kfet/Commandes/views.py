@@ -41,6 +41,15 @@ def panier(request, erreur=None):
     elif erreur=="3":
         erreur = "<strong>Le panier est vide</strong>, veuillez ajoutez des articles dans le panier pour le valider"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="10":
+        erreur = "10"
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="11":
+        erreur = "<strong>La quantité ne peut être supérieure au stock</strong>, veuillez chcoisir une valeur inférieur ou égale à la quantité restante."
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    elif erreur=="12":
+        erreur = "<strong>La quantité ne peut être nulle</strong>, veuillez sélectionner une valeur positive."
+        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
         return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
@@ -79,8 +88,25 @@ def panier_suppr(request, produit_panier_id):
 @login_required
 def panier_maj(request, produit_panier_id):
     if request.method == 'POST':
-        produit = Produit_Panier.objects.filter(id=produit_panier_id).update(quantite=request.POST['quantite'])
-    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+        produit_panier = get_object_or_404(Produit_Panier, pk=produit_panier_id)
+        produit = get_object_or_404(Produit, pk=produit_panier.produit_id)
+        quantite = quantite=request.POST['quantite']
+        if quantite:       
+            if produit.quantite > int(quantite):
+                if quantite == "0":
+                    erreur = 12
+                    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+                else:
+                    produit = Produit_Panier.objects.filter(id=produit_panier_id).update(quantite=quantite)
+                    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+            else:
+                erreur = 11
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+        else:
+            erreur = 12
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+    else:
+        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
 
 @login_required
 def validerPanier(request):

@@ -10,6 +10,7 @@
         <th>Nom</th>
         <th>Prix</th>
         <th>Photos</th>
+        <th>Quantité en stock</th>
         <th>Commander</th>
     </tr>
     {% for pro in produit.object_list %}
@@ -17,6 +18,11 @@
         <td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td>
         <td>{{pro.prix}}</td>
         <td><center><img src="{{pro.image.url}}" height="50"></center></td>
+        <td>
+            <center>
+                {{ pro.quantite }}
+            </center>
+        </td>
         <td>
             <center>
             {% ifnotequal pro.quantite 0 %}
@@ -30,6 +36,7 @@
             {% endifnotequal %}
         </center>
         </td>
+
     </tr>
     {% endfor %}
 </table>

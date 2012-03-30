@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Promo, UserProfile, Panier, Status_Commande, Commande
+from django.shortcuts import render_to_response
+from Kfet.Commun.models import Promo, Panier, Status_Commande, Commande
 from Kfet.Commun.models.UserProfile import create_user_profile
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class CompteForm(forms.Form):
@@ -88,11 +88,29 @@ def login(request):
 
 @login_required
 def gestion(request):
+    context={}
     user=request.user
     profile = user.get_profile()
+    context['user'] = user
+    context['profile'] = profile
+
     encours = Status_Commande.objects.get(code=1)
-    commandes_encours = Commande.objects.filter(status_commande=encours)
-    return render_to_response('Comptes/gestion.html', {'user':user,'profile':profile, 'commandes_encours':commandes_encours}, context_instance=RequestContext(request))
+    commandes = Commande.objects.filter(status_commande=encours)
+    
+    paginator = Paginator(commandes, 10) # Show 10 items per page
+    page = request.GET.get('page',1)
+    try:
+        commandes_encours = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        commandes_encours = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        commandes_encours = paginator.page(paginator.num_pages)
+
+    if commandes_encours.object_list.count()>0:
+        context['commandes_encours'] = commandes_encours
+    return render_to_response('Comptes/gestion.html', context,  context_instance=RequestContext(request))
 
 def logout(request):
     auth_logout(request)

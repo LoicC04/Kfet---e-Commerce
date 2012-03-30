@@ -27,7 +27,7 @@
             {% ifnotequal pan.produit.quantite 0 %}
                 {{ pan.produit.quantite }}
             {% else %}
-                Produit épuisé
+                <span style="color:red">Produit épuisé</span>
             {% endifnotequal %}
         </td>
         <td>

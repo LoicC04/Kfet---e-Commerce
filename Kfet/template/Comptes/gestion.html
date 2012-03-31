@@ -7,10 +7,10 @@
 
 <table style=width:100%>
     <tr>
-        <td>Nom</td><td>{{user.first_name}}</td>
+        <td>Nom</td><td>{{user.last_name}}</td>
     </tr>
     <tr>
-        <td>Prénom</td><td>{{user.last_name}}</td>
+        <td>Prénom</td><td>{{user.first_name}}</td>
     </tr>
     <tr>
         <td>Numéro étudiant</td><td>{{user.username}}</td>
@@ -30,14 +30,34 @@
 {% if commandes_encours %}
 <table style="width:100%;text-align:center">
     <tr>
+        <th>Numéro commande</th>
+        <th>Statut commande</th>
         <th>Date</th>
         <th>Type de règlement</th>
         <th>Total</th>
     </tr>
     {% for c in commandes_encours.object_list %}
     <tr>
-        <td>{{ c.date }}</td>
-        <td>{{ c.reglement.type }}</td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+                {{ c.id }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+                {{ c.status_commande.label }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+                {{ c.date }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+            {{ c.reglement.type }}
+            </a>
+        </td>
         <td><strong>{{ c.prix }}€</strong></td>
     </tr>
     {% endfor %}

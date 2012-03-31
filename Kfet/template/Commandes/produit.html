@@ -15,28 +15,67 @@
     {% endifequal %}
     </div>
 {% endifnotequal %}
-<div id="image" style="position:absolute;left:65%;top:15%;width:200px;z-index:0">
-    <img src="{{ produit.image.url }}" width=200px>
-</div>
 
-<div id="prix" style="position:absolute;left:78%;top:30%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
-    <center>
-        <br/>
-        {{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup>
-    </center>
-</div>
+<div>
+    <div style="width=280px;height:100px;">
+        <div style="
+            position: relative;
+            padding: 10px;
+            margin-top: 10px;
+            width: 30%;
+            float: left; 
+        ">
 
-<div id="image" style="position:absolute;left:35%;top:24%;width:300px;z-index:0">
-    <p><b>Description : </b> {{ produit.info }}</b></p>
-    <p><b>Ingrédients : </b> {{ produit.ingredients }}</b></p>
-    <p><b>Quantité restante :</b> {{ produit.quantite }}</b></p>
-    {% ifnotequal produit.quantite 0 %}
-        <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-            Quantité :<input type=text size=2 name="quantite"><br/>
-            <input type=hidden value="{{ produit.id }}" name="produit">
-            <input type=submit Value="Ajouter au panier">
-        </form>
-    {% endifnotequal %}
+            <div id="prix" style="position:absolute;left:0%;top:60%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
+                <center>
+                    <br/>
+                    {{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup>
+                </center>
+            </div>
+            <img src="{{ produit.image.url }}" height=150px>
+        </div>
+        <div style="
+            background-color: mediumslateblue;
+            position: relative;
+            padding: 2px;
+            width: 60%;
+            float: left;
+            margin-left: 5px;
+            margin-bottom: 10px;
+            margin-top : 20px;
+            color : white;
+        ">
+        <strong><a href="{% url Kfet.Commandes.views.produit produit.id %}"> &nbsp {{ produit.nom }}</a></strong></br>
+            &nbsp &nbsp &nbsp Quantité en stock : {{ produit.quantite }}<br/><br/>
+            <p style="margin-left:25px"><strong>Description : </strong>{{ produit.info }}</p>
+            <p style="margin-left:25px"><strong>Ingrédients : </strong>{{ produit.ingredient }}</p>
+        </div> 
+        <div style="
+            background-color: paleturquoise;
+            position: relative;
+            padding: 2px;
+            width: 60%;
+            margin-left: 5px;
+            margin-top: 2px;
+            float: left; 
+        ">
+            {% ifnotequal produit.quantite 0 %}
+            <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
+                <strong>&nbsp Prix : {{ produit.prix }}</strong>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
+                <input type=hidden value="{{ produit.id }}" name="produit">
+                <span style="float: right; display: inline; background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; margin-right:10px;top:40%">
+                    <input
+                        style="margin-right: -7px; position: relative; height: 29px; line-height: 27px; background: url('/static/css/T_Shirt/css/images/button-right.png') no-repeat right 0; float: left; display: inline; width: auto; border: none; cursor: pointer; padding-left: 15px; padding-right: 13px; color: #fff; font-weight: bold; letter-spacing: 1px; "
+                        type="submit" value="Commander" />
+                </span>
+            </form>
+            {% else %}
+            <center><strong>Produit épuisé</strong></center>
+            {% endifnotequal %}
+        </center>
+           
+        </div>
+    </div>
 </div>
 
 <div id="comms" style="position:absolute;left:35%;top:60%;width:600px;;z-index:0">

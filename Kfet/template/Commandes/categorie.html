@@ -28,7 +28,7 @@
             margin-top : 20px;
             color : white;
         ">
-            <b>&nbsp {{ pro.nom }}</b></br>
+        <strong><a href="{% url Kfet.Commandes.views.produit pro.id %}"> &nbsp {{ pro.nom }}</a></strong></br>
             &nbsp &nbsp &nbsp Quantité en stock : {{ pro.quantite }}
         </div> 
         <div style="
@@ -42,7 +42,7 @@
         ">
             {% ifnotequal pro.quantite 0 %}
             <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-                <b>&nbsp Prix : {{ pro.prix }}</b>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
+                <strong>&nbsp Prix : {{ pro.prix }}</strong>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
                 <input type=hidden value="{{ pro.id }}" name="produit">
                 <span style="float: right; display: inline; background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; margin-right:10px;">
                     <input
@@ -51,7 +51,7 @@
                 </span>
             </form>
             {% else %}
-                <p>Produit épuisé</p>
+            <center><strong>Produit épuisé</strong></center>
             {% endifnotequal %}
         </center>
            

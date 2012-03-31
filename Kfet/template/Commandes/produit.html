@@ -17,16 +17,17 @@
 {% endifnotequal %}
 
 <div>
-    <div style="width=280px;height:100px;">
+    <div style="width=280px;min-height:500px;">
         <div style="
             position: relative;
             padding: 10px;
             margin-top: 10px;
             width: 30%;
+            min-height: 400px;
             float: left; 
         ">
 
-            <div id="prix" style="position:absolute;left:0%;top:60%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
+            <div id="prix" style="position:absolute;left:0%;top:30%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
                 <center>
                     <br/>
                     {{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup>
@@ -45,8 +46,8 @@
             margin-top : 20px;
             color : white;
         ">
-        <strong><a href="{% url Kfet.Commandes.views.produit produit.id %}"> &nbsp {{ produit.nom }}</a></strong></br>
-            &nbsp &nbsp &nbsp Quantité en stock : {{ produit.quantite }}<br/><br/>
+            <strong><a href="{% url Kfet.Commandes.views.produit produit.id %}"> &nbsp {{ produit.nom }}</a></strong></br>
+            <p style="margin-left:25px"><strong>Quantité en stock : </strong>{{ produit.quantite }}
             <p style="margin-left:25px"><strong>Description : </strong>{{ produit.info }}</p>
             <p style="margin-left:25px"><strong>Ingrédients : </strong>{{ produit.ingredient }}</p>
         </div> 
@@ -72,28 +73,50 @@
             {% else %}
             <center><strong>Produit épuisé</strong></center>
             {% endifnotequal %}
-        </center>
-           
+               
+        </div>
+        <div style="
+            background-color: paleturquoise;
+            position: relative;
+            padding: 2px;
+            width: 60%;
+            margin-left: 5px;
+            margin-top: 10px;
+            margin-bottom : 50px;
+            padding-right:4px;
+            float: left; 
+        ">
+        {% for com in comms.object_list %}
+        <p style="padding-left:10px" align="justify"><strong>{{ com.user }}</strong></p>
+        <p style="padding-left:40px; padding-right:20px" align="justify">{{ com.commentaire }}</p>
+        {% endfor %}
+        
+        <div class="pagination">
+            <span class="step-links">
+                {% if comms.has_previous %}
+                    <a href="?page={{ comms.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ comms.number }} / {{ comms.paginator.num_pages }}.
+                </span>
+
+                {% if comms.has_next %}
+                    <a href="?page={{ comms.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+
+
+        {% if user.first_name %}
+        <form action="{% url Kfet.Commandes.views.produit produit.id %}" method="POST">{% csrf_token %}
+            <textarea name="com" cols=55 rows=5></textarea><br/>
+            <input type="submit" value="Ajouter un commentaire">
+        </form>        
+        {% endif %}
+
         </div>
     </div>
-</div>
-
-<div id="comms" style="position:absolute;left:35%;top:60%;width:600px;;z-index:0">
-
-    <table style="width:100%;"> 
-    {% for com in comms.object_list %}
-        <tr>
-            <td>{{ com.user }}</td>
-            <td>{{ com.commentaire }}</td>
-        </tr>
-    {% endfor %}
-    </table> 
-    {% if user.firstname %}
-    <form action="{% url Kfet.Commandes.views.produit produit.id %}" method="POST">{% csrf_token %}
-        <textarea name="com" cols=20 rows=10></textarea>
-        <input type="submit" value="Ajouter un commentaire">
-    </form>        
-    {% endif %}
 </div>
 
 {% endblock %}

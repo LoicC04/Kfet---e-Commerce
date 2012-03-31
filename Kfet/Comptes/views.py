@@ -43,8 +43,8 @@ def creation(request):
                     panier.save()
                     user = User()
                     user.username = numero           
-                    user.first_name = nom
-                    user.last_name = prenom                   
+                    user.first_name = prenom
+                    user.last_name = nom                   
                     user.email = mail
                     user.set_password(password)
 

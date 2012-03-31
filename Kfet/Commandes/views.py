@@ -195,7 +195,8 @@ def validerPanier(request):
     profil.panier = nouveau_panier
     profil.save()
 
-    return HttpResponse("Valider! Prix à payer: {0} €".format(prix_panier))
+   # return HttpResponse("Valider! Prix à payer: {0} €".format(prix_panier))
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.confirmationPanier', args=[commande.id]))
 
 @login_required
 def choisirMenu(request,typeMenu_id, menu_id=None):
@@ -216,3 +217,14 @@ def choisirMenu(request,typeMenu_id, menu_id=None):
     else:
         form = ChoisirMenuForm(instance=menu)
     return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
+
+@login_required
+def confirmationPanier(request, commande_id):
+    try:
+        commande = Commande.objects.get(pk=commande_id)
+    except Commande.DoesNotExist:
+        return HttpResponse("Erreur pendant la validation du panier. La commande {0} n'existe pas.")
+
+    panier_produit = Produit_Panier.objects.filter(panier=commande.panier)
+    
+    return render_to_response('Commandes/confirmationPanier.html', {'commande':commande, "panier_produit":panier_produit}, context_instance=RequestContext(request))

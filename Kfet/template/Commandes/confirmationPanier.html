@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Confirmation de la commande {{ commande.id }} - Kfet{% endblock %}
+
+{% block content %}
+<h1>Commande de {{ commande.user.first_name }} {{ commande.user.last_name }} du {{ commande.date }}</h1>
+
+<h2>Statut de la commande : {{ commande.status_commande.label }}</h2>
+
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Nom</th>
+        <th>Quantité</th>
+        <th>Prix unitaire</th>
+    </tr>
+    {% for pan in panier_produit %}
+    <tr>
+        <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.nom }}</a></td>
+        <td>{{ pan.quantite }}</td>
+        <td>{{ pan.produit.prix }} €</td>
+    </tr>
+    {% endfor %}
+    <tr style="height:4em;font-weight:bold;color:red;">
+        <td>Total Commande</td>
+        <td>{{ panier_produit.count }} produits</td>
+        <td style="border:outset 3px red;">{{ commande.prix }} € </td>
+</table>
+
+<h3>Pour récupérer sa commande</h3>
+
+<p>Le service commence à 12h30. La pizza vous attendra à la Kfet</p>
+
+{% endblock %}

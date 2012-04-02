@@ -23,7 +23,7 @@ class Produit(models.Model):
             app_label = 'Commun'
 
         def __unicode__(self):
-            representation = "{0}, quantite={1}".format(self.nom,self.quantite)
+            representation = "{0}".format(self.nom)
             return representation
 
         def save(self, size=(234,238)):

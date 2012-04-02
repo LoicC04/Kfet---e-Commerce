@@ -21,15 +21,18 @@ class Menu(models.Model):
        return "Menu {0} de {1}".format(self.typeMenu.nom, self.user.username);
 
 class ChoisirMenuForm(forms.ModelForm):
+    def __init__(self, plat, *args, **kwargs):
+        super(ChoisirMenuForm, self).__init__(*args, **kwargs)
+   
+        cat_boisson = Categorie.objects.filter(nom="Boisson")
+        cat_plat = Categorie.objects.filter(nom=plat)
+        cat_article = Categorie.objects.all().exclude(nom__in=["Pizza", "Boisson", "Sandwich"])
+        
+        self.fields['boisson'] = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_boisson).filter(quantite__gte=1))
+        self.fields['plat'] = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_plat).filter(quantite__gte=1))
+        self.fields['produit1'] = forms.ModelChoiceField(Produit.objects.filter(categorie__in=cat_article).filter(quantite__gte=1))
+        self.fields['produit2'] = forms.ModelChoiceField(Produit.objects.filter(categorie__in=cat_article).filter(quantite__gte=1))
+
     class Meta:
         model = Menu
         exclude=('typeMenu', 'user')
-
-    cat_boisson = Categorie.objects.filter(nom="Boisson")
-    cat_plat = Categorie.objects.filter(nom="Pizza")
-    cat_article = Categorie.objects.all().exclude(nom__in=["Pizza","Boisson"])
-
-    boisson = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_boisson))
-    plat = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_plat))
-    produit1 = forms.ModelChoiceField(Produit.objects.filter(categorie__in=cat_article))
-    produit2 = forms.ModelChoiceField(Produit.objects.filter(categorie__in=cat_article))

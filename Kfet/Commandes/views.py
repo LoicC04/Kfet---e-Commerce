@@ -195,7 +195,6 @@ def validerPanier(request):
     profil.panier = nouveau_panier
     profil.save()
 
-   # return HttpResponse("Valider! Prix à payer: {0} €".format(prix_panier))
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.confirmationPanier', args=[commande.id]))
 
 @login_required
@@ -210,12 +209,12 @@ def choisirMenu(request,typeMenu_id, menu_id=None):
         menu.user = request.user
     
     if request.method=='POST':
-        form = ChoisirMenuForm(data=request.POST, instance=menu)
+        form = ChoisirMenuForm(typeMenu.nom,data=request.POST, instance=menu)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('Kfet.views.home'))
     else:
-        form = ChoisirMenuForm(instance=menu)
+        form = ChoisirMenuForm(typeMenu.nom, instance=menu)
     return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
 
 @login_required

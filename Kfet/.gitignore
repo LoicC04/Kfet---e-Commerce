@@ -3,8 +3,6 @@
 *.pot
 *~
 *.swp
-nbproject/
 *.save
-/static/
-bug
 settings.py
+static/images

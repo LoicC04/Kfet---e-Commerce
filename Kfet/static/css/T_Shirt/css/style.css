@@ -198,3 +198,67 @@ footer span { padding-left: 3px; padding-right: 4px; }
     width : 250px;
     background-color:orange;
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++ */
+
+/* Style page produit */
+
+/* Style page categorie */
+.cat_produit{
+    min-width:700px;
+    min-height:150px;
+}
+
+.cat_image{
+    position: relative;
+    padding: 10px;
+    margin-top: 10px;
+    width: 20%;
+    float: left; 
+}
+
+.cat_detail{
+    background-color: mediumslateblue;
+    position: relative;
+    padding: 2px;
+    width: 60%;
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-top : 20px;
+    color : white;
+}
+
+.cat_commande{
+    background-color: paleturquoise;
+    position: relative;
+    padding: 2px;
+    width: 60%;
+    margin-left: 5px;
+    margin-top: 2px;
+    float: left; 
+}
+.cat_span{
+    float: right; 
+    display: inline; 
+    background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; 
+    margin-right:10px;
+}
+.cat_button{
+    margin-right: -7px;
+    position: relative;
+    height: 29px;
+    line-height: 27px;
+    background: url('/static/css/T_Shirt/css/images/button-right.png') no-repeat right 0;
+    float: left;
+    display: inline;
+    width: auto;
+    border: none;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 13px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px; 
+}
+

@@ -100,7 +100,7 @@ def gestion(request):
         encours=None
         #return HttpResponse("Aucun status de commande n'est défini n'est défini (En cours est celui par défaut)")
     if encours!=None:
-        commandes = Commande.objects.filter(status_commande=encours)
+        commandes = Commande.objects.filter(status_commande=encours).filter(user=user)
     
         paginator = Paginator(commandes, 10) # Show 10 items per page
         page = request.GET.get('page',1)

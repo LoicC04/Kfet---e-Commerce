@@ -36,6 +36,7 @@
             <img src="{{ produit.image.url }}" height=150px>
         </div>
         <div style="
+            border-radius: 10px;
             background-color: mediumslateblue;
             position: relative;
             padding: 2px;
@@ -52,7 +53,8 @@
             <p style="margin-left:25px"><strong>Ingrédients : </strong>{{ produit.ingredients }}</p>
         </div> 
         <div style="
-            background-color: paleturquoise;
+            border-radius: 10px;
+            background-color: mediumslateblue;
             position: relative;
             padding: 2px;
             width: 60%;
@@ -76,7 +78,8 @@
                
         </div>
         <div style="
-            background-color: paleturquoise;
+            border-radius: 10px;
+            background-color: mediumslateblue;
             position: relative;
             padding: 2px;
             width: 60%;
@@ -86,9 +89,26 @@
             padding-right:4px;
             float: left; 
         ">
-        {% for com in comms.object_list %}
-        <p style="padding-left:10px" align="justify"><strong>{{ com.user }}</strong></p>
-        <p style="padding-left:40px; padding-right:20px" align="justify">{{ com.commentaire }}</p>
+        {% for com in comms.object_list %}            
+        <div style="
+            border-radius: 10px;
+            background-color : paleturquoise;
+            width : 40%;
+            margin: 10px;
+            "
+        >
+            <p style="padding-left:10px" align="justify"><strong>{{ com.user.first_name }}</strong></p>
+        </div>
+        <div style="
+            border-radius: 10px;
+            background-color : paleturquoise;
+            min-width : 360px;
+            margin: 10px;
+            margin-left : 50px;
+            "
+        >
+            <p style="padding-left:40px; padding-right:20px" align="justify">{{ com.commentaire }}</p>
+        </div>
         {% endfor %}
         
         <div class="pagination">

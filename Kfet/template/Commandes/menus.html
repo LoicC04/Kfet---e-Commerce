@@ -7,17 +7,17 @@
 
 <p>Choisissez un menu :</p>
 {% for menu in typeMenu %}
-    <div style="border:outset 1px blue;padding:5px;padding-left:20px">
-        <h3>{{ menu.nom}}</h3>
-        <ul>
-            <li>Nombre d'articles : {{ menu.nombreArticles }}</li>
-            <li>Prix : {{ menu.prix }} €</li>
-            <li>Description<br/>{{ menu.description }}</li>
-        </ul>
+<div class="cat_produit">
+    <div class="cat_detail">
+        <strong>&nbsp {{ menu.nom }}</strong> avec {{ menu.nombreArticles }} articles<br/>
+        &nbsp &nbsp &nbsp {{ menu.description }}
+    </div>
+    <div class="cat_commande">
         <span class="button">
             <input type="button" value="Choisir" OnClick="window.location.href='{% url Kfet.Commandes.views.choisirMenu menu.id %}'"/>
         </span>
     </div>
+</div>
 {% endfor %}
 
 {% endblock %}

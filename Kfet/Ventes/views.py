@@ -25,7 +25,16 @@ def index(request):
     return render_to_response('Ventes/index.html', {'produit':produits}, context_instance=RequestContext(request) )
 
 def produit_vente(request, produit_id):
-    vente = Vente(produit_id=produit_id, quantite=1)
+    if request.method == 'POST':
+        quantite = int(request.POST['quantite'])
+    else:
+        quantite = 1
+
+    produit = Produit.objects.get(pk=produit_id)
+    produit.quantite = produit.quantite - quantite
+    produit.save()
+
+    vente = Vente(produit_id=produit_id, quantite=quantite)
     vente.save()
     return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
 

@@ -5,6 +5,10 @@
 {% block content %}
 <h1>Kfet Vente</h1>
 
+{% if vente.id %}
+    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp <font color="red"><a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
+{% endif %}
+
 <div style="padding:30px; min-height:400px">
     {% for pro in produit %}
     <div style="float:left; padding-left:10px;">
@@ -21,7 +25,7 @@
             </form>
 
             {% endifequal %}
-            <center>{{ pro.nom }}</center>                          
+            <center>{{ pro.nom }} ({{ pro.quantite }})</center>                          
         </blockquote>
     </div>
     {% endfor %}

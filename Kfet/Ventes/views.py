@@ -21,8 +21,13 @@ def index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         produits = paginator.page(paginator.num_pages)
+    
+    try:
+        vente = Vente.objects.latest('date')
+    except Vente.DoesNotExist:         
+        vente = Vente()
 
-    return render_to_response('Ventes/index.html', {'produit':produits}, context_instance=RequestContext(request) )
+    return render_to_response('Ventes/index.html', {'produit':produits, 'vente':vente}, context_instance=RequestContext(request) )
 
 def produit_vente(request, produit_id):
     if request.method == 'POST':
@@ -37,7 +42,15 @@ def produit_vente(request, produit_id):
     vente = Vente(produit_id=produit_id, quantite=quantite)
     vente.save()
     return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
-
-
     
+def annuler_vente(request, vente_id):
+    
+    vente = Vente.objects.get(pk=vente_id)
+
+    produit = Produit.objects.get(pk=vente.produit.id)
+    produit.quantite = produit.quantite + vente.quantite
+    produit.save()
+    vente.delete()
+
+    return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
 

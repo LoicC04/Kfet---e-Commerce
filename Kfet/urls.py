@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     (r'^comptes/', include('Kfet.Comptes.urls')),
+    (r'^ventes/', include('Kfet.Ventes.urls')),
     (r'^commandes/', include('Kfet.Commandes.urls')),
     (r'^gestionStock/', include('Kfet.GestionStock.urls')),
     url(r'^$', 'Kfet.views.home'),

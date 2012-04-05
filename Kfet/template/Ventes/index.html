@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Kfet - Vente Kfetier{% endblock %}
+
+{% block content %}
+<h1>Kfet Vente</h1>
+
+{% for pro in produit %}
+
+{{ pro.nom }}
+
+{% endfor %}
+
+{% endblock %}

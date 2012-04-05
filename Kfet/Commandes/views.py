@@ -12,12 +12,14 @@ from django.http import Http404
 
 def produit(request, produit_id, erreur=None):
     user = request.user
+    profile = user.get_profile()
+
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.decimal=str(produit.prix%1).split(".")[1]
 
     if not user.is_anonymous():
         if request.method == 'POST':
-            Com = Commentaire(user_id=user.id,commentaire=request.POST['com'],produit_id=produit_id)
+            Com = Commentaire(profile_id=profile.id,commentaire=request.POST['com'],produit_id=produit_id)
             Com.save()
 
     list_comms = Commentaire.objects.filter(produit=produit_id)
@@ -227,3 +229,21 @@ def confirmationPanier(request, commande_id):
     panier_produit = Produit_Panier.objects.filter(panier=commande.panier)
     
     return render_to_response('Commandes/confirmationPanier.html', {'commande':commande, "panier_produit":panier_produit}, context_instance=RequestContext(request))
+
+
+@login_required
+def comm_suppr(request, comm_id):
+    user = request.user
+    profile = user.get_profile()
+
+    comm = Commentaire.objects.get(pk=comm_id)
+    produit = Produit.objects.get(pk=comm.produit_id)
+
+    if profile.id == comm.profile_id:
+        comm.delete()        
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit.id]))
+
+@login_required
+def comm_maj(request, comm_id):
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+

@@ -1,12 +1,13 @@
 from django.db import models
 from Produit import *
-from django.contrib.auth.models import User
+from UserProfile import *
 
 
 class Commentaire(models.Model):
-        user = models.ForeignKey(User)
+        profile = models.ForeignKey(UserProfile)
         commentaire = models.TextField()
         produit = models.ForeignKey(Produit)
+        date = models.DateTimeField(auto_now_add = True, auto_now = True)
 
 	class Meta:
             app_label = 'Commun'

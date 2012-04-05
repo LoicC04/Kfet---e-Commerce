@@ -64,7 +64,7 @@
         ">
             {% ifnotequal produit.quantite 0 %}
             <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-                <strong>&nbsp Prix : {{ produit.prix }}</strong>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
+                <strong>&nbsp Prix : {{ produit.prix }}</strong>&nbsp  &nbsp &nbsp <font color="white">Quantité :</font><input type=text size=2 name="quantite">
                 <input type=hidden value="{{ produit.id }}" name="produit">
                 <span style="float: right; display: inline; background: url('/static/css/T_Shirt/css/images/button-left.png') no-repeat 0 0; margin-right:10px;top:40%">
                     <input
@@ -93,11 +93,11 @@
         <div style="
             border-radius: 10px;
             background-color : paleturquoise;
-            width : 40%;
+            min-width : 30%;
             margin: 10px;
             "
         >
-            <p style="padding-left:10px" align="justify"><strong>{{ com.user.first_name }}</strong></p>
+        <p style="padding-left:10px" align="justify"><strong>{{ com.profile.user.first_name }} &nbsp ({{ com.profile.promo }})</strong> &nbsp &nbsp {% ifequal com.profile.user.first_name user.first_name %} coucou {% endifequal %}</p>
         </div>
         <div style="
             border-radius: 10px;
@@ -107,7 +107,8 @@
             margin-left : 50px;
             "
         >
-            <p style="padding-left:40px; padding-right:20px" align="justify">{{ com.commentaire }}</p>
+            <p style="padding:20px;" align="justify">{{ com.commentaire }}</p>
+            <p align="right">Le {{ com.date }} &nbsp</p>
         </div>
         {% endfor %}
         

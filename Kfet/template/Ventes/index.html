@@ -5,10 +5,21 @@
 {% block content %}
 <h1>Kfet Vente</h1>
 
-{% for pro in produit %}
-
-{{ pro.nom }}
-
-{% endfor %}
+<div style="padding:30px; min-height:400px">
+    {% for pro in produit %}
+    <div style="float:left; padding-left:10px;">
+        </br>
+        <blockquote style="color:black;height:130px;width:120px;padding: 2px 10px 2px 10px; margin: 2px 2px 2px 2px;">
+            <br/>
+            {% ifequal  pro.quantite 0 %}
+            <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="80px"></a></center>
+            {% else %}
+            <center><a href="{% url Kfet.Ventes.views.produit_vente pro.id %}"><img src="{{ pro.image.url }}" alt="Image" height="80px"></a></center>
+            {% endifequal %}
+            <center>{{ pro.nom }}</center>                
+        </blockquote>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

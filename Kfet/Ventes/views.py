@@ -1,14 +1,17 @@
 # Create your views here.
 from django.shortcuts import render_to_response, get_list_or_404
 from Commun.models.Produit import *
+from Commun.models.Vente import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 def index(request):
     list_produit = get_list_or_404(Produit)
     
-    paginator = Paginator(list_produit, 10) # Show 10 items per page
+    paginator = Paginator(list_produit, 12) # Show 10 items per page
     page = request.GET.get('page',1)
     try:
         produits = paginator.page(page)
@@ -20,4 +23,12 @@ def index(request):
         produits = paginator.page(paginator.num_pages)
 
     return render_to_response('Ventes/index.html', {'produit':produits}, context_instance=RequestContext(request) )
+
+def produit_vente(request, produit_id):
+    vente = Vente(produit_id=produit_id, quantite=1)
+    vente.save()
+    return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
+
+
+    
 

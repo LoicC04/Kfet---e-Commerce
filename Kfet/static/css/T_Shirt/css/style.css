@@ -264,3 +264,21 @@ footer span { padding-left: 3px; padding-right: 4px; }
     letter-spacing: 1px; 
 }
 
+
+/* ++++++++++++++++++++++++++++++++++++++++ */
+
+/* Style page index vente */
+
+blockquote {
+    font-style: italic;
+    border: 2px dotted mediumslateblue;
+    padding-left: 15px; 
+    padding-right: 15px;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #74752B;
+    width: 150px;
+    heigh: 500px;   
+}

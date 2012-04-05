@@ -4,7 +4,7 @@ from Produit import *
 
 class Vente(models.Model):
         produit = models.ForeignKey(Produit)
-        date = models.DateTimeField('date vente')
+        date = models.DateTimeField(auto_now_add = True, auto_now = True)
         quantite = models.IntegerField()
 
 	class Meta:

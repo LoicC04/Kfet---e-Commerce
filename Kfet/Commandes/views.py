@@ -239,7 +239,7 @@ def comm_suppr(request, comm_id):
     comm = Commentaire.objects.get(pk=comm_id)
     produit = Produit.objects.get(pk=comm.produit_id)
 
-    if profile.id == comm.profile_id:
+    if profile.id == comm.profile_id or user.is_staff:
         comm.delete()        
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit.id]))
 

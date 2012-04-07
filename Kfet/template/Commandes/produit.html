@@ -97,7 +97,19 @@
             margin: 10px;
             "
         >
-        <p style="padding-left:10px" align="justify"><strong>{{ com.profile.user.first_name }} &nbsp ({{ com.profile.promo }})</strong> &nbsp &nbsp {% ifequal com.profile.user.first_name user.first_name %} <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/></a> {% endifequal %}</p>
+        <p style="padding-left:10px" align="justify">
+            <strong>{{ com.profile.user.first_name }} 
+                &nbsp ({{ com.profile.promo }})
+            </strong> 
+                &nbsp &nbsp 
+                {% ifequal com.profile.user.first_name user.first_name %} 
+                    <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/></a> 
+                {% else %}
+                {% if user.is_staff %}                
+                    <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/></a> 
+                {% endif %}
+                {% endifequal %}
+        </p>
         </div>
         <div style="
             border-radius: 10px;

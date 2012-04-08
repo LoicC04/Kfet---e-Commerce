@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Les types de menus - Kfet{% endblock %}
+
+{% block content %}
+
+<h1>Les types de menus proposés</h1>
+
+{% if menus %}
+<ul>
+{% for m in menus %}
+        <li>{{ m.nom }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Aucun menu n'est défini</p>
+{% endif %}
+
+<h3><a href="{% url Kfet.Administration.views.ajouterModifierMenu %}"><img src="/static/icon/icon_addlink.gif" title="Ajouter un menu"/>Ajouter un menu</a></h3>
+
+{% endblock %}

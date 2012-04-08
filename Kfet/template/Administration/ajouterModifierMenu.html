@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des menus{% endblock %}
+
+<script type="text/javascript">
+function dismissAddAnotherPopup(win) {
+    win.close();
+}</script>
+
+{% block content %}
+
+
+{% if menu_id %}
+    <h1>Modifier le menu</h1>
+    <form enctype="multipart/form-data" action="{% url Kfet.Administration.views.ajouterModifierMenu menu_id %}" method="post">
+{% else %}
+    <h1>Ajouter un menu</h1>
+    <form enctype="multipart/form-data" action="{% url Kfet.Administration.views.ajouterModifierMenu %}" method="post">
+{% endif %}
+    {% csrf_token %}
+    <table border=0 style=width:100%>
+    {% for field in form %}
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}
+            {% ifequal field.name "" %}
+            <a onClick="window.open('http://kfet/admin/Commun/categorie/add/?_popup=1','My admin page',  'width=800,height=800, scrollbars=yes');" href="javascript: void(0)"  >
+                <img src="/static/icon/icon_addlink.gif" title="Ajouter une Catégorie"/>
+            </a>
+            
+            
+            {% endifequal %}
+            {% if field.help_text %}
+                <span style="color:grey;padding-left:1em"> - {{ field.help_text }}</span>
+            {% endif %}
+        </td>
+        <td>{{ field.errors }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <p><input type="submit" value="Valider" /></p>
+</form>
+
+
+{% endblock %}

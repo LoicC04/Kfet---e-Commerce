@@ -62,9 +62,9 @@ def creerFournisseur(request, id=None):
     return render_to_response('GestionStock/creerFournisseur.html', {'form':form , 'id':id}, context_instance=RequestContext(request))
 
 @login_required
-def commander(request, fournisseur_id):
+def commander(request, fournisseur_id, erreur=None):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
-    list_produits = Produit.objects.all().filter(fournisseur=fournisseur_id).order_by('quantite')
+    list_produits = Produit.objects.all().filter(fournisseur=fournisseur_id).order_by('quantite').filter(quantiteCommandeFournisseur__lte=0)
     list_produits_commande = Produit.objects.all().filter(fournisseur=fournisseur_id).filter(quantiteCommandeFournisseur__gte=1).order_by('quantite')
 
     paginator = Paginator(list_produits, 10) # Show 10 items per page
@@ -79,7 +79,7 @@ def commander(request, fournisseur_id):
         produits = paginator.page(paginator.num_pages)
 
     form=None
-    return render_to_response('GestionStock/commander.html', {'form':form, 'fournisseur':fournisseur,'produits':produits, 'produits_commande':list_produits_commande}, context_instance=RequestContext(request))
+    return render_to_response('GestionStock/commander.html', {'form':form, 'fournisseur':fournisseur,'produits':produits, 'produits_commande':list_produits_commande, 'erreur':erreur }, context_instance=RequestContext(request))
 
 @login_required
 def creerProduit(request, fournisseur_id, produit_id=None):
@@ -153,3 +153,30 @@ def add_new_model(request, model_name):
 
                 page_context = {'form': form, 'field': normal_model_name}
                 return render_to_response('widgets/popup.html', page_context, context_instance=RequestContext(request))
+
+@login_required
+def commande(request, produit_id):
+    if request.method == 'POST':
+        produit = get_object_or_404(Produit, pk=produit_id)
+        quantite = request.POST['quantiteCommandeFournisseur']
+        if quantite:
+            if int(quantite) <= 0:
+                erreur = 1
+                return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[produit.fournisseur_id,erreur]),)
+            else:
+                Produit.objects.filter(id=produit_id).update(quantiteCommandeFournisseur=quantite)
+                return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[produit.fournisseur_id]),)
+        else:
+            erreur = 2
+            return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[produit.fournisseur_id,erreur]),)
+    else:
+        return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[produit.fournisseur_id]),)
+
+@login_required
+def validerCommande(request, fournisseur_id):
+    list_produits_commande = Produit.objects.all().filter(fournisseur=fournisseur_id).filter(quantiteCommandeFournisseur__gte=1)
+    for p in list_produits_commande:
+        p.quantite = p.quantite+p.quantiteCommandeFournisseur
+        p.quantiteCommandeFournisseur = 0
+        p.save()
+    return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]),)

@@ -8,6 +8,15 @@
 
 <h3>Produits actuellement en commande</h3>
 
+{% if erreur %}
+<p>
+    {% ifequal erreur 1 %}
+        La quantité à commander doit être positive
+    {% else %}
+        Une quantité à commander doit être spécifiée
+    {% endifequal %}
+</p>      
+{% endif %}
 
 {% if produits_commande %}
      <table border="1" width=100%>
@@ -25,16 +34,30 @@
             <td>{{ p.quantite }}</td>
             <td>{{ p.categorie }}</td>
             <td>{{ p.prix }}</td>
-            <td>{{ p.quantiteCommandeFournisseur }}</td>
+            <td>
+                <form action="{% url Kfet.GestionStock.views.commande p.id %}" method="POST">{% csrf_token %}
+                    <input type="text" value="{{ p.quantiteCommandeFournisseur }}" size=3 name="quantiteCommandeFournisseur">
+                    <input type="submit" value="ok">
+                </form>
+            </td>
             <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/>
                 <a href="{% url Kfet.GestionStock.views.supprimerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a>
             </td>
         </tr>
         {% endfor %}
     </table>
+    
+    <p>Pour valider toute la commande appuyer sur "Valider". Si la quantité n'est pas bonne, changez la avant.</p>
+    <span class="button">
+        <input type="button" value="Valider" OnClick="window.location.href='{% url Kfet.GestionStock.views.validerCommande fournisseur.id %}'"/>
+    </span>
+    <br/>
+    <br/>
+    <br/>
 {% else %}
     <p>Aucun produit actuellement en commande chez ce fournisseur </p>
 {% endif %}
+
 
 <h3>Tous les produits chez ce fournisseur</h3>
 
@@ -54,7 +77,12 @@
             <td>{{ p.quantite }}</td>
             <td>{{ p.categorie }}</td>
             <td>{{ p.prix }}</td>
-            <td>{{ p.quantiteCommandeFournisseur }}</td>
+            <td>
+                <form action="{% url Kfet.GestionStock.views.commande p.id %}" method="POST">{% csrf_token %}
+                    <input type="text" value="{{ p.quantiteCommandeFournisseur }}" size=3 name="quantiteCommandeFournisseur">
+                    <input type="submit" value="ok">
+                </form>
+            </td>
             <td><a href="{% url Kfet.GestionStock.views.creerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le produit"/>modifier</a><br/>
                 <a href="{% url Kfet.GestionStock.views.supprimerProduit fournisseur.id p.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a>
         </tr>

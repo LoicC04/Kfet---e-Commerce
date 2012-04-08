@@ -7,6 +7,10 @@
 {% if erreur %}
 <center style="color:red">{{ erreur|safe }}</center>
 {% endif %}
+
+<h3>Mes produits commandés</h3>
+
+{% if panier %}
 <table style=width:100%;text-align:center>
     <tr>
         <th>Nom</th>
@@ -36,6 +40,32 @@
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<p>Aucun produits dans le panier</p>
+{% endif %}
+
+<h3>Mes menus commandés</h3>
+
+{% if menus %}
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Nom</th>
+        <th>Plat</th>
+        <th>Boisson</th>
+        <th>Articles</th>
+    </tr>
+    {% for menu in menus %}
+    <tr>
+        <td>{{ menu.typeMenu.nom }}</td>
+        <td>{{ menu.plat.nom }}</td>
+        <td>{{ menu.boisson.nom }}</td>
+        <td>{{ menu.produit1.nom }} {% if menu.produit2 %} et {{ menu.produit2.nom }} {% endif %}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Aucun menus commandés</p>
+{% endif %}
 
 <span class="button">
     <input type="button" value="Valider panier" OnClick="window.location.href='{% url Kfet.Commandes.views.validerPanier %}'"/>

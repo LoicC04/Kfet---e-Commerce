@@ -13,6 +13,7 @@ class Menu(models.Model):
     plat = models.ForeignKey(Produit, blank=False, null=False, related_name="menu_plat")
     produit1 = models.ForeignKey(Produit, blank=False, null=False, related_name="menu_produit1")
     produit2 = models.ForeignKey(Produit, blank=True, null=True, related_name="menu_produit2")
+    date = models.DateTimeField(auto_now_add = True, auto_now = True)
     
     class Meta:
         app_label = 'Commun'
@@ -35,4 +36,4 @@ class ChoisirMenuForm(forms.ModelForm):
 
     class Meta:
         model = Menu
-        exclude=('typeMenu', 'user')
+        exclude=('typeMenu', 'user', 'date', 'panier')

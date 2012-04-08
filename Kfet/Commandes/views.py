@@ -57,32 +57,32 @@ def panier(request, erreur=None):
     user = request.user
     profil = user.get_profile()
     panier = Produit_Panier.objects.filter(panier=profil.panier_id)
+    menus = profil.panier.menus.all()
+    context = {}
+    context['panier']=panier
+    context['menus']=menus
+
     if erreur==None:
-        return render_to_response('Commandes/panier.html', {'panier':panier}, context_instance=RequestContext(request) )
+        pass
     elif erreur=="1":
         erreur = "<strong>Un produit ne peut pas être commandé avec une quantité nulle!</strong>. Veuillez le supprimer ou changer la quantité commandée"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="2":
         erreur = "<strong>Un produit n'est plus en stock !</strong>. Veuillez le supprimer ou attendre un approvisionnement"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="3":
         erreur = "<strong>Le panier est vide</strong>, veuillez ajoutez des articles dans le panier pour le valider"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="4":
         erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="10":
         erreur = "10"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="11":
         erreur = "<strong>La quantité ne peut être supérieure au stock</strong>, veuillez choisir une valeur inférieure ou égale à la quantité restante."
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     elif erreur=="12":
         erreur = "<strong>La quantité ne peut être nulle</strong>, veuillez sélectionner une valeur positive."
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
     else:
         erreur = "Une erreur est survenue, merci de réessayer"
-        return render_to_response('Commandes/panier.html', {'panier':panier, 'erreur':erreur}, context_instance=RequestContext(request) )
+    context['erreur']=erreur
+
+    return render_to_response('Commandes/panier.html', context, context_instance=RequestContext(request) )
 
 @login_required
 def panier_ajout(request):    
@@ -116,6 +116,11 @@ def panier_suppr(request, produit_panier_id):
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
 
 @login_required
+def panier_menu_suppr(request, menu_id):
+    Menu.objects.filter(id=menu_id).delete()
+    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+
+@login_required
 def panier_maj(request, produit_panier_id):
     if request.method == 'POST':
         produit_panier = get_object_or_404(Produit_Panier, pk=produit_panier_id)
@@ -144,10 +149,11 @@ def validerPanier(request):
     profil = user.get_profile() # on récupère son profil
     panier_a_valider = profil.panier # on récupère son panier
     produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id) # Le panier liste les produits sélectionnés
+    menus = Menu.objects.filter(panier=profil.panier_id)
     prix_panier=0
 
 
-    if produits_a_valider.count()<=0:
+    if produits_a_valider.count()<=0 or menus.count()<=0 :
         # Le panier est vide
         erreur=3
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
@@ -214,6 +220,8 @@ def choisirMenu(request,typeMenu_id, menu_id=None):
         form = ChoisirMenuForm(typeMenu.nom,data=request.POST, instance=menu)
         if form.is_valid():
             form.save()
+            request.user.get_profile().panier.menus.add(menu)
+            request.user.get_profile().panier.save()
             return HttpResponseRedirect(reverse('Kfet.views.home'))
     else:
         form = ChoisirMenuForm(typeMenu.nom, instance=menu)

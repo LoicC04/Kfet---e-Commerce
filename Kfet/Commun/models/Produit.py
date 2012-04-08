@@ -43,5 +43,5 @@ class CreationProduitForm(forms.ModelForm):
         exclude=('fournisseur', 'quantite', 'quantiteCommandeFournisseur')
 
     categorie = forms.ModelChoiceField(Categorie.objects, widget=SelectWithPopUp)
-    articleDouble = forms.BooleanField(required=False, label="Article double ?")
+    articleDouble = forms.BooleanField(required=False, label="Article compte double dans un menu ?")
 

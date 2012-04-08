@@ -1,7 +1,8 @@
 from django.db import models
-from Reglement import *
-from Panier import *
-from Status_Commande import *
+from Reglement import Reglement
+from Panier import Panier
+from Status_Commande import Status_Commande
+from Menu import Menu
 from django.contrib.auth.models import User
 
 

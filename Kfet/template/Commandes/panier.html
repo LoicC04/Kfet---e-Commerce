@@ -3,11 +3,19 @@
 {% block title %} Panier - Kfet{% endblock %}
 
 {% block content %}
+
+
+<div id="prix" style="float:right;top:30%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
+    <center>
+        <br/>
+        {{ prix_panier|stringformat:"d" }}€<sup>{{ decimal }}</sup>
+    </center>
+</div>
+
 <h1>Panier de Mr {{user.first_name}}</h1>
 {% if erreur %}
 <center style="color:red">{{ erreur|safe }}</center>
 {% endif %}
-
 
 <h3>Mes produits commandés</h3>
 
@@ -15,15 +23,14 @@
 <table style=width:100%;text-align:center>
     <tr>
         <th>Nom</th>
-        <th>Prix unitaire</th>
         <th>Quantité</th>
         <th>Quantité en stock</th>
+        <th>Prix unitaire</th>
         <th>Actions disponible</th>
     </tr>
     {% for pan in panier %}
     <tr>
         <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.nom }}</a></td>
-        <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.prix }} €</a></td>
         <td>
             <form action="{% url Kfet.Commandes.views.panier_maj pan.id %}" method="POST">{% csrf_token %}
                 <input type="text" value="{{ pan.quantite }}" size=3 name="quantite">
@@ -37,6 +44,7 @@
                 <span style="color:red">Produit épuisé</span>
             {% endifnotequal %}
         </td>
+        <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.prix }} €</a></td>
         <td>
             <a href="{% url Kfet.Commandes.views.panier_suppr pan.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/>Supprimer</a><br/>
         </td>

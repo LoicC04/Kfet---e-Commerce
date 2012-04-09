@@ -10,6 +10,7 @@ class TypeMenu(models.Model):
         categorie = models.ForeignKey(Categorie)
         prix = models.DecimalField(max_digits=10, decimal_places=2)
         description = models.TextField()
+        actif = models.BooleanField(default=True)
 
 	class Meta:
             app_label = 'Commun'
@@ -20,6 +21,7 @@ class TypeMenu(models.Model):
 class TypeMenuForm(forms.ModelForm):
     class Meta:
         model = TypeMenu
+        exclude=('actif')
 
     categorie = forms.ModelChoiceField(Categorie.objects, widget=SelectWithPopUp, label="Categorie du plat")
     nombreArticles = forms.IntegerField(label="Nombre d'articles", min_value=0)

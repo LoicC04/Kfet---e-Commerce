@@ -8,7 +8,7 @@ def home(request):
     return render_to_response('Kfet/home.html', {}, context_instance=RequestContext(request) ) 
 
 def listMenu(request):
-    typeMenu = TypeMenu.objects.all()
+    typeMenu = TypeMenu.objects.filter(actif=True)
     return render_to_response('Commandes/menus.html', {'typeMenu':typeMenu}, context_instance=RequestContext(request) ) 
 
 @login_required

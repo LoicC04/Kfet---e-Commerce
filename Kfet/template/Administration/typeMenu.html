@@ -6,12 +6,35 @@
 
 <h1>Les types de menus proposés</h1>
 
+
+{% if erreur %}
+    <center style="color:red">{{ erreur|safe }}</center>
+{% endif %}
+
 {% if menus %}
-<ul>
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Nom</th>
+        <th>Nombre d'articles</th>
+        <th>Catégorie de plat</th>
+        <th>Prix</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
 {% for m in menus %}
-        <li>{{ m.nom }}</li>
+    <tr>
+        <td>{{ m.nom }}</td>
+        <td>{{ m.nombreArticles }}</td>
+        <td>{{ m.categorie.nom }}</td>
+        <td>{{ m.prix }}</td>
+        <td>{{ m.description }}</td>
+        <td>
+            <a href="{% url Kfet.Administration.views.ajouterModifierMenu m.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le menu"/>modifier</a><br/>
+            <a href="{% url Kfet.Administration.views.supprimerMenu m.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le menu"/>Supprimer</a>
+        </td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
 {% else %}
 <p>Aucun menu n'est défini</p>
 {% endif %}

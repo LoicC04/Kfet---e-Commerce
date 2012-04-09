@@ -36,20 +36,26 @@ def produit(request, produit_id, erreur=None):
 
 def categorie(request, cat_id):
     categorie = get_object_or_404(Produit, pk=cat_id)
-    list_produit = get_list_or_404(Produit, categorie=cat_id)
-    
-    paginator = Paginator(list_produit, 10) # Show 10 items per page
-    page = request.GET.get('page',1)
-    try:
-        produits = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        produits = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        produits = paginator.page(paginator.num_pages)
+    context={}
+    context['categorie']=categorie
 
-    return render_to_response('Commandes/categorie.html', {'produit':produits , 'categorie':categorie}, context_instance=RequestContext(request) )
+    try:
+        list_produit = get_list_or_404(Produit, categorie=cat_id)
+        paginator = Paginator(list_produit, 10) # Show 10 items per page
+        page = request.GET.get('page',1)
+        try:
+            produits = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            produits = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            produits = paginator.page(paginator.num_pages)
+        context['produit']=produits
+    except Http404:
+        pass
+
+    return render_to_response('Commandes/categorie.html', context, context_instance=RequestContext(request) )
 
 @login_required
 def panier(request, erreur=None):

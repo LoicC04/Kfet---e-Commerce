@@ -5,36 +5,36 @@
 {% block content %}
 <h1>{{categorie.categorie}}</h1>
 
-{% for pro in produit.object_list %}
-<div class="cat_produit">
-    <div class="cat_image">
-        <img src="{{ pro.image.url }}" height=70px>
+{% if produit.object_list %}
+    {% for pro in produit.object_list %}
+    <div class="cat_produit">
+        <div class="cat_image">
+            <img src="{{ pro.image.url }}" height=70px>
+        </div>
+        <div class="cat_detail">
+        <strong><a href="{% url Kfet.Commandes.views.produit pro.id %}"> &nbsp {{ pro.nom }}</a></strong></br>
+            &nbsp &nbsp &nbsp Quantité en stock : {{ pro.quantite }}
+        </div> 
+        <div class="cat_commande">
+            {% ifnotequal pro.quantite 0 %}
+            <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
+                <strong>&nbsp Prix : {{ pro.prix }}</strong>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
+                <input type=hidden value="{{ pro.id }}" name="produit">
+                <span class="cat_span">
+                    <input
+                        class="cat_button"
+                        type="submit" value="Commander" />
+                </span>
+            </form>
+            {% else %}
+                <center><strong>Produit épuisé</strong></center>
+            {% endifnotequal %}
+        </div>
     </div>
-    <div class="cat_detail">
-    <strong><a href="{% url Kfet.Commandes.views.produit pro.id %}"> &nbsp {{ pro.nom }}</a></strong></br>
-        &nbsp &nbsp &nbsp Quantité en stock : {{ pro.quantite }}
-    </div> 
-    <div class="cat_commande">
-        {% ifnotequal pro.quantite 0 %}
-        <form action="{% url Kfet.Commandes.views.panier_ajout %}" method="POST">{% csrf_token %}
-            <strong>&nbsp Prix : {{ pro.prix }}</strong>&nbsp  &nbsp &nbsp Quantité :<input type=text size=2 name="quantite">
-            <input type=hidden value="{{ pro.id }}" name="produit">
-            <span class="cat_span">
-                <input
-                    class="cat_button"
-                    type="submit" value="Commander" />
-            </span>
-        </form>
-        {% else %}
-        <center><strong>Produit épuisé</strong></center>
-        {% endifnotequal %}
-    </center>
-       
-    </div>
-</div>
+    {% endfor %}
 
-{% endfor %}
-<br/><br/>
+    <br/><br/>
+
     <div class="pagination">
         <span class="step-links">
             {% if produit.has_previous %}
@@ -50,5 +50,8 @@
             {% endif %}
         </span>
     </div>
+{% else %}
+    <p>Aucun produits n'existent dans cette catégorie</p>
+{% endif %}
 
 {% endblock %}

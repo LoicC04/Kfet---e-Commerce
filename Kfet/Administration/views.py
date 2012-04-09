@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
@@ -10,9 +11,13 @@ def index(request):
     return render_to_response('Administration/index.html', { }, context_instance=RequestContext(request))
 
 @login_required
-def typeMenu(request):
-    menus = TypeMenu.objects.all()
-    return render_to_response('Administration/typeMenu.html', { 'menus':menus }, context_instance=RequestContext(request))
+def typeMenu(request, erreur=None):
+    menus = TypeMenu.objects.filter(actif=True)
+    context={}
+    context['menus']=menus
+    if erreur=="1":
+        context['erreur']="Des ventes ont été effectuées avec ce menu, impossible de le supprimer. Il peut être désactiver"
+    return render_to_response('Administration/typeMenu.html', context, context_instance=RequestContext(request))
 
 @login_required
 def ajouterModifierMenu(request, menu_id=None):
@@ -29,6 +34,18 @@ def ajouterModifierMenu(request, menu_id=None):
     else:
         form = TypeMenuForm(instance=menu)
     return render_to_response('Administration/ajouterModifierMenu.html', {'form':form , 'menu_id':menu_id}, context_instance=RequestContext(request))
+
+@login_required
+def supprimerMenu(request,menu_id):
+    menu = get_object_or_404(TypeMenu, pk=menu_id)
+    if menu.menu_set.count()==0:
+        menu.delete()
+        return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu'))
+    else:
+        menu.actif=False
+        menu.save()
+        erreur=1
+        return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu', args=[erreur]))
 
 @login_required
 def typePaiement(request):

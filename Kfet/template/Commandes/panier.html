@@ -14,6 +14,7 @@
 <table style=width:100%;text-align:center>
     <tr>
         <th>Nom</th>
+        <th>Prix unitaire</th>
         <th>Quantité</th>
         <th>Quantité en stock</th>
         <th>Actions disponible</th>
@@ -21,6 +22,7 @@
     {% for pan in panier %}
     <tr>
         <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.nom }}</a></td>
+        <td><a href="{% url Kfet.Commandes.views.produit pan.produit.id %}">{{ pan.produit.prix }} €</a></td>
         <td>
             <form action="{% url Kfet.Commandes.views.panier_maj pan.id %}" method="POST">{% csrf_token %}
                 <input type="text" value="{{ pan.quantite }}" size=3 name="quantite">
@@ -53,13 +55,45 @@
         <th>Plat</th>
         <th>Boisson</th>
         <th>Articles</th>
+        <th>Prix</th>
+        <th>Actions disponible</th>
     </tr>
     {% for menu in menus %}
     <tr>
         <td>{{ menu.typeMenu.nom }}</td>
-        <td>{{ menu.plat.nom }}</td>
-        <td>{{ menu.boisson.nom }}</td>
-        <td>{{ menu.produit1.nom }} {% if menu.produit2 %} et {{ menu.produit2.nom }} {% endif %}</td>
+        <td>
+            {% ifnotequal menu.plat.quantite 0 %}
+                {{ menu.plat.nom }}
+            {% else %}
+            <span style="color:red">{{ menu.plat.nom }} épuisé</span>
+            {% endifnotequal %}
+        </td>
+        <td>
+            {% ifnotequal menu.boisson.quantite 0 %}
+                {{ menu.boisson.nom }}
+            {% else %}
+            <span style="color:red">{{ menu.boisson.nom }} épuisé</span>
+            {% endifnotequal %}
+        </td>
+        <td>
+            {% ifnotequal menu.produit1.quantite 0 %}
+                {{ menu.produit1.nom }}
+            {% else %}
+                <span style="color:red">{{ menu.produit1.nom }} épuisé</span>
+            {% endifnotequal %}
+            {% if menu.typeMenu.nombreArticles %} et 
+                {% ifnotequal menu.produit2.quantite 0 %}
+                    {{ menu.produit2.nom }}
+                {% else %}
+                    <span style="color:red">{{ menu.produit2.nom }} épuisé</span>
+                {% endifnotequal %}
+            {% endif %}
+        </td>
+        <td>{{ menu.typeMenu.prix }} €</td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.panier_menu_suppr menu.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le menu"/>Supprimer</a><br/>
+            <a href="{% url Kfet.Commandes.views.choisirMenu menu.typeMenu.id menu.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le menu"/>Modifier</a><br/>
+        </td>
     </tr>
     {% endfor %}
 </table>

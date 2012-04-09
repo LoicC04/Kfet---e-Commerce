@@ -12,6 +12,7 @@ urlpatterns = patterns('Kfet.Commandes.views',
     #Gestion panier
     url(r'^panier_ajout/$', 'panier_ajout'), 
     url(r'^panier_suppr/(?P<produit_panier_id>\d+)/$', 'panier_suppr'), 
+    url(r'^panier_menu_suppr/(?P<menu_id>\d+)/$', 'panier_menu_suppr'), 
     url(r'^panier_maj/(?P<produit_panier_id>\d+)/$', 'panier_maj'),  
 
     #Affichage produit
@@ -31,5 +32,5 @@ urlpatterns = patterns('Kfet.Commandes.views',
 
     #Menu
     url(r'^choisirMenu/(?P<typeMenu_id>\d+)/$', 'choisirMenu'),
-    #url(r'^choisirMenu/(?P<typeMenu_id>\d+)/(?P<menu_id>\d+)/$', 'Kfet.views.choisirMenu'),
+    url(r'^choisirMenu/(?P<typeMenu_id>\d+)/(?P<menu_id>\d+)/$', 'choisirMenu'),
 )

@@ -125,7 +125,7 @@ def panier_maj(request, produit_panier_id):
     if request.method == 'POST':
         produit_panier = get_object_or_404(Produit_Panier, pk=produit_panier_id)
         produit = get_object_or_404(Produit, pk=produit_panier.produit_id)
-        quantite = quantite=request.POST['quantite']
+        quantite = request.POST['quantite']
         if quantite:       
             if produit.quantite >= int(quantite):
                 if int(quantite) <= 0:
@@ -153,7 +153,7 @@ def validerPanier(request):
     prix_panier=0
 
 
-    if produits_a_valider.count()<=0 or menus.count()<=0 :
+    if produits_a_valider.count()<=0 and menus.count()<=0 :
         # Le panier est vide
         erreur=3
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
@@ -163,35 +163,58 @@ def validerPanier(request):
     commande.prix = prix_panier
     commande.user = user
     commande.panier = panier_a_valider
+    # On récupère le type de paiement
     try:
         reglement_liquide = Reglement.objects.get(type="Liquide")
     except Reglement.DoesNotExist:
         return HttpResponse("Aucun type de règlement n'est défini (Liquide est celui par défaut)")
     commande.reglement = reglement_liquide
+
+    # On récupère le status de la commande : "En cours" pour la première étape
     try:
         status_encours = get_object_or_404(Status_Commande,label="En cours")
     except Http404:
         return HttpResponse("Aucun status de commande n'est défini (En Cours est celui par défaut)")
     commande.status_commande = status_encours
 
-    for elt in produits_a_valider: # Pour chaque produit dans le panier on vérifie sa quantité par rapport au stock
-        if elt.quantite<=0:
-            # Un produit dans le panier a une quantité à 0
-            erreur=1
-            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
-        elif elt.produit.quantite<=0:
-            # produit en rupture de stock
-            erreur=2
-            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
-        elif elt.quantite<=elt.produit.quantite:
-            # stock suffisant pour commander
-            prix_panier += elt.produit.prix*elt.quantite # On ajoute le prix*quantité
-            elt.produit.quantite -= elt.quantite # on met à jour le stock
-            elt.produit.save()
-        else:
-            # stock du produit insuffisant
-            erreur=4
-            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+    if produits_a_valider.count()>0: # il y a des produits dans le panier
+        for elt in produits_a_valider: # Pour chaque produit dans le panier on vérifie sa quantité par rapport au stock
+            if elt.quantite<=0:
+                # Un produit dans le panier a une quantité à 0
+                erreur=1
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+            elif elt.produit.quantite<=0:
+                # produit en rupture de stock
+                erreur=2
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+            elif elt.quantite<=elt.produit.quantite:
+                # stock suffisant pour commander
+                prix_panier += elt.produit.prix*elt.quantite # On ajoute le prix*quantité
+                elt.produit.quantite -= elt.quantite # on met à jour le stock
+                elt.produit.save()
+            else:
+                # stock du produit insuffisant
+                erreur=4
+                return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+
+    if menus.count()>0:
+        for menu in menus:
+            produits = [menu.plat, menu.boisson, menu.produit1]
+            if menu.typeMenu.nombreArticles==2:
+                produits.append(menu.produit2)
+            # Première passe pour vérifier le stock de tous les produits
+            for p in produits:
+                if p.quantite<=0:
+                    # produit en rupture de stock
+                    erreur=2
+                    return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[erreur]))
+            # Deuxième pass pour diminuer le stock de tous les produits en même temps!
+            for p in produits:
+                # stock suffisant pour commander
+                p.quantite -= 1  # on met à jour le stock
+                p.save()
+            prix_panier += menu.prix # On ajoute le prix
+
 
     commande.prix = prix_panier
     # On sauvegarde la commande une fois les stocks mis à jour
@@ -208,9 +231,11 @@ def validerPanier(request):
 @login_required
 def choisirMenu(request,typeMenu_id, menu_id=None):
     typeMenu = get_object_or_404(TypeMenu, pk=typeMenu_id)
+    update=False
     if menu_id!=None:
         menu = get_object_or_404(Menu, pk=menu_id)
         menu_id=int(menu.id)
+        update=True
     else:
         menu = Menu()
         menu.typeMenu_id = typeMenu_id
@@ -220,11 +245,12 @@ def choisirMenu(request,typeMenu_id, menu_id=None):
         form = ChoisirMenuForm(typeMenu.nom,data=request.POST, instance=menu)
         if form.is_valid():
             form.save()
-            request.user.get_profile().panier.menus.add(menu)
-            request.user.get_profile().panier.save()
-            return HttpResponseRedirect(reverse('Kfet.views.home'))
+            if update==False:
+                request.user.get_profile().panier.menus.add(menu)
+                request.user.get_profile().panier.save()
+            return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
-        form = ChoisirMenuForm(typeMenu.nom, instance=menu)
+        form = ChoisirMenuForm(typeMenu.categorie.nom, instance=menu)
     return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
 
 @login_required

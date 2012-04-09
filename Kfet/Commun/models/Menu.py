@@ -2,18 +2,18 @@ from django.db import models
 from Produit import Produit
 from Categorie import Categorie
 from TypeMenu import TypeMenu
+from Panier import Panier
 from django import forms
-from django.contrib.auth.models import User
 
 
 class Menu(models.Model):
     typeMenu = models.ForeignKey(TypeMenu, blank=False, null=False)
-    user = models.ForeignKey(User, blank=False, null=False)
     boisson = models.ForeignKey(Produit, blank=False, null=False, related_name="menu_boisson")
     plat = models.ForeignKey(Produit, blank=False, null=False, related_name="menu_plat")
     produit1 = models.ForeignKey(Produit, blank=False, null=False, related_name="menu_produit1")
     produit2 = models.ForeignKey(Produit, blank=True, null=True, related_name="menu_produit2")
     date = models.DateTimeField(auto_now_add = True, auto_now = True)
+    panier = models.ForeignKey(Panier, blank=False, null=False)
     
     class Meta:
         app_label = 'Commun'
@@ -27,7 +27,7 @@ class ChoisirMenuForm(forms.ModelForm):
    
         cat_boisson = Categorie.objects.filter(nom="Boisson")
         cat_plat = Categorie.objects.filter(nom=plat)
-        cat_article = Categorie.objects.all().exclude(nom__in=["Pizza", "Boisson", "Sandwich"])
+        cat_article = Categorie.objects.all().exclude(nom__in=["Pizza", "Boisson", "Sandwich", "Quiche"])
         
         self.fields['boisson'] = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_boisson).filter(quantite__gte=1))
         self.fields['plat'] = forms.ModelChoiceField(Produit.objects.filter(categorie=cat_plat).filter(quantite__gte=1))
@@ -36,4 +36,4 @@ class ChoisirMenuForm(forms.ModelForm):
 
     class Meta:
         model = Menu
-        exclude=('typeMenu', 'user', 'date', 'panier')
+        exclude=('typeMenu', 'date', 'panier')

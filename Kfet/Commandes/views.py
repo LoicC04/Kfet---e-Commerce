@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
 from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire
 from django.template import RequestContext
@@ -57,7 +56,7 @@ def panier(request, erreur=None):
     user = request.user
     profil = user.get_profile()
     panier = Produit_Panier.objects.filter(panier=profil.panier_id)
-    menus = profil.panier.menus.all()
+    menus = profil.panier.menu_set.all()
     context = {}
     context['panier']=panier
     context['menus']=menus
@@ -149,7 +148,7 @@ def validerPanier(request):
     profil = user.get_profile() # on récupère son profil
     panier_a_valider = profil.panier # on récupère son panier
     produits_a_valider = Produit_Panier.objects.filter(panier=profil.panier_id) # Le panier liste les produits sélectionnés
-    menus = Menu.objects.filter(panier=profil.panier_id)
+    menus = panier_a_valider.menu_set.all()
     prix_panier=0
 
 
@@ -213,7 +212,7 @@ def validerPanier(request):
                 # stock suffisant pour commander
                 p.quantite -= 1  # on met à jour le stock
                 p.save()
-            prix_panier += menu.prix # On ajoute le prix
+            prix_panier += menu.typeMenu.prix # On ajoute le prix
 
 
     commande.prix = prix_panier
@@ -229,29 +228,23 @@ def validerPanier(request):
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.confirmationPanier', args=[commande.id]))
 
 @login_required
-def choisirMenu(request,typeMenu_id, menu_id=None):
+def choisirMenu(request, typeMenu_id, menu_id=None):
     typeMenu = get_object_or_404(TypeMenu, pk=typeMenu_id)
-    update=False
     if menu_id!=None:
         menu = get_object_or_404(Menu, pk=menu_id)
-        menu_id=int(menu.id)
-        update=True
     else:
         menu = Menu()
         menu.typeMenu_id = typeMenu_id
-        menu.user = request.user
+        menu.panier = request.user.get_profile().panier
     
     if request.method=='POST':
-        form = ChoisirMenuForm(typeMenu.nom,data=request.POST, instance=menu)
+        form = ChoisirMenuForm(plat=typeMenu.categorie.nom,data=request.POST, instance=menu)
         if form.is_valid():
             form.save()
-            if update==False:
-                request.user.get_profile().panier.menus.add(menu)
-                request.user.get_profile().panier.save()
             return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
     else:
-        form = ChoisirMenuForm(typeMenu.categorie.nom, instance=menu)
-    return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu}, context_instance=RequestContext(request))
+        form = ChoisirMenuForm(plat=typeMenu.categorie.nom, instance=menu)
+    return render_to_response('Commandes/choisirMenu.html', {'form':form, 'typeMenu':typeMenu, 'menu_id':menu.id}, context_instance=RequestContext(request))
 
 @login_required
 def confirmationPanier(request, commande_id):

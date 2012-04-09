@@ -12,7 +12,7 @@ def articles(request):
     if not user.is_anonymous():
         profil = user.get_profile()
         article = Produit_Panier.objects.filter(panier=profil.panier_id).count()
-        article+= profil.panier.menus.count()
+        article+= profil.panier.menu_set.count()
     else:
         article = 0
     return { 'article':article }

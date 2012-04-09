@@ -5,7 +5,11 @@
 {% block content %}
 <h1>Menu : {{ typeMenu.nom }}</h1>
 
-<form action="{% url Kfet.Commandes.views.choisirMenu typeMenu.id %}" method="post">
+{% if menu_id %}
+    <form action="{% url Kfet.Commandes.views.choisirMenu typeMenu.id menu_id %}" method="post">
+{% else %}
+    <form action="{% url Kfet.Commandes.views.choisirMenu typeMenu.id %}" method="post">
+{% endif %}
     {% csrf_token %}
     <table border=0 style=width:100%>
         {% for field in form %}

@@ -97,47 +97,18 @@
 							<li class="widget">
 								<h2>Search</h2>
 								<div id="search">
-									<form action="#" method="get" accept-charset="utf-8">
-										<label>Keyword</label>
+                                                                    <form action="{% url Kfet.views.recherche %}" method="POST" accept-charset="utf-8">{% csrf_token %}
+										<label>Mots-clé</label>
 										<input type="text" class="blink" name="keyword" />
-										<label>Category</label>
+										<label>Catégories</label>
 										<select size="1" name="category">
-                                                                                        <option value="default">-- Select Category --</option>
+                                                                                        <option value="default">-- Selectionner une catégorie --</option>
                                                                                         {% if categories_list %}
                                                                                             {% for c in categories_list %}
                                                                                                 <option value="{{ c.nom }}">{{ c.nom }}</option>
                                                                                             {% endfor %}
                                                                                         {% endif %}
 										</select>
-										<div class="price">
-											<label>Price</label>
-											<select size="1" name="price">
-												<option value="10">€10</option>
-												<option value="20">€20</option>
-												<option value="30">€30</option>
-												<option value="40">€40</option>
-												<option value="50">€50</option>
-												<option value="60">€60</option>
-												<option value="70">€70</option>
-												<option value="80">€80</option>
-												<option value="90">€90</option>
-												<option value="100">€100</option>
-											</select>
-											<label>to:</label>
-											<select size="1" name="to">
-												<option value="50">€50</option>
-												<option value="60">€60</option>
-												<option value="70">€70</option>
-												<option value="80">€80</option>
-												<option value="90">€90</option>
-                                                                                                <option value="100">€100</option>
-												<option value="200">€200</option>
-												<option value="300">€300</option>
-												<option value="400">€400</option>
-												<option value="500">€500</option>
-											</select>
-											<div class="cl">&nbsp;</div>
-										</div>
 										<span class="button"><input type="submit" value="Rechercher" /></span>
 										<div class="cl">&nbsp;</div>
 									</form>
@@ -164,7 +135,7 @@
                                                     {% for produit in publicites_produit %}
                                                     <a href="{% url Kfet.Commandes.views.produit produit.id %}">
                                                     <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%} style="text-align:center">
-                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" height="238px" />
+                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="234px" />
 							<div class="pr-info">
                                                             <h4>{{ produit.nom }}</h4>
                                                             <p>{{ produit.info }}</p>

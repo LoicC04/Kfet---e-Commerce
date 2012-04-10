@@ -137,7 +137,7 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 .post h2 { font-family: 'Museo500', arial, sans-serif; font-size: 26px; padding-bottom: 7px; font-weight: normal; word-spacing: 3px; }
 .post p { word-spacing: -1px; margin-bottom: 1.5em}
 
-#products .product { float: left; display: inline; width: 234px; margin-right: 8px; border: 1px solid #dedede; position: relative; }
+#products .product { float: left; display: inline; width: 234px; max-height: 200px; margin-right: 8px; border: 1px solid #dedede; position: relative; }
 #products .last { margin-right: 0; }
 #products .product img { padding-bottom: 68px; }
 #products .product .pr-info { position: absolute; bottom: 15px; left: 0; background: url('/static/css/T_Shirt/css/images/products-info-bar.png') no-repeat 0 0; padding: 11px 118px 11px 12px; }

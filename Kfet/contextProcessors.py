@@ -10,6 +10,7 @@ def categories(request):
 def articles(request):
     user = request.user
     prix=0
+    decimal=0
     if not user.is_anonymous():
         profil = user.get_profile()
         produit_panier = Produit_Panier.objects.filter(panier=profil.panier_id)
@@ -20,9 +21,9 @@ def articles(request):
         for m in menu_panier:
             prix+=m.typeMenu.prix
         article+= menu_panier.count()
+        decimal=str(prix%1).split(".")[1]
     else:
         article = 0
-    decimal=str(prix%1).split(".")[1]
     return { 'article':article, 'prix_panier':prix, 'decimal':decimal }
 
 def publicites(request):

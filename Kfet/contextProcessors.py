@@ -21,7 +21,8 @@ def articles(request):
         for m in menu_panier:
             prix+=m.typeMenu.prix
         article+= menu_panier.count()
-        decimal=str(prix%1).split(".")[1]
+        if prix != 0:
+            decimal=str(prix%1).split(".")[1]
     else:
         article = 0
     return { 'article':article, 'prix_panier':prix, 'decimal':decimal }

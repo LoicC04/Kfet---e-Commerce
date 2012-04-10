@@ -139,7 +139,7 @@ nav li a:hover span { padding-left: 25px; background-position: right -69px; }
 
 #products .product { float: left; display: inline; width: 234px; max-height: 200px; margin-right: 8px; border: 1px solid #dedede; position: relative; }
 #products .last { margin-right: 0; }
-#products .product img { padding-bottom: 68px; }
+#products .product img { padding-bottom: 68px; max-height: 200px;}
 #products .product .pr-info { position: absolute; bottom: 15px; left: 0; background: url('/static/css/T_Shirt/css/images/products-info-bar.png') no-repeat 0 0; padding: 11px 118px 11px 12px; }
 #products .product .pr-info h4 { text-transform: uppercase; font-size: 14px; color: #375970; line-height: 18px; }
 #products .product .pr-info p { font-size: 11px; color: #000; line-height: 12px; }

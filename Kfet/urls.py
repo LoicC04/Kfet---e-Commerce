@@ -22,7 +22,10 @@ urlpatterns = patterns('',
     (r'^gestionStock/', include('Kfet.GestionStock.urls')),
     (r'^administration/', include('Kfet.Administration.urls')),
     url(r'^$', 'Kfet.views.home'),
+    url(r'^recherche/$', 'Kfet.views.recherche'),
     url(r'^menus/$', 'Kfet.views.listMenu'),
+
+    
 )
 
 urlpatterns += staticfiles_urlpatterns()

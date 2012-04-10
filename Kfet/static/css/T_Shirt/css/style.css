@@ -70,8 +70,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1em;
 }
 
-h1#logo { float: left; display: inline; padding-top: 23px; padding-bottom: 20px; margin-bottom:0 }
-h1#logo a { width: 100px; height: 38px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat; background-size : 38px; padding-left:74px; background-position: center;}
+h1#logo { float: left; display: inline; padding-top: 7px; padding-bottom: 5px; margin-bottom:0 }
+h1#logo a { width: 100px; height: 69px; display: block; background: url('/static/css/T_Shirt/css/images/logo.png') no-repeat; background-size : 69px; padding-left:74px; background-position: center;}
 
 #account { float: right; display: inline; padding-top: 24px; width: 173px;  }
 #account a.view-account { padding-left: 33px; display: block; line-height: 17px; background: url('/static/css/T_Shirt/css/images/shop.png') no-repeat 0 0; color: #ffe75f; margin-bottom: 2px; }

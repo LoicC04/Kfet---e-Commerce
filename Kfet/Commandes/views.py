@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire, Categorie
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -35,7 +35,7 @@ def produit(request, produit_id, erreur=None):
     return render_to_response('Commandes/produit.html', {'produit':produit, 'erreur':erreur, 'comms':comms}, context_instance=RequestContext(request))
 
 def categorie(request, cat_id):
-    categorie = get_object_or_404(Produit, pk=cat_id)
+    categorie = get_object_or_404(Categorie, pk=cat_id)
     context={}
     context['categorie']=categorie
 

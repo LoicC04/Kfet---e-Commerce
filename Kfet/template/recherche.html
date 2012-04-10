@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche - Kfet{% endblock %}
+
+{% block content %}
+<h1>Recherche</h1>
+
+{% for pro in produit %}
+    {{ pro.nom }}
+{% endfor %}
+
+{% for men in menu %}
+    {{ men.nom }}
+{% endfor %}
+{% endblock %}

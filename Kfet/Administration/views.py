@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
+from Kfet.Commun.models.Reglement import Reglement, ReglementForm
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
@@ -13,9 +14,11 @@ def index(request):
 
 @login_required
 def typeMenu(request, erreur=None):
-    menus = TypeMenu.objects.filter(actif=True)
+    menus_actif = TypeMenu.objects.filter(actif=True)
+    menus_inactif = TypeMenu.objects.filter(actif=False)
     context={}
-    context['menus']=menus
+    context['menus_actif']=menus_actif
+    context['menus_inactif']=menus_inactif
     if erreur=="1":
         context['erreur']="Des ventes ont été effectuées avec ce menu, impossible de le supprimer. Il peut être désactiver"
     return render_to_response('Administration/typeMenu.html', context, context_instance=RequestContext(request))
@@ -60,9 +63,44 @@ def supprimerMenu(request,menu_id):
         
         return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu', args=[erreur]))
 
+def activerMenu(request, menu_id):
+    typeMenu = get_object_or_404(TypeMenu, pk=menu_id)
+    typeMenu.actif=True
+    typeMenu.save()
+    return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu'))
+
 @login_required
-def typePaiement(request):
-    return render_to_response('Administration/typePaiement.html', { }, context_instance=RequestContext(request))
+def typeReglement(request, erreur=None):
+    context = {}
+    reglements = Reglement.objects.all().filter(actif=True)
+    context['reglements']=reglements
+    if erreur=="1":
+        context['erreur']="Le type de régèlement est désactivé"
+    return render_to_response('Administration/typeReglement.html', context, context_instance=RequestContext(request))
+
+@login_required
+def ajouterModifierReglement(request, reglement_id=None):
+    if reglement_id!=None:
+        reglement = get_object_or_404(Reglement, pk=reglement_id)
+    else:
+        reglement = Reglement()
+    
+    if request.method=='POST':
+        form = ReglementForm(data=request.POST, instance=reglement)
+        if form.is_valid():
+            form.save()
+            return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeReglement'))
+    else:
+        form = ReglementForm(instance=reglement)
+    return render_to_response('Administration/ajouterModifierReglement.html', {'form':form , 'reglement_id':reglement_id}, context_instance=RequestContext(request))
+
+@login_required
+def supprimerReglement(request, reglement_id):
+    reglement = Reglement.objects.get(pk=reglement_id)
+    reglement.actif=False
+    reglement.save()
+    erreur="Le règlement a été désactivé"
+    return render_to_response('Administration/typeReglement.html', {'erreur':erreur}, context_instance=RequestContext(request))
 
 @login_required
 def dettes(request):

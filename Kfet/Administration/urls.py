@@ -11,9 +11,14 @@ urlpatterns = patterns('Kfet.Administration.views',
     (r'^typeMenu/ajouter/$', 'ajouterModifierMenu'),
     (r'^typeMenu/modifier/(?P<menu_id>\d+)/$', 'ajouterModifierMenu'),
     (r'^typeMenu/supprimer/(?P<menu_id>\d+)/$', 'supprimerMenu'),
+    (r'^typeMenu/activer/(?P<menu_id>\d+)/$', 'activerMenu'),
 
     # Gestion des types de paiement
-    (r'^typePaiement/$', 'typePaiement'),
+    (r'^typeReglement/$', 'typeReglement'),
+    (r'^typeReglement/(?P<erreur>\d+)/$', 'typeReglement'),
+    (r'^typeReglement/ajouter/$', 'ajouterModifierReglement'),
+    (r'^typeReglement/modifier/(?P<reglement_id>\d+)/$', 'ajouterModifierReglement'),
+    (r'^typeReglement/supprimer/(?P<reglement_id>\d+)/$', 'supprimerReglement'),
 
     # Gestion des dettes
     (r'^dettes/$', 'dettes'),

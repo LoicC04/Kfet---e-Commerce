@@ -7,7 +7,10 @@
 
 <h2>Statut de la commande : {{ commande.status_commande.label }}</h2>
 
+{% if panier_produit.count > 0 %}
+<hr/>
 <table style=width:100%;text-align:center>
+    <caption><h2>Produits</h2></caption>
     <tr>
         <th>Nom</th>
         <th>Quantité</th>
@@ -21,10 +24,48 @@
     </tr>
     {% endfor %}
     <tr style="height:4em;font-weight:bold;color:red;">
-        <td>Total Commande</td>
-        <td>{{ panier_produit.count }} produits</td>
-        <td style="border:outset 3px red;">{{ commande.prix }} € </td>
+        <td>Total Produit</td>
+        <td>{{ nbProduits }} produit{% if nbProduits > 1 %}s{% endif %}</td>
+        <td style="border:outset 3px red;">{{ prixProduits }} € </td>
+    </tr>
 </table>
+{% endif %}
+
+{% if menus.count > 0 %}
+<hr/>
+<table style=width:100%;text-align:center>
+    <caption><h2>Menus</h2></caption>
+    <tr>
+        <th>Nom</th>
+        <th>Plat</th>
+        <th>Boisson</th>
+        <th>Articles</th>
+        <th>Prix</th>
+    </tr>
+    {% for m in menus %}
+    <tr>
+        <td>{{ m.typeMenu.nom }}</a></td>
+        <td>{{ m.plat.nom }}</td>
+        <td>{{ m.boisson.nom }}</td>
+        <td>{{ m.produit1.nom }}{% if m.typeMenu.nombreArticles > 1 %} et {{ m.produit2.nom }}{% endif %}</td>
+        <td>{{ m.typeMenu.prix }} €</td>
+    </tr>
+    {% endfor %}
+    <tr style="height:4em;font-weight:bold;color:red;">
+        <td></td>
+        <td></td>
+        <td>Total Menu</td>
+        <td>{{ menus.count }} menu{% if menus.count > 1 %}s{% endif %}</td>
+        <td style="border:outset 3px red;">{{ prixMenus }} € </td>
+    </tr>
+</table>
+{% endif %}
+
+<hr/>
+<br/>
+<h2>Total commande : <strong>{{ commande.prix }} €</strong></h2>
+<h3>Moyen de paiement : <strong>{{ commande.reglement.type }}</strong></h3>
+<hr/>
 
 <h3>Pour récupérer sa commande</h3>
 

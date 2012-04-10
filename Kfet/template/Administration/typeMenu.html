@@ -11,7 +11,7 @@
     <center style="color:red">{{ erreur|safe }}</center>
 {% endif %}
 
-{% if menus %}
+{% if menus_actif %}
 <table style=width:100%;text-align:center>
     <tr>
         <th>Nom</th>
@@ -21,7 +21,7 @@
         <th>Description</th>
         <th>Actions</th>
     </tr>
-{% for m in menus %}
+{% for m in menus_actif %}
     <tr>
         <td>{{ m.nom }}</td>
         <td>{{ m.nombreArticles }}</td>
@@ -40,5 +40,34 @@
 {% endif %}
 
 <h3><a href="{% url Kfet.Administration.views.ajouterModifierMenu %}"><img src="/static/icon/icon_addlink.gif" title="Ajouter un menu"/>Ajouter un menu</a></h3>
+
+<br/><br/>
+
+{% if menus_inactif %}
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Nom</th>
+        <th>Nombre d'articles</th>
+        <th>Catégorie de plat</th>
+        <th>Prix</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+{% for m in menus_inactif %}
+    <tr>
+        <td>{{ m.nom }}</td>
+        <td>{{ m.nombreArticles }}</td>
+        <td>{{ m.categorie.nom }}</td>
+        <td>{{ m.prix }}</td>
+        <td>{{ m.description }}</td>
+        <td>
+            <a href="{% url Kfet.Administration.views.activerMenu m.id %}"><img src="/static/icon/icon_addlink.gif" title="Activer le menu"/>Activer</a>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<p>Aucun menu n'est défini</p>
+{% endif %}
 
 {% endblock %}

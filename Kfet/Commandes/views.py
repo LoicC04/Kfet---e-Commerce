@@ -260,8 +260,18 @@ def confirmationPanier(request, commande_id):
         return HttpResponse("Erreur pendant la validation du panier. La commande {0} n'existe pas.")
 
     panier_produit = Produit_Panier.objects.filter(panier=commande.panier)
+    nbProduits = 0
+    prixProduits = 0
+    for pan in panier_produit:
+        nbProduits+=pan.quantite
+        prixProduits+=pan.quantite*pan.produit.prix
+
+    menus = Menu.objects.filter(panier=commande.panier)
+    prixMenus = 0
+    for m in menus:
+        prixMenus+=m.typeMenu.prix
     
-    return render_to_response('Commandes/confirmationPanier.html', {'commande':commande, "panier_produit":panier_produit}, context_instance=RequestContext(request))
+    return render_to_response('Commandes/confirmationPanier.html', {'commande':commande, "panier_produit":panier_produit, "nbProduits":nbProduits, "menus":menus, "prixProduits":prixProduits, "prixMenus":prixMenus}, context_instance=RequestContext(request))
 
 
 @login_required

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des types de règlements{% endblock %}
+
+{% block content %}
+
+<h1>Gestion des types de règlements</h1>
+
+
+{% if erreur %}
+    <center style="color:red">{{ erreur|safe }}</center>
+{% endif %}
+
+
+
+{% if reglements %}
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Type</th>
+        <th>Proposé au paiement en ligne ?</th>
+        <th>Action</th>
+    </tr>
+{% for r in reglements %}
+    <tr>
+        <td>{{ r.type }}</td>
+        <td>{{ r.proposeEnLigne }}</td>
+        <td>
+            <a href="{% url Kfet.Administration.views.ajouterModifierReglement r.id %}"><img src="/static/icon/icon_editlink.gif" title="Modifier le règlement"/>Modifier</a><br/>
+            <a href="{% url Kfet.Administration.views.supprimerReglement r.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le règlement"/>Supprimer</a>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<p>Aucun règlement n'est défini</p>
+{% endif %}
+
+<h3><a href="{% url Kfet.Administration.views.ajouterModifierReglement %}"><img src="/static/icon/icon_addlink.gif" title="Ajouter un règlement"/>Ajouter un règlement</a></h3>
+
+{% endblock %}

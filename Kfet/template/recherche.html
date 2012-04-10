@@ -3,11 +3,22 @@
 {% block title %}Recherche - Kfet{% endblock %}
 
 {% block content %}
-<h1>Recherche</h1>
 
+<h2>Produits recherchés</h2>
+{% if not produit %}
+<p>Aucun produits trouvés</p>
+{% endif %}
+<table border=0 style="width:100%">
 {% for pro in produit %}
-    {{ pro.nom }}
+    <tr><td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td><td>{{ pro.prix }}</td></tr>
 {% endfor %}
+</table>
+<br/>
+
+<h2>Menus recherchés</h2>
+{% if not menu %}
+<p>Aucun menus trouvés</p>
+{% endif %}
 
 {% for men in menu %}
     {{ men.nom }}

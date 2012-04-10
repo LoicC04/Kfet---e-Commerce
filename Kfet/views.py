@@ -16,7 +16,7 @@ def recherche(request):
     if request.method == 'POST':
         keyword = request.POST['keyword']
         category = request.POST['category']
-        produit = Produit.objects.filter(nom__contains=keyword)
-        menu = TypeMenu.objects.filter(nom__contains=keyword)
+        produit = Produit.objects.filter(nom__icontains=keyword)
+        menu = TypeMenu.objects.filter(nom__icontains=keyword)
     return render_to_response('recherche.html', {'produit':produit, 'menu':menu}, context_instance=RequestContext(request) )
 

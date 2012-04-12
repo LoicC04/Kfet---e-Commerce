@@ -105,3 +105,7 @@ def supprimerReglement(request, reglement_id):
 @login_required
 def dettes(request):
     return render_to_response('Administration/dettes.html', { }, context_instance=RequestContext(request))
+
+@login_required
+def ventes(request):
+

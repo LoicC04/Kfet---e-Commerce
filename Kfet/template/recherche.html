@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<h2>Mots-clés : {{ keyword }} dans {% ifequal category "default" %} {% else %}{{ category }} {% endifequal %}</h2>
+
 <h2>Produits recherchés</h2>
 {% if not produit %}
 <p>Aucun produits trouvés</p>

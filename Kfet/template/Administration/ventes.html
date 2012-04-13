@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Administration de la Kfet{% endblock %}
+
+{% block content %}
+
+<h1>Administration</h1>
+
+<table border=0 style="width:100%">
+    <tr><td> Id vente </td><td>Produit vendu</td><td>Quantité</td></tr>
+    {% for vente in ventes %}
+
+        <tr><td>{{ vente.id }}</td><td>{{ vente.produit }}</td><td>{{ vente.quantite }}</td></tr>
+
+    {% endfor %}
+</table>
+
+{% endblock %}

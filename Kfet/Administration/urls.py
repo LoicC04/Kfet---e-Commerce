@@ -23,4 +23,8 @@ urlpatterns = patterns('Kfet.Administration.views',
     # Gestion des dettes
     (r'^dettes/$', 'dettes'),
     #(r'^(?P<poll_id>\d+)/$', 'detail'),
+
+    # Gestion des dettes
+    (r'^ventes/$', 'ventes'),
+
 )

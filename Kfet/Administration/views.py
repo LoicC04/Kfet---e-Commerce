@@ -4,8 +4,10 @@ from django.template import RequestContext
 from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
 from Kfet.Commun.models.Reglement import Reglement, ReglementForm
+from Kfet.Commun.models.Vente import Vente
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
+import datetime
 
 
 @login_required
@@ -108,4 +110,8 @@ def dettes(request):
 
 @login_required
 def ventes(request):
+    ventes = Vente.objects.filter(date__gte=datetime.date.today())
+    commandes = Commande.objects.filter(date__gte=datetime.date.today())
+
+    return render_to_response('Administration/ventes.html', { 'ventes':ventes }, context_instance=RequestContext(request))
 

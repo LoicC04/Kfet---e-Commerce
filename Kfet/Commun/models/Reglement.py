@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 from django.db import models
 from django import forms
 
@@ -17,3 +18,5 @@ class ReglementForm(forms.ModelForm):
     class Meta:
         model = Reglement
         exclude=('actif')
+
+    proposeEnLigne = forms.BooleanField(label="Réglement proposé aux utilisateurs?", initial=False)

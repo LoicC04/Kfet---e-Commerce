@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire, Categorie
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire, Categorie, ReglementCommandeForm
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -87,6 +87,9 @@ def panier(request, erreur=None):
         erreur = "Une erreur est survenue, merci de réessayer"
     context['erreur']=erreur
 
+    form = ReglementCommandeForm()
+    context['form']=form
+
     return render_to_response('Commandes/panier.html', context, context_instance=RequestContext(request) )
 
 @login_required
@@ -150,6 +153,9 @@ def panier_maj(request, produit_panier_id):
 
 @login_required
 def validerPanier(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier'))
+
     user = request.user # On récupère l'utilisateur
     profil = user.get_profile() # on récupère son profil
     panier_a_valider = profil.panier # on récupère son panier
@@ -169,11 +175,9 @@ def validerPanier(request):
     commande.user = user
     commande.panier = panier_a_valider
     # On récupère le type de paiement
-    try:
-        reglement_liquide = Reglement.objects.get(type="Liquide")
-    except Reglement.DoesNotExist:
-        return HttpResponse("Aucun type de règlement n'est défini (Liquide est celui par défaut)")
-    commande.reglement = reglement_liquide
+    form = ReglementCommandeForm(data=request.POST)
+    if form.is_valid():
+        commande.reglement = form.cleaned_data['reglement']
 
     # On récupère le status de la commande : "En cours" pour la première étape
     try:

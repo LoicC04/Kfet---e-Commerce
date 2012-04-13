@@ -110,10 +110,21 @@
 <p>Aucun menus commandés</p>
 {% endif %}
 
-<span class="button" style="margin-left:35%;margin-top:20px">
-    <input type="button" value="Valider panier" OnClick="window.location.href='{% url Kfet.Commandes.views.validerPanier %}'"/>
-</span>
-
-<p></p>
+{% if menus or panier %}
+<div style="margin-left:35%;">
+<form action="{% url Kfet.Commandes.views.validerPanier %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        {{ field.errors }}
+        {% endfor %}
+        <br/>
+    <span class="button" style="margin-top:20px">
+        <input type="submit" value="Valider panier"/>
+    </span>
+</form>
+</div>
+{% endif %}
 
 {% endblock %}

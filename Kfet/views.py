@@ -15,9 +15,22 @@ def listMenu(request):
 def recherche(request):    
     if request.method == 'POST':
         keyword = request.POST['keyword']
-        category = request.POST['category']
+        keywords = keyword.split(' ') 
+        category = request.POST['category']                
+
         if category == "default":
-            produit = Produit.objects.filter(nom__icontains=keyword)
+            if len(keywords) == 1:
+                produit = Produit.objects.filter(nom__icontains=keywords[0])
+            else:
+                produit = []
+                for key in keywords:
+                    test = 0
+                    pro = Produit.objects.filter(nom__icontains=key)
+                    for result in produit:
+                        if result == pro[0]:
+                            test = 1
+                    if test == 0:
+                        produit += pro
         else:
             categorie = Categorie.objects.get(nom=category)
             produit = Produit.objects.filter(nom__icontains=keyword, categorie=categorie.id)

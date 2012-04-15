@@ -36,7 +36,23 @@ def recherche(request):
                         produit += pro
         else:
             categorie = Categorie.objects.get(nom=category)
-            produit = Produit.objects.filter(nom__icontains=keyword, categorie=categorie.id)
+
+            if len(keywords) == 1:
+                produit = Produit.objects.filter(nom__icontains=keywords[0], categorie=categorie.id)
+            else:
+                produit = []
+                for key in keywords:
+                    test = 0
+                    pro = Produit.objects.filter(nom__icontains=key, categorie=categorie.id)
+                    for result in produit:
+                        try:
+                            if result == pro[0]:
+                                test = 1
+                        except IndexError:
+                            pass
+                    if test == 0:
+                        produit += pro
+
         menu = TypeMenu.objects.filter(nom__icontains=keyword)
     return render_to_response('recherche.html', {'produit':produit, 'menu':menu, 'keyword':keyword, 'category':category}, context_instance=RequestContext(request) )
 

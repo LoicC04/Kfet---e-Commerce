@@ -112,6 +112,9 @@ def dettes(request):
 def ventes(request):
     ventes = Vente.objects.filter(date__gte=datetime.date.today())
     commandes = Commande.objects.filter(date__gte=datetime.date.today())
+    ca = 0
+    for vente in ventes:
+        ca += vente.produit.prix * vente.quantite
 
-    return render_to_response('Administration/ventes.html', { 'ventes':ventes }, context_instance=RequestContext(request))
+    return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'ca':ca }, context_instance=RequestContext(request))
 

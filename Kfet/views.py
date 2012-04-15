@@ -27,8 +27,11 @@ def recherche(request):
                     test = 0
                     pro = Produit.objects.filter(nom__icontains=key)
                     for result in produit:
-                        if result == pro[0]:
-                            test = 1
+                        try:
+                            if result == pro[0]:
+                                test = 1
+                        except IndexError:
+                            pass
                     if test == 0:
                         produit += pro
         else:

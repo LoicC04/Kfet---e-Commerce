@@ -1,0 +1,172 @@
+% $Id: beamercolorthemepolytech.sty 39 2010-04-02 06:44:32Z 20403346t $
+\ProvidesPackage{beamercolorthemepolytech}
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+% 
+% Adaptation for use by Polytech 
+% Copyright 2006 by Lissy Alexandre <lissyx@users.sourceforge.net>
+
+\mode<presentation>
+
+\setbeamertemplate{background canvas}[vertical shading][bottom=blue!10,top=white]
+
+%% Définit la couleur ``de base''
+%% Par défaut, {rgb}{0.05,0.18,0.53}
+\definecolor{beamer@blendedblue}{rgb}{0.54, 0.71, 0.85}
+\definecolor{beamer@polytechorange}{rgb}{1.0,0.62,0.196} % Polytech Orange!
+% \setbeamercolor{background canvas}{parent=normal text}
+
+\setbeamercolor{background}{parent=background canvas}
+\setbeamercolor{polytechorange}{fg=beamer@polytechorange}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Référence % Cible (fg: foreground, bg: background)
+\setbeamercolor{structure}{fg=beamer@blendedblue}
+
+\setbeamercolor{palette primary}{use=structure,fg=structure.fg!0!white}
+\setbeamercolor{palette secondary}{use=structure,fg=structure.fg!0!white}
+\setbeamercolor{palette tertiary}{use=structure,fg=structure.fg!0!white}
+\setbeamercolor{palette quaternary}{fg=white,bg=black}
+
+\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+
+\setbeamercolor{math text}{}
+\setbeamercolor{math text inlined}{parent=math text}
+\setbeamercolor{math text displayed}{parent=math text}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{example text}{fg=green!50!black}
+
+\setbeamercolor{normal text in math text}{}
+
+\setbeamercolor{local polytechorange}{parent=polytechorange}
+
+% \setbeamercolor{titlelike}{parent=polytechorange}
+\setbeamercolor{title}{parent=titlelike}
+\setbeamercolor{title in head/foot}{parent=palette tertiary}
+\setbeamercolor{title in sidebar}{parent=palette sidebar quaternary}
+
+\setbeamercolor{subtitle}{parent=title}
+
+\setbeamercolor{author}{use=palette,bg=structure}
+\setbeamercolor{author in head/foot}{parent=palette secondary}
+\setbeamercolor{author in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{institute}{}
+\setbeamercolor{institute in head/foot}{parent=palette tertiary}
+\setbeamercolor{institute in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{date}{}
+\setbeamercolor{date in head/foot}{parent=palette quaternary}
+\setbeamercolor{date in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{titlegraphic}{}
+
+\setbeamercolor{part name}{}
+\setbeamercolor{part title}{parent=titlelike}
+\setbeamercolor{part title in head/foot}{parent=palette quaternary}
+
+\setbeamercolor{section in toc}{parent=polytechorange}
+\setbeamercolor{section in head/foot}{parent=palette tertiary}
+\setbeamercolor{section in sidebar}{parent=palette sidebar secondary}
+\setbeamercolor{section in sidebar shaded}{use=section in sidebar,fg=section in sidebar.fg!40!bg}
+\setbeamercolor{section number projected}{parent=item projected}
+
+\setbeamercolor{subsection in toc}{}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{subsection in sidebar}{parent=palette sidebar primary}
+\setbeamercolor{subsection in sidebar shaded}{use=subsection in sidebar,fg=subsection in sidebar.fg!40!bg}
+\setbeamercolor{subsection number projected}{parent={subitem projected}}
+
+\setbeamercolor{headline}{}
+\setbeamercolor{footline}{}
+
+\setbeamercolor{sidebar}{}
+\setbeamercolor{sidebar left}{parent=sidebar}
+\setbeamercolor{sidebar right}{parent=sidebar}
+
+\setbeamercolor{logo}{parent=palette secondary}
+
+\setbeamercolor{frametitle}{parent=titlelike}
+\setbeamercolor{framesubtitle}{parent=frametitle}
+
+\setbeamercolor{frametitle right}{parent=frametitle}
+
+\setbeamercolor{caption}{}
+\setbeamercolor{caption name}{parent=polytechorange}
+
+\setbeamercolor{button}{use=local polytechorange,bg=local polytechorange.fg!50!bg,fg=white}
+\setbeamercolor{button border}{use=button,fg=button.bg}
+\setbeamercolor{navigation symbols}{}
+\setbeamercolor{navigation symbols dimmed}{}
+% \setbeamercolor{navigation symbols}{use=polytechorange,fg=polytechorange.fg!40!bg}
+% \setbeamercolor{navigation symbols dimmed}{use=polytechorange,fg=polytechorange.fg!20!bg}
+\setbeamercolor{mini frame}{parent=section in head/foot}
+
+\setbeamercolor{block body}{}
+\setbeamercolor{block body alerted}{}
+\setbeamercolor{block body example}{}
+\setbeamercolor{block title}{parent=polytechorange}
+\setbeamercolor{block title alerted}{parent=alerted text}
+\setbeamercolor{block title example}{parent=example text}
+
+\setbeamercolor{item}{parent=local polytechorange}
+\setbeamercolor{subitem}{parent=item}
+\setbeamercolor{subsubitem}{parent=subitem}
+
+\setbeamercolor{item projected}{parent=item,use=item,fg=white,bg=item.fg}
+\setbeamercolor{subitem projected}{parent=item projected}
+\setbeamercolor{subsubitem projected}{parent=subitem projected}
+
+\setbeamercolor{enumerate item}{parent=item}
+\setbeamercolor{enumerate subitem}{parent=subitem}
+\setbeamercolor{enumerate subsubitem}{parent=subsubitem}
+
+\setbeamercolor{itemize item}{parent=item}
+\setbeamercolor{itemize subitem}{parent=subitem}
+\setbeamercolor{itemize subsubitem}{parent=subsubitem}
+
+\setbeamercolor{itemize/enumerate body}{}
+\setbeamercolor{itemize/enumerate subbody}{}
+\setbeamercolor{itemize/enumerate subsubbody}{}
+
+\setbeamercolor{description item}{parent=item}
+
+\setbeamercolor{bibliography item}{parent=item}
+
+\setbeamercolor{bibliography entry author}{use=polytechorange,fg=polytechorange.fg}
+\setbeamercolor{bibliography entry title}{use=normal text,fg=normal text.fg}
+\setbeamercolor{bibliography entry location}{use=polytechorange,fg=polytechorange.fg!65!bg}
+\setbeamercolor{bibliography entry note}{use=polytechorange,fg=polytechorange.fg!65!bg}
+
+\setbeamercolor{separation line}{}
+
+\setbeamercolor{upper separation line head}{parent=separation line}
+\setbeamercolor{middle separation line head}{parent=separation line}
+\setbeamercolor{lower separation line head}{parent=separation line}
+
+\setbeamercolor{upper separation line foot}{parent=separation line}
+\setbeamercolor{middle separation line foot}{parent=separation line}
+\setbeamercolor{lower separation line foot}{parent=separation line}
+
+\setbeamercolor{abstract}{}
+\setbeamercolor{abstract title}{parent=polytechorange}
+
+\setbeamercolor{verse}{}
+
+\setbeamercolor{quotation}{}
+\setbeamercolor{quote}{parent=quotation}
+
+% \textcolor{black}{[ \insertpagenumber ]}
+\setbeamercolor{page number in head/foot}{use=polytechorange,fg=polytechorange.fg}
+
+\setbeamercolor{qed symbol}{parent=polytechorange}
+
+\mode
+<all>

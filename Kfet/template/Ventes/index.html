@@ -5,6 +5,8 @@
 {% block content %}
 <h1>Kfet Vente</h1>
 
+<p>{{ error }}</p>
+
 {% if vente.id %}
     <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp <font color="red"><a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
 {% endif %}

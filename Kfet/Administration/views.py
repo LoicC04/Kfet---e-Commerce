@@ -5,9 +5,11 @@ from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
 from Kfet.Commun.models.Reglement import Reglement, ReglementForm
 from Kfet.Commun.models.Vente import Vente
+from Kfet.Commun.models.UserProfile import UserProfile
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
 import datetime
+from django.utils.encoding import smart_str
 
 
 @login_required
@@ -105,8 +107,26 @@ def supprimerReglement(request, reglement_id):
     return render_to_response('Administration/typeReglement.html', {'erreur':erreur}, context_instance=RequestContext(request))
 
 @login_required
-def dettes(request):
-    return render_to_response('Administration/dettes.html', { }, context_instance=RequestContext(request))
+def dettes(request, user_id=None):
+    context={}
+    context["users"] = UserProfile.objects.filter(dette__gt=0)
+    if user_id!=None:
+        profile = UserProfile.objects.get(user=user_id)
+        context["message"]="La dette de {0} {1} a été effacée".format(smart_str(profile.user.first_name), smart_str(profile.user.last_name))
+    
+    return render_to_response('Administration/dettes.html', context, context_instance=RequestContext(request))
+
+@login_required
+def effacerDette(request,user_id):
+    profile = UserProfile.objects.get(user=user_id)
+    profile.dette = 0
+    profile.save()
+    return dettes(request, user_id=profile.user.id)
+
+@login_required
+def enleverDeDette(request, user_id, montant):
+    return render_to_response('Administration/dettes.html', {  }, context_instance=RequestContext(request))
+
 
 @login_required
 def ventes(request):

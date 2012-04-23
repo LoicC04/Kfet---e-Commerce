@@ -1,16 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Administration de la Kfet{% endblock %}
+{% block title %}Gérer les dettes{% endblock %}
 
 {% block content %}
 
-<h1>Administration</h1>
+<h1>Administration des dettes</h1>
 
-<ul>
-    <li><a href="{% url Kfet.GestionStock.views.index %}">Gérer les stocks</a> : Fournisseurs et produits</li>
-    <li><a href="{% url Kfet.Administration.views.typeMenu %}">Gérer menus</a> : Composer et modifier les menus</li>
-    <li><a href="{% url Kfet.Administration.views.typeReglement %}">Gérer les types de paiements</a> : Ajouter et modifier un type de paiement en ligne</li>
-    <li><a href="{% url Kfet.Administration.views.dettes %}">Gérer les dettes</a> : Consulter, modifier une dette</li>
-</ul>
+{% if message %}
+    <center style="color:red">{{ message|safe }}</center>
+{% endif %}
+
+{% if users %}
+<table style=width:100%;text-align:center>
+    <tr>
+        <th>Étudiant</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Dettes</th>
+        <th>Actions</th>
+    </tr>
+{% for u in users %}
+    <tr>
+        <td>{{ u.user.username }}</td>
+        <td>{{ u.user.last_name }}</td>
+        <td>{{ u.user.first_name }}</td>
+        <td>{{ u.dette }}</td>
+        <td>
+            <a href="{% url Kfet.Administration.views.effacerDette u.user.id %}"><img src="/static/icon/icon_dellink.gif" title="Effacer la dette"/>Effacer</a><br/>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+    <p>Aucun utilisateur n'a de dette.</p>
+{% endif %}
 
 {% endblock %}

@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     promo = models.ForeignKey(Promo, blank=True, null=True)
     panier = models.ForeignKey(Panier, blank=True, null=True)
 
-    dette = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False, default=0)
+    dette = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)
 
     class Meta:
         app_label = 'Commun'

@@ -3,11 +3,20 @@
 {% block title %}Gestion compte Utilisateur - Kfet{% endblock %}
 
 {% block content %}
+<div style="float:right;padding:10px;border:2px outset red;border-radius:10px;">
+    <h2>Dette à régler</h2>
+        <center>
+        <div id="prix" style="top:30%;width:85px;height:85px;background: url('/static/css/T_Shirt/css/images/products-price.png') no-repeat 0 0;z-index:1;color:white; font-size: 30px; font-family: 'HelveticaInseratRoman', arial, sans-serif; text-align: center;">
+            <br/>
+            {{ profile.dette|stringformat:"d" }}€<sup>{{ decimale }}</sup>
+        </div>
+        </center>
+</div>
 <h1>Gestion d'un compte utilisateur</h1>
 
-<table style=width:100%>
+<table >
     <tr>
-        <td>Nom</td><td>{{user.last_name}}</td>
+        <td style="width:150px">Nom</td><td>{{user.last_name}}</td>
     </tr>
     <tr>
         <td>Prénom</td><td>{{user.first_name}}</td>
@@ -39,22 +48,22 @@
     {% for c in commandes_encours.object_list %}
     <tr>
         <td>
-            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
                 {{ c.id }}
             </a>
         </td>
         <td>
-            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
                 {{ c.status_commande.label }}
             </a>
         </td>
         <td>
-            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
                 {{ c.date }}
             </a>
         </td>
         <td>
-            <a href="{% url Kfet.Commandes.views.confirmationPanier c.panier_id %}">
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
             {{ c.reglement.type }}
             </a>
         </td>

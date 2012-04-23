@@ -93,6 +93,9 @@ def gestion(request):
     profile = user.get_profile()
     context['user'] = user
     context['profile'] = profile
+    
+    if profile.dette != 0:
+        context["decimale"]=str(profile.dette%1).split(".")[1]
 
     try:
         encours = Status_Commande.objects.get(code=1)

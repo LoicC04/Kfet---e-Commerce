@@ -17,14 +17,22 @@
         <th>Nom</th>
         <th>Prénom</th>
         <th>Dettes</th>
-        <th>Actions</th>
+        <th>Diminuer de</th>
+        <th>Effacer</th>
     </tr>
 {% for u in users %}
     <tr>
         <td>{{ u.user.username }}</td>
         <td>{{ u.user.last_name }}</td>
         <td>{{ u.user.first_name }}</td>
-        <td>{{ u.dette }}</td>
+        <td>{{ u.dette }} €</td>
+        <td>
+            <form action="{% url Kfet.Administration.views.enleverDeDette u.user.id %}" method="POST">{% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+                <input type="submit" value="ok">
+            </form>
         <td>
             <a href="{% url Kfet.Administration.views.effacerDette u.user.id %}"><img src="/static/icon/icon_dellink.gif" title="Effacer la dette"/>Effacer</a><br/>
         </td>

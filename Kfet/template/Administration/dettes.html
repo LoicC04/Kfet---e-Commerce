@@ -14,7 +14,7 @@
 <div>
     <p><strong>Afficher : </strong>
     {% for p in promos %}
-        <a href="?promo={{ p }}">{{ p }}</a> |
+    <a href="{% url Kfet.Administration.views.dettes %}?promo={{ p }}">{{ p }}</a> |
     {% endfor %}
     </p>
 </div>
@@ -55,7 +55,7 @@
 <div class="pagination">
     <span class="step-links">
         {% if users.has_previous %}
-                <a href="?page={{ users.previous_page_number }}&promo={{ promo }}">précédente</a>
+                <a href="{% url Kfet.Administration.views.dettes %}?page={{ users.previous_page_number }}&promo={{ promo }}">précédente</a>
             {% endif %}
 
             <span class="current">
@@ -63,7 +63,7 @@
             </span>
 
             {% if users.has_next %}
-                <a href="?page={{ users.next_page_number }}&promo={{ promo }}">suivante</a>
+                <a href="{% url Kfet.Administration.views.dettes %}?page={{ users.next_page_number }}&promo={{ promo }}">suivante</a>
             {% endif %}
         </span>
     </div>

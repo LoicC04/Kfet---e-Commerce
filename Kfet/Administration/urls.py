@@ -23,7 +23,7 @@ urlpatterns = patterns('Kfet.Administration.views',
     # Gestion des dettes
     (r'^dettes/$', 'dettes'),
     (r'^effacerDette/(?P<user_id>\d+)/$', 'effacerDette'),
-    (r'^eneleverDeDette/(?P<user_id>\d+)/$', 'enleverDeDette'),
+    (r'^enleverDeDette/(?P<user_id>\d+)/$', 'enleverDeDette'),
     #(r'^(?P<poll_id>\d+)/$', 'detail'),
 
     # Gestion des dettes

@@ -10,21 +10,33 @@
     <center style="color:red">{{ message|safe }}</center>
 {% endif %}
 
-{% if users %}
+{% if promos %}
+<div>
+    <p><strong>Afficher : </strong>
+    {% for p in promos %}
+        <a href="?promo={{ p }}">{{ p }}</a> |
+    {% endfor %}
+    </p>
+</div>
+{% endif %}
+
+{% if users.object_list %}
 <table style=width:100%;text-align:center>
     <tr>
         <th>Étudiant</th>
         <th>Nom</th>
         <th>Prénom</th>
+        <th>Promo</th>
         <th>Dettes</th>
         <th>Diminuer de</th>
         <th>Effacer</th>
     </tr>
-{% for u in users %}
-    <tr>
+{% for u in users.object_list %}
+    <tr {% if u.dette >= 5.0 %} style="color:red" {% endif %}>
         <td>{{ u.user.username }}</td>
         <td>{{ u.user.last_name }}</td>
         <td>{{ u.user.first_name }}</td>
+        <td>{{ u.promo.promo }}</td>
         <td>{{ u.dette }} €</td>
         <td>
             <form action="{% url Kfet.Administration.views.enleverDeDette u.user.id %}" method="POST">{% csrf_token %}
@@ -39,6 +51,24 @@
     </tr>
 {% endfor %}
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if users.has_previous %}
+                <a href="?page={{ users.previous_page_number }}&promo={{ promo }}">précédente</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ users.number }} / {{ users.paginator.num_pages }}.
+            </span>
+
+            {% if users.has_next %}
+                <a href="?page={{ users.next_page_number }}&promo={{ promo }}">suivante</a>
+            {% endif %}
+        </span>
+    </div>
+
+
 {% else %}
     <p>Aucun utilisateur n'a de dette.</p>
 {% endif %}

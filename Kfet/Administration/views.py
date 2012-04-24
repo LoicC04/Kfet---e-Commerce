@@ -5,12 +5,15 @@ from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
 from Kfet.Commun.models.Reglement import Reglement, ReglementForm
 from Kfet.Commun.models.Vente import Vente
+from Kfet.Commun.models.Promo import Promo
 from Kfet.Commun.models.UserProfile import UserProfile
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
 import datetime
 from django.utils.encoding import smart_str
 from django import forms
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required
@@ -116,7 +119,23 @@ class DetteForm(forms.Form):
 def dettes(request, user_id=None, montant=None):
     context={}
     context["form"] = DetteForm()
-    context["users"] = UserProfile.objects.filter(dette__gt=0)
+
+    # Traitement du filtrage demandé par l'utilisateur
+    promos = ["Tous"]
+    promos.extend(Promo.objects.all())
+    context['promos'] = promos
+    promotion = request.GET.get('promo','Tous')
+    users = UserProfile.objects.filter(dette__gt=0).order_by("-dette")
+    if promotion!="Tous":
+        try:
+            promo = Promo.objects.get(promo=promotion)
+            users = users.filter(promo=promo)
+        except ObjectDoesNotExist:
+            pass
+    context['promo'] = promotion
+
+
+    # Affichage des messages en fonctions des actions réalisées
     if user_id!=None:
         if user_id==-1:
             context["message"]="Erreur lors de la saisie de la dette"
@@ -127,6 +146,21 @@ def dettes(request, user_id=None, montant=None):
             else:
                 context["message"]="La dette de {0} {1} a été effacée".format(smart_str(profile.user.first_name), smart_str(profile.user.last_name))
     
+
+    # Pagination des utilisateurs ayant des dettes
+    paginator = Paginator(users,15) # Afficher 15 éléments par page
+    page = request.GET.get('page',1)
+    try:
+        users_pagi = paginator.page(page)
+    except PageNotAnInteger:
+        # Si la page n'est pas un entier, on affiche la première page
+        users_pagi = paginator.page(1)
+    except EmptyPage:
+        # Si on dépasse le nombre de page, on affiche la dernière
+        users_pagi = paginator.page(paginator.num_pages)
+
+    context['users'] = users_pagi
+
     return render_to_response('Administration/dettes.html', context, context_instance=RequestContext(request))
 
 @login_required

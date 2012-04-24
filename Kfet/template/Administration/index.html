@@ -6,38 +6,44 @@
 
 <h1>Administration</h1>
 
-<div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
-    <center>
-        <a href="{% url Kfet.GestionStock.views.index %}"><img src="/static/css/T_Shirt/css/images/boxes.png" alt="Stocks" height="130px"><br/></a> 
-        <h1>Gérer les stocks</h1>Fournisseurs et produits.
-    </center>
+<div style="padding:30px; min-height:800px">
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <a href="{% url Kfet.GestionStock.views.index %}"><img src="/static/css/T_Shirt/css/images/boxes.png" alt="Stocks" height="130px"><br/></a> 
+            <h1>Gérer les stocks</h1>Fournisseurs et produits.
+        </center>
+    </div>
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <a href="{% url Kfet.Administration.views.typeMenu %}"><img src="/static/css/T_Shirt/css/images/menu.png" alt="Menu" height="130px"><br/></a> 
+            <h1>Gérer les menus</h1>Composer et modifier les menus.
+        </center>
+    </div>
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <a href="{% url Kfet.Administration.views.typeReglement %}"><img src="/static/css/T_Shirt/css/images/payment.png" alt="Paiements" height="130px"><br/></a> 
+            <h1>Gérer les paiements</h1>Ajouter et modifier un type de paiement.
+        </center>
+    </div>
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <a href="{% url Kfet.Administration.views.dettes %}"><img src="/static/css/T_Shirt/css/images/bill.png" alt="Paiements" height="130px"><br/></a> 
+            <h1>Gérer les dettes</h1>Consulter, modifier une dette.
+        </center>
+    </div>
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin-left:170px">
+        <center>
+            <a href="{% url Kfet.Administration.views.ventes %}"><img src="/static/css/T_Shirt/css/images/sale.png" alt="Paiements" height="130px"><br/></a> 
+            <h1>Gérer les ventes</h1>Consulter les ventes de la journée.
+        </center>
+    </div>
+
 </div>
 
-<div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
-    <center>
-        <a href="{% url Kfet.Administration.views.typeMenu %}"><img src="/static/css/T_Shirt/css/images/menu.png" alt="Menu" height="130px"><br/></a> 
-        <h1>Gérer les menus</h1>Composer et modifier les menus.
-    </center>
-</div>
 
-<div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
-    <center>
-        <a href="{% url Kfet.Administration.views.typeReglement %}"><img src="/static/css/T_Shirt/css/images/payment.png" alt="Paiements" height="130px"><br/></a> 
-        <h1>Gérer les paiements</h1>Ajouter et modifier un type de paiement.
-    </center>
-</div>
-
-<div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
-    <center>
-        <a href="{% url Kfet.Administration.views.dettes %}"><img src="/static/css/T_Shirt/css/images/bill.png" alt="Paiements" height="130px"><br/></a> 
-        <h1>Gérer les dettes</h1>Consulter, modifier une dette.
-    </center>
-</div>
-
-<div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin-left:170px">
-    <center>
-        <a href="{% url Kfet.Administration.views.ventes %}"><img src="/static/css/T_Shirt/css/images/sale.png" alt="Paiements" height="130px"><br/></a> 
-        <h1>Gérer les ventes</h1>Consulter les ventes de la journée.
-    </center>
-</div>
 {% endblock %}

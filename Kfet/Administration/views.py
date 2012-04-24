@@ -5,9 +5,12 @@ from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
 from Kfet.Commun.models.Reglement import Reglement, ReglementForm
 from Kfet.Commun.models.Vente import Vente
+from Kfet.Commun.models.UserProfile import UserProfile
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
 import datetime
+from django.utils.encoding import smart_str
+from django import forms
 
 
 @login_required
@@ -104,9 +107,49 @@ def supprimerReglement(request, reglement_id):
     erreur="Le règlement a été désactivé"
     return render_to_response('Administration/typeReglement.html', {'erreur':erreur}, context_instance=RequestContext(request))
 
+
+
+class DetteForm(forms.Form):
+    dette_a_enlever = forms.DecimalField(max_digits=5, decimal_places=2,  widget=forms.TextInput(attrs={'size':'8'}))
+
 @login_required
-def dettes(request):
-    return render_to_response('Administration/dettes.html', { }, context_instance=RequestContext(request))
+def dettes(request, user_id=None, montant=None):
+    context={}
+    context["form"] = DetteForm()
+    context["users"] = UserProfile.objects.filter(dette__gt=0)
+    if user_id!=None:
+        if user_id==-1:
+            context["message"]="Erreur lors de la saisie de la dette"
+        else:
+            profile = UserProfile.objects.get(user=user_id)
+            if montant!=None:
+                context["message"]="La dette de {0} {1} a été diminuée de {2} €".format(smart_str(profile.user.first_name), smart_str(profile.user.last_name), montant)
+            else:
+                context["message"]="La dette de {0} {1} a été effacée".format(smart_str(profile.user.first_name), smart_str(profile.user.last_name))
+    
+    return render_to_response('Administration/dettes.html', context, context_instance=RequestContext(request))
+
+@login_required
+def effacerDette(request,user_id):
+    profile = UserProfile.objects.get(user=user_id)
+    profile.dette = 0
+    profile.save()
+    return dettes(request, user_id=profile.user.id)
+
+@login_required
+def enleverDeDette(request, user_id):
+    if request.method == "POST":
+        profile = UserProfile.objects.get(user=user_id)
+        form = DetteForm(data=request.POST)
+        if form.is_valid():
+            dette_a_enlever = form.cleaned_data['dette_a_enlever']
+            profile.dette = profile.dette - dette_a_enlever
+            profile.save()
+            return dettes(request, user_id=profile.user.id, montant=dette_a_enlever)
+    return dettes(request, user_id=-1)
+
+
+
 
 @login_required
 def ventes(request):

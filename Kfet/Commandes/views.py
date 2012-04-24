@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, get_list_or_404
-from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, Reglement, TypeMenu, Menu, ChoisirMenuForm, Commentaire, Categorie, ReglementCommandeForm
+from Kfet.Commun.models import Produit, Produit_Panier, Panier, Status_Commande, Commande, TypeMenu, Menu, ChoisirMenuForm, Commentaire, Categorie, ReglementCommandeForm
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -78,7 +78,7 @@ def panier(request, erreur=None):
     elif erreur=="4":
         erreur = "<strong>Un produit n'est pas en quantité suffisante !</strong>. Veuillez le supprimer, attendre un approvisionnement ou changer la quantité commandée"
     elif erreur=="10":
-        erreur = "10"
+        erreur = "<strong>Le type de paiement est incorrect.</strong>"
     elif erreur=="11":
         erreur = "<strong>La quantité ne peut être supérieure au stock</strong>, veuillez choisir une valeur inférieure ou égale à la quantité restante."
     elif erreur=="12":
@@ -178,7 +178,10 @@ def validerPanier(request):
     form = ReglementCommandeForm(data=request.POST)
     if form.is_valid():
         commande.reglement = form.cleaned_data['reglement']
-
+    else:
+        # Type de paiement incorrect
+        return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[10]))
+    
     # On récupère le status de la commande : "En cours" pour la première étape
     try:
         status_encours = get_object_or_404(Status_Commande,label="En cours")
@@ -228,6 +231,11 @@ def validerPanier(request):
     commande.prix = prix_panier
     # On sauvegarde la commande une fois les stocks mis à jour
     commande.save()
+    # On smet à jour la dette de l'utilisateur si il l'a choisit comme moyen de paiement
+    if commande.reglement.type=="Dette":
+        profil.dette += commande.prix
+    profil.save()
+
 
     # On créé un nouveau panier pour l'utilisateur et le rattache à son profil
     nouveau_panier = Panier()
@@ -261,7 +269,10 @@ def confirmationPanier(request, commande_id):
     try:
         commande = Commande.objects.get(pk=commande_id)
     except Commande.DoesNotExist:
-        return HttpResponse("Erreur pendant la validation du panier. La commande {0} n'existe pas.")
+        return HttpResponse("Erreur pendant la validation du panier. La commande {0} n'existe pas.".format(commande_id))
+    user = request.user
+    if user!=commande.user:
+        return HttpResponse("Cette commande ne vous appartient pas")
 
     panier_produit = Produit_Panier.objects.filter(panier=commande.panier)
     nbProduits = 0

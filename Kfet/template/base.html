@@ -126,7 +126,7 @@
                             {% block content %}{% endblock %}
 						</div>
                                                 <!-- End Post -->
-                                                {% if "admin" or "vente" in current_path %}
+                                                {% if "admin" in current_path or "vente" in current_path %}
                                                 
                                                 {% else %}
                                                     {% if publicites_produit %}

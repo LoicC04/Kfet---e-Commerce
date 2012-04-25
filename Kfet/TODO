@@ -1,16 +1,19 @@
-- Possibilité de réutiliser les images uploadé
-- Promotions
+PRIO :
 - Ajouter les commandes validée dans table vente ?? => page vente de la journée avec un tableau ventes kftier et un tableau vente commandes
 - Backoffice Gestion utilisateur = admin ou non gestion commandes gestion commentaire global ...
-- Module Dettes
 - Module Ventes
     - Gérer dette
     - Enlever Pub de la page vente
 - CSS en général
-- CSS Recherche + Verif implémentation multikeyword
-- Mode debug
 - Modifier commentaire
 
 
+
+PAS PRIO :
+
+- Possibilité de réutiliser les images uploadé
+- Promotions
+- CSS Recherche + Verif implémentation multikeyword
+- Mode debug
 Dettes : 
     + Alerte utilisateur quand il dépasse 5 euros

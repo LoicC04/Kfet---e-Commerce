@@ -7,6 +7,9 @@ def categories(request):
     list = Categorie.objects.all()
     return { 'categories_list': list }
 
+def get_current_path(request):
+    return {'current_path': request.get_full_path()}
+
 def articles(request):
     user = request.user
     prix=0

@@ -126,25 +126,29 @@
                             {% block content %}{% endblock %}
 						</div>
                                                 <!-- End Post -->
-                                                {% if publicites_produit %}
-						<!-- Begin Products -->
-                                                <div id="products">
-                                                    {% for produit in publicites_produit %}
-                                                    <a href="{% url Kfet.Commandes.views.produit produit.id %}">
-                                                    <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%} style="text-align:center">
-                                                        <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="234px" />
-							<div class="pr-info">
-                                                            <h4>{{ produit.nom }}</h4>
-                                                            <p>{{ produit.info }}</p>
-                                                            <span class="pr-price">{{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup></span>
-						    	</div>
+                                                {% if "admin" in current_path %}
+                                                
+                                                {% else %}
+                                                    {% if publicites_produit %}
+                                                    <!-- Begin Products -->
+                                                    <div id="products">
+                                                        {% for produit in publicites_produit %}
+                                                        <a href="{% url Kfet.Commandes.views.produit produit.id %}">
+                                                        <div {% if forloop.last %} class="product last" {% else %} class="product" {% endif%} style="text-align:center">
+                                                            <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="234px" />
+                                                            <div class="pr-info">
+                                                                <h4>{{ produit.nom }}</h4>
+                                                                <p>{{ produit.info }}</p>
+                                                                <span class="pr-price">{{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup></span>
+                                                            </div>
+                                                        </div>
+                                                        </a>
+                                                        {% endfor %}
+                                                        <div class="cl">&nbsp;</div>
                                                     </div>
-                                                    </a>
-                                                    {% endfor %}
-						    <div class="cl">&nbsp;</div>
-						</div>
-                                                <!-- End Products -->
-                                                {% endif %}
+                                                    <!-- End Products -->
+                                                    {% endif %}
+                                                {% endif%}
 					</div>
 					<!-- End Content -->
 					<div class="cl">&nbsp;</div>

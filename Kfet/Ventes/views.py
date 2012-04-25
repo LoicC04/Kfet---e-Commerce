@@ -2,13 +2,15 @@
 from django.shortcuts import render_to_response, get_list_or_404
 from Commun.models.Produit import *
 from Commun.models.Vente import *
+from Commun.models.Promo import *
+from Commun.models.UserProfile import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
-def index(request, erreur=None):
+def index(request, promo_id, open, erreur=None):
     list_produit = get_list_or_404(Produit)
 
     if erreur == "1":
@@ -32,7 +34,13 @@ def index(request, erreur=None):
     except Vente.DoesNotExist:         
         vente = Vente()
 
-    return render_to_response('Ventes/index.html', {'produit':produits, 'vente':vente, 'error':error}, context_instance=RequestContext(request) )
+    promos = Promo.objects.all()
+    users = UserProfile.objects.filter(promo_id=promo_id)
+
+    if open == "1":
+        open = 1
+
+    return render_to_response('Ventes/index.html', {'produit':produits, 'vente':vente, 'error':error, 'promos':promos, 'users':users, 'open':open}, context_instance=RequestContext(request) )
 
 def produit_vente(request, produit_id):
     if request.method == 'POST':
@@ -50,9 +58,12 @@ def produit_vente(request, produit_id):
 
         vente = Vente(produit_id=produit_id, quantite=quantite)
         vente.save()
-        return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
+
+#        user = UserProfile.objects.get(user_id=request.POST['nomDette'])
+#        user.dette = user.dette + 10
+        return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0"]))
     else:
-        return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1"]))
+        return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0", "1"]))
 
 
     
@@ -65,5 +76,5 @@ def annuler_vente(request, vente_id):
     produit.save()
     vente.delete()
 
-    return HttpResponseRedirect(reverse('Kfet.Ventes.views.index'))
+    return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0"]))
 

@@ -8,15 +8,38 @@
 <p>{{ error }}</p>
 
 {% if vente.id %}
-    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp <font color="red"><a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
+    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp <a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
 {% endif %}
+
+<input type="button" id="voir" value="Dettes" onClick="divaffiche()" style="display:inline;"/> 
+<input type="button" id="cache" value="Cacher dettes" onClick="divcache()" style="display:none;"/>
+
+{% ifequal open 1 %}
+<div id="popup" style="min-height:120px;display:block">
+{% else %}
+<div id="popup" style="min-height:120px;display:none">
+{% endifequal %}
+
+
+    <div style="float:left;padding:10px;width:130px;margin:20px">
+
+        {% for promo in promos %}
+            <a href="{% url Kfet.Ventes.views.index promo.id 1 %}">{{promo.promo}}</a></br>
+        {% endfor %}
+
+    </div>
+    <div style="float:left;padding:10px;width:130px;margin:20px">
+            <select size="5" style="width:200px" name="nomDette">
+                {% for user in users %}
+                    <option value="{{ user.user_id }}">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>
+                {% endfor%}
+            </select>        
+    </div>    
+</div>
 
 <div style="padding:30px; min-height:400px">
     {% for pro in produit.object_list %}
-    <div style="float:left; padding-left:10px;">
-        </br>
-        <blockquote style="color:black;height:160px;width:120px;padding: 2px 10px 2px 10px; margin: 2px 2px 2px 2px;">
-            <br/>
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:130px;margin:20px">
             {% ifequal  pro.quantite 0 %}
             <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="100px"></a></center>
             {% else %}
@@ -28,7 +51,6 @@
 
             {% endifequal %}
             <center>{{ pro.nom }} ({{ pro.quantite }})</center>                          
-        </blockquote>
     </div>
     {% endfor %}
 </div>

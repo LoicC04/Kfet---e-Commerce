@@ -10,7 +10,7 @@ import os
 from django.utils.html import escape
 from django.db.models.loading import get_models, get_apps
 from django.forms.models import modelform_factory
-from django.contrib.auth.decorators import
+from django.contrib.auth.decorators import user_passes_test
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -36,8 +36,6 @@ def index(request):
         produits_stock = paginator_stock.page(paginator_stock.num_pages)
 
     return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
-else:
-    return  HttpResponseRedirect(reverse('Kfet.Comptes.views.login'))
 
 @user_passes_test(lambda u: u.is_superuser)
 def reappro(request):

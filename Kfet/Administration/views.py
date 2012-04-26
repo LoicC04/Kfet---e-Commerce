@@ -14,13 +14,14 @@ from django.utils.encoding import smart_str
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import user_passes_test
 
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def index(request):
     return render_to_response('Administration/index.html', { }, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def typeMenu(request, erreur=None):
     menus_actif = TypeMenu.objects.filter(actif=True)
     menus_inactif = TypeMenu.objects.filter(actif=False)
@@ -31,7 +32,7 @@ def typeMenu(request, erreur=None):
         context['erreur']="Des ventes ont été effectuées avec ce menu, impossible de le supprimer. Il peut être désactiver"
     return render_to_response('Administration/typeMenu.html', context, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def ajouterModifierMenu(request, menu_id=None):
     if menu_id!=None:
         menu = get_object_or_404(TypeMenu, pk=menu_id)
@@ -47,7 +48,7 @@ def ajouterModifierMenu(request, menu_id=None):
         form = TypeMenuForm(instance=menu)
     return render_to_response('Administration/ajouterModifierMenu.html', {'form':form , 'menu_id':menu_id}, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def supprimerMenu(request,menu_id):
     """ Fonction de suppression des menus de la carte de la Kfet """
     # On récupère le typeMenu en question
@@ -71,13 +72,14 @@ def supprimerMenu(request,menu_id):
         
         return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu', args=[erreur]))
 
+@user_passes_test(lambda u: u.is_superuser)
 def activerMenu(request, menu_id):
     typeMenu = get_object_or_404(TypeMenu, pk=menu_id)
     typeMenu.actif=True
     typeMenu.save()
     return  HttpResponseRedirect(reverse('Kfet.Administration.views.typeMenu'))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def typeReglement(request, erreur=None):
     context = {}
     reglements = Reglement.objects.all().filter(actif=True)
@@ -86,7 +88,7 @@ def typeReglement(request, erreur=None):
         context['erreur']="Le type de régèlement est désactivé"
     return render_to_response('Administration/typeReglement.html', context, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def ajouterModifierReglement(request, reglement_id=None):
     if reglement_id!=None:
         reglement = get_object_or_404(Reglement, pk=reglement_id)
@@ -102,7 +104,7 @@ def ajouterModifierReglement(request, reglement_id=None):
         form = ReglementForm(instance=reglement)
     return render_to_response('Administration/ajouterModifierReglement.html', {'form':form , 'reglement_id':reglement_id}, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def supprimerReglement(request, reglement_id):
     reglement = Reglement.objects.get(pk=reglement_id)
     reglement.actif=False
@@ -115,7 +117,7 @@ def supprimerReglement(request, reglement_id):
 class DetteForm(forms.Form):
     dette_a_enlever = forms.DecimalField(max_digits=5, decimal_places=2,  widget=forms.TextInput(attrs={'size':'8'}))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def dettes(request, user_id=None, montant=None):
     context={}
     context["form"] = DetteForm()
@@ -163,14 +165,14 @@ def dettes(request, user_id=None, montant=None):
 
     return render_to_response('Administration/dettes.html', context, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def effacerDette(request,user_id):
     profile = UserProfile.objects.get(user=user_id)
     profile.dette = 0
     profile.save()
     return dettes(request, user_id=profile.user.id)
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def enleverDeDette(request, user_id):
     if request.method == "POST":
         profile = UserProfile.objects.get(user=user_id)
@@ -182,10 +184,7 @@ def enleverDeDette(request, user_id):
             return dettes(request, user_id=profile.user.id, montant=dette_a_enlever)
     return dettes(request, user_id=-1)
 
-
-
-
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def ventes(request):
     ventes = Vente.objects.filter(date__gte=datetime.date.today())
     commandes = Commande.objects.filter(date__gte=datetime.date.today())

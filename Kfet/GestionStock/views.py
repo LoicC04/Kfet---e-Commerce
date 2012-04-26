@@ -10,41 +10,41 @@ import os
 from django.utils.html import escape
 from django.db.models.loading import get_models, get_apps
 from django.forms.models import modelform_factory
+from django.contrib.auth.decorators import
 
-@login_required
+
+@user_passes_test(lambda u: u.is_superuser)
 def index(request):
-    user = request.user
-    if user.is_staff:
-        list_produit_rupture = Produit.objects.all().filter(quantite=0)
-        list_produit_en_stock = Produit.objects.all().filter(quantite__gte=1)
+    list_produit_rupture = Produit.objects.all().filter(quantite=0)
+    list_produit_en_stock = Produit.objects.all().filter(quantite__gte=1)
 
-        paginator_rupture = Paginator(list_produit_rupture, 10) # Show 10 items per page
-        paginator_stock = Paginator(list_produit_en_stock, 10) # Show 10 items per page
+    paginator_rupture = Paginator(list_produit_rupture, 10) # Show 10 items per page
+    paginator_stock = Paginator(list_produit_en_stock, 10) # Show 10 items per page
 
-        page_rupture = request.GET.get('pageRupture',1)
-        page_stock = request.GET.get('pageStock',1)
-        try:
-            produits_rupture = paginator_rupture.page(page_rupture)
-            produits_stock = paginator_stock.page(page_stock)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            produits_rupture = paginator_rupture.page(1)
-            produits_stock = paginator_stock.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            produits_rupture = paginator_rupture.page(paginator_rupture.num_pages)
-            produits_stock = paginator_stock.page(paginator_stock.num_pages)
+    page_rupture = request.GET.get('pageRupture',1)
+    page_stock = request.GET.get('pageStock',1)
+    try:
+        produits_rupture = paginator_rupture.page(page_rupture)
+        produits_stock = paginator_stock.page(page_stock)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        produits_rupture = paginator_rupture.page(1)
+        produits_stock = paginator_stock.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        produits_rupture = paginator_rupture.page(paginator_rupture.num_pages)
+        produits_stock = paginator_stock.page(paginator_stock.num_pages)
 
-        return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
-    else:
-        return  HttpResponseRedirect(reverse('Kfet.Comptes.views.login'))
+    return render_to_response('GestionStock/home.html', {'produits_out':produits_rupture, 'produits_in':produits_stock}, context_instance=RequestContext(request))
+else:
+    return  HttpResponseRedirect(reverse('Kfet.Comptes.views.login'))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def reappro(request):
     list_Fournisseur = Fournisseur.objects.all()
     return render_to_response('GestionStock/reappro.html', { 'fournisseurs':list_Fournisseur, }, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def creerFournisseur(request, id=None):
     if id!=None:
         fournisseur = get_object_or_404(Fournisseur, pk=id)
@@ -61,7 +61,7 @@ def creerFournisseur(request, id=None):
         form = CreationForm(instance=fournisseur)
     return render_to_response('GestionStock/creerFournisseur.html', {'form':form , 'id':id}, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def commander(request, fournisseur_id, erreur=None):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
     list_produits = Produit.objects.all().filter(fournisseur=fournisseur_id).order_by('quantite').filter(quantiteCommandeFournisseur__lte=0)
@@ -81,7 +81,7 @@ def commander(request, fournisseur_id, erreur=None):
     form=None
     return render_to_response('GestionStock/commander.html', {'form':form, 'fournisseur':fournisseur,'produits':produits, 'produits_commande':list_produits_commande, 'erreur':erreur }, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def creerProduit(request, fournisseur_id, produit_id=None):
     fournisseur = get_object_or_404(Fournisseur, pk=fournisseur_id)
     if produit_id!=None:
@@ -100,14 +100,14 @@ def creerProduit(request, fournisseur_id, produit_id=None):
 
     return render_to_response('GestionStock/creerProduit.html', {'form':form, 'fournisseur':fournisseur, 'produit_id':produit.id}, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def supprimerProduit(request, fournisseur_id, produit_id):
     produit = get_object_or_404(Produit, pk=produit_id)
     produit.delete()
     os.remove(produit.image.path)
     return  HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[fournisseur_id]))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def editerCategorie(request, categorie_id=None):
     if categorie_id!=None:
         categorie = get_object_or_404(Categorie, pk=categorie_id)
@@ -123,7 +123,7 @@ def editerCategorie(request, categorie_id=None):
         form = CreationCategorieForm(instance=categorie)
     return render_to_response('GestionStock/creerCategorie.html', {'form':form , 'categorie_id':categorie_id}, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def add_new_model(request, model_name):
     if (model_name.lower() == model_name):
         normal_model_name = model_name.capitalize()
@@ -154,7 +154,7 @@ def add_new_model(request, model_name):
                 page_context = {'form': form, 'field': normal_model_name}
                 return render_to_response('widgets/popup.html', page_context, context_instance=RequestContext(request))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def commande(request, produit_id):
     if request.method == 'POST':
         produit = get_object_or_404(Produit, pk=produit_id)
@@ -172,7 +172,7 @@ def commande(request, produit_id):
     else:
         return HttpResponseRedirect(reverse('Kfet.GestionStock.views.commander', args=[produit.fournisseur_id]),)
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def validerCommande(request, fournisseur_id):
     list_produits_commande = Produit.objects.all().filter(fournisseur=fournisseur_id).filter(quantiteCommandeFournisseur__gte=1)
     for p in list_produits_commande:

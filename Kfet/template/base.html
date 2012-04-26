@@ -71,7 +71,7 @@
                                                 <ul>
                                                         <li><a href="/" title="Page d'accueil"><span>Accueil</span></a></li>
                                                         <li><a href="/comptes/gestion" title="Page de mon compte"><span>Mon compte</span></a></li>
-                                                        {% if user.is_staff %}
+                                                        {% if user.is_superuser %}
                                                         <li>
                                                             <a href="{% url Kfet.Administration.views.index %}" title="Administration">
                                                                 <span>Administration</span>

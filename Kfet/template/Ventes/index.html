@@ -8,7 +8,7 @@
 <p>{{ error }}</p>
 
 {% if vente.id %}
-    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp <a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
+    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp {% if vente.user_id %} ( Mis en dette à {{ vente.user.user.first_name }} {{ vente.user.user.last_name }} ) {% endif %} &nbsp &nbsp <a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
 {% endif %}
 
 <input type="button" id="voir" value="Dettes" onClick="divaffiche()" style="display:inline;"/> 
@@ -29,9 +29,9 @@
 
     </div>
     <div style="float:left;padding:10px;width:130px;margin:20px">
-            <select size="5" style="width:200px" name="nomDette">
+            <select size="5" style="width:250px" name="nomDette">
                 {% for user in users %}
-                    <option value="{{ user.user_id }}">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>
+                <option value="{{ user.user_id }}" onclick="document.forms['form'].elements['nomDette'].value = '{{ user.user_id }}';">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>
                 {% endfor%}
             </select>        
     </div>    
@@ -40,12 +40,13 @@
 <div style="padding:30px; min-height:400px">
     {% for pro in produit.object_list %}
     <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:130px;margin:20px">
-            {% ifequal  pro.quantite 0 %}
-            <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="100px"></a></center>
-            {% else %}
-            <center><a href="{% url Kfet.Ventes.views.produit_vente pro.id %}"><img src="{{ pro.image.url }}" alt="Image" height="80px"></a></center>
-            <form action="{% url Kfet.Ventes.views.produit_vente pro.id %}" method="POST">{% csrf_token %}
-                <input type="text" name="quantite" size="3">
+            <form id="form" action="{% url Kfet.Ventes.views.produit_vente pro.id %}" method="POST">{% csrf_token %}
+                {% ifequal  pro.quantite 0 %}
+                <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="100px"></a></center>
+                {% else %}
+                <center><a href="#" onclick="document.forms['form'].submit()"><img src="{{ pro.image.url }}" alt="Image" height="80px"></a></center>
+                <input type="text" name="quantite" size="3" value="1">
+                <input type="hidden" name="nomDette" value="no">
                 <input type="submit" value="Vendre">
             </form>
 

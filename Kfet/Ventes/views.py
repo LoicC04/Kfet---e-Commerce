@@ -48,20 +48,27 @@ def produit_vente(request, produit_id):
             quantite = int(request.POST['quantite'])
         except ValueError:
             quantite = 0
-    else:
-        quantite = 1
 
-    if quantite != 0:
-        produit = Produit.objects.get(pk=produit_id)
-        produit.quantite = produit.quantite - quantite
-        produit.save()
+        if quantite != 0:
+            produit = Produit.objects.get(pk=produit_id)
+            produit.quantite = produit.quantite - quantite
+            produit.save()
 
-        vente = Vente(produit_id=produit_id, quantite=quantite)
-        vente.save()
 
-#        user = UserProfile.objects.get(user_id=request.POST['nomDette'])
-#        user.dette = user.dette + 10
-        return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0"]))
+
+            if request.POST['nomDette'] != "no":
+                user = UserProfile.objects.get(user_id=request.POST['nomDette'])
+                user.dette = user.dette + quantite * produit.prix
+                user.save()
+
+                vente = Vente(produit_id=produit_id, quantite=quantite, user_id=user.id)
+                vente.save()
+
+            else:
+                vente = Vente(produit_id=produit_id, quantite=quantite)
+                vente.save()
+
+            return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0"]))
     else:
         return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0", "1"]))
 
@@ -74,6 +81,13 @@ def annuler_vente(request, vente_id):
     produit = Produit.objects.get(pk=vente.produit.id)
     produit.quantite = produit.quantite + vente.quantite
     produit.save()
+
+    if vente.user_id:
+        user = UserProfile.objects.get(pk=vente.user_id)
+        user.dette = user.dette - vente.quantite * produit.prix
+        user.save()
+
+
     vente.delete()
 
     return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0"]))

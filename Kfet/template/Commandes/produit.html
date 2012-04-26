@@ -103,10 +103,11 @@
             </strong> 
                 &nbsp &nbsp 
                 {% ifequal com.profile.user.first_name user.first_name %} 
-                    <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/></a> 
+                    <a href="#comm" onClick="document.getElementsByName('com')[0].value='{{ com.commentaire }}'; document.getElementsByName('id')[0].value='{{ com.id }}';"><img src="/static/icon/icon_editlink.gif" title="Modifier le commenatire"/></a>
+                    <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le commenatire"/></a> 
                 {% else %}
                 {% if user.is_staff %}                
-                    <a href="{% url Kfet.Commandes.views.comm_suppr com.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le produit"/></a> 
+                    <a href="{% url Kfet.Commandes.views.cmmm_suppr cmm.id %}"><img src="/static/icon/icon_dellink.gif" title="Supprimer le commentaire"/></a> 
                 {% endif %}
                 {% endifequal %}
         </p>
@@ -142,10 +143,19 @@
 
 
         {% if user.first_name %}
-        <form action="{% url Kfet.Commandes.views.produit produit.id %}" method="POST">{% csrf_token %}
+        <center>
+        <A NAME="comm"></a>
+        <form id="form" action="{% url Kfet.Commandes.views.produit produit.id %}" method="POST">{% csrf_token %}
             <textarea name="com" cols=55 rows=5></textarea><br/>
-            <input type="submit" value="Ajouter un commentaire">
-        </form>        
+            <input type="hidden" name="id" value="">
+            <span style="float: right; display: inline; background: url('/static/css/T_Shirt/css/images/button-long.png') no-repeat 0 0; margin-right:10px;top:40%">
+                <input
+                    style="margin-right: -7px; position: relative; height: 29px; line-height: 27px; background: url('/static/css/T_Shirt/css/images/button-right.png') no-repeat right 0; float: left; display: inline; width: auto; border: none; cursor: pointer; padding-left: 15px; padding-right: 13px; color: #fff; font-weight: bold; letter-spacing: 1px; "
+                    type="submit" value="Ajouter un commentaire" 
+                    />
+            </span>
+        </form> 
+        </center>
         {% endif %}
 
         </div>

@@ -18,8 +18,13 @@ def produit(request, produit_id, erreur=None):
 
     if not user.is_anonymous():
         if request.method == 'POST':
-            Com = Commentaire(profile_id=profile.id,commentaire=request.POST['com'],produit_id=produit_id)
-            Com.save()
+            if request.POST['id'] == "":
+                Com = Commentaire(profile_id=profile.id,commentaire=request.POST['com'],produit_id=produit_id)
+                Com.save()
+            else:
+                Com = Commentaire.objects.get(pk=request.POST['id'])
+                Com.commentaire = request.POST['com']
+                Com.save()
 
     list_comms = Commentaire.objects.filter(produit=produit_id)
 

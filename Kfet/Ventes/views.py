@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
+@user_passes_test(lambda u: u.is_staff)
 def index(request, promo_id, open, erreur=None):
     list_produit = get_list_or_404(Produit)
 
@@ -42,6 +43,7 @@ def index(request, promo_id, open, erreur=None):
 
     return render_to_response('Ventes/index.html', {'produit':produits, 'vente':vente, 'error':error, 'promos':promos, 'users':users, 'open':open}, context_instance=RequestContext(request) )
 
+@user_passes_test(lambda u: u.is_staff)
 def produit_vente(request, produit_id):
     if request.method == 'POST':
         try:
@@ -72,8 +74,7 @@ def produit_vente(request, produit_id):
     else:
         return HttpResponseRedirect(reverse('Kfet.Ventes.views.index', args=["1","0", "1"]))
 
-
-    
+@user_passes_test(lambda u: u.is_staff)   
 def annuler_vente(request, vente_id):
     
     vente = Vente.objects.get(pk=vente_id)

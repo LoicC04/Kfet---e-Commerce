@@ -71,6 +71,14 @@
                                                 <ul>
                                                         <li><a href="/" title="Page d'accueil"><span>Accueil</span></a></li>
                                                         <li><a href="/comptes/gestion" title="Page de mon compte"><span>Mon compte</span></a></li>
+                                                        {% if user.is_staff %}
+                                                        <li>
+                                                            <a href="{% url Kfet.Ventes.views.index 1 0 %}" title="Ventes">
+                                                                <span>Ventes</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
+
                                                         {% if user.is_superuser %}
                                                         <li>
                                                             <a href="{% url Kfet.Administration.views.index %}" title="Administration">
@@ -78,7 +86,6 @@
                                                             </a>
                                                         </li>
                                                         {% endif %}
-                                                        <li><a href="#" title="Page de la boutique"><span>La boutique</span></a></li>
                                                         <li><a href="#" title="Page de contact"><span>Contact</span></a></li>
                                                 </ul>
                                                 <div class="cl">&nbsp;</div>

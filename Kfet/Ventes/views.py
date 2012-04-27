@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import user_passes_test
 
 
 @user_passes_test(lambda u: u.is_staff)
@@ -36,7 +37,7 @@ def index(request, promo_id, open, erreur=None):
         vente = Vente()
 
     promos = Promo.objects.all()
-    users = UserProfile.objects.filter(promo_id=promo_id)
+    users = UserProfile.objects.filter(promo=promo_id)
 
     if open == "1":
         open = 1

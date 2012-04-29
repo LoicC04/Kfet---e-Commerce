@@ -10,6 +10,7 @@ from Kfet.Commun.models.UserProfile import UserProfile
 from django.shortcuts import render_to_response, HttpResponseRedirect, get_object_or_404
 from django.core.urlresolvers import reverse
 import datetime
+import time
 from django.utils.encoding import smart_str
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -186,11 +187,30 @@ def enleverDeDette(request, user_id):
 
 @user_passes_test(lambda u: u.is_superuser)
 def ventes(request):
-    ventes = Vente.objects.filter(date__gte=datetime.date.today())
-    commandes = Commande.objects.filter(date__gte=datetime.date.today())
-    ca = 0
-    for vente in ventes:
-        ca += vente.produit.prix * vente.quantite
+    if request.method == "POST":
 
-    return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'commandes':commandes, 'ca':ca }, context_instance=RequestContext(request))
+        date = time.strptime(request.POST['date'], "%m/%d/%Y")
+        date = time.strftime("%Y-%m-%d", date)
 
+        ventes = Vente.objects.filter(date=date)
+        commandes = Commande.objects.filter(date=date)
+        ca = 0
+        for vente in ventes:
+            ca += vente.produit.prix * vente.quantite
+
+        for commande in commandes:
+            ca += commande.prix
+
+        return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'commandes':commandes, 'ca':ca , 'date':date}, context_instance=RequestContext(request))
+
+    else:
+        ventes = Vente.objects.filter(date=datetime.date.today())
+        commandes = Commande.objects.filter(date=datetime.date.today())
+        ca = 0
+        for vente in ventes:
+            ca += vente.produit.prix * vente.quantite
+
+        for commande in commandes:
+            ca += commande.prix
+
+        return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'commandes':commandes, 'ca':ca }, context_instance=RequestContext(request))

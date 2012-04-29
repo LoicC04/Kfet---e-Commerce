@@ -192,5 +192,5 @@ def ventes(request):
     for vente in ventes:
         ca += vente.produit.prix * vente.quantite
 
-    return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'ca':ca }, context_instance=RequestContext(request))
+    return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'commandes':commandes, 'ca':ca }, context_instance=RequestContext(request))
 

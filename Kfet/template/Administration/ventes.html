@@ -6,6 +6,8 @@
 
 <h1>Administration</h1>
 <p>Chiffre d'affaire de la journée : {{ca}}</p>
+
+<h2>Ventes individuelles</h2>
 <table border=0 style="width:100%">
     <tr><td> Id vente </td><td>Produit vendu</td><td>Quantité</td></tr>
     {% for vente in ventes %}
@@ -14,5 +16,16 @@
 
     {% endfor %}
 </table>
+<br/>
+<h2>Commandes</h2>
+<table border=0 style="width:100%">
+    <tr><td> Id vente </td><td>Panier</td><td>Nom acheteur</td><td>Prix total</td></tr>
+    {% for commande in commandes %}
+
+        <tr><td>{{ commande.id }}</td><td>{{ commande.panier }}</td><td>{{ commande.user.first_name }} {{ commande.user.last_name }}</td><td>{{ commande.prix }}</td></tr>
+
+    {% endfor %}
+</table>
+
 
 {% endblock %}

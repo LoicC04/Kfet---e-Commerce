@@ -1,5 +1,5 @@
 PRIO :
-- Ajouter les commandes validée dans table vente ?? => page vente de la journée avec un tableau ventes kftier et un tableau vente commandes
+- N'afficher que vente validée dans page vente +oix des jours 
 - Backoffice Gestion utilisateur = admin ou non gestion commandes gestion commentaire global ...
 - Module Ventes : CSS
 - CSS en général

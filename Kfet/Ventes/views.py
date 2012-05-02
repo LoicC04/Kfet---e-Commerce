@@ -60,7 +60,7 @@ def produit_vente(request, produit_id):
 
 
             if request.POST['nomDette'] != "no":
-                user = UserProfile.objects.get(user_id=request.POST['nomDette'])
+                user = UserProfile.objects.get(user=request.POST['nomDette'])
                 user.dette = user.dette + quantite * produit.prix
                 user.save()
 

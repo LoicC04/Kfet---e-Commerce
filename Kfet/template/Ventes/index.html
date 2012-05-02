@@ -31,7 +31,7 @@
     <div style="float:left;padding:10px;width:130px;margin:20px">
             <select size="5" style="width:250px" name="nomDette">
                 {% for user in users %}
-                <option value="{{ user.user_id }}" onclick="document.forms['form'].elements['nomDette'].value = '{{ user.user_id }}';">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>
+                <option value="{{ user.user_id }}" onClick="$('#nomDette').value='{{ user.user_id }}';">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>
                 {% endfor%}
             </select>        
     </div>    
@@ -40,13 +40,13 @@
 <div style="padding:30px; min-height:400px">
     {% for pro in produit.object_list %}
     <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:130px;margin:20px">
-            <form id="form" action="{% url Kfet.Ventes.views.produit_vente pro.id %}" method="POST">{% csrf_token %}
+            <form id="form" name="form"  action="{% url Kfet.Ventes.views.produit_vente pro.id %}" method="POST">{% csrf_token %}
                 {% ifequal  pro.quantite 0 %}
                 <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="100px"></a></center>
                 {% else %}
-                <center><a href="#" onclick="document.forms['form'].submit()"><img src="{{ pro.image.url }}" alt="Image" height="80px"></a></center>
+                <center><a href="#" onclick="$('#form').submit();"><img src="{{ pro.image.url }}" alt="Image" height="80px"></a></center>
                 <input type="text" name="quantite" size="3" value="1">
-                <input type="hidden" name="nomDette" value="no">
+                <input id="nomDette" type="hidden" name="nomDette" value="no">
                 <input type="submit" value="Vendre">
             </form>
 

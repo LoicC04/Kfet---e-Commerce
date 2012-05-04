@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} Kfet - Gestion des commandes{% endblock %}
+
+{% block content %}
+<h1>Kfet Gestion des commandes</h1>
+
+<div style="padding:30px; min-height:800px">
+
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <h2>{{ nb_en_attente }} commande{% if nb_en_attente > 0 %}s{% endif %}</h2>
+            <a href="{% url Kfet.GestionCommandes.views.listCommande 1 %}"><img src="/static/css/T_Shirt/css/images/en_attente.png" alt="Stocks" height="130px"><br/></a> 
+            <h1>En attente</h1>
+        </center>
+    </div>
+    
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <h2>{{ nb_en_cours }} commande{% if nb_en_cours > 0 %}s{% endif %}</h2>
+            <a href="{% url Kfet.GestionCommandes.views.listCommande 2 %}"><img src="/static/css/T_Shirt/css/images/en_cours.svg" alt="Stocks" height="130px"><br/></a> 
+            <h1>En cours de traitement</h1>
+        </center>
+    </div>
+    
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <h2>{{ nb_terminee }} commande{% if nb_terminee > 0 %}s{% endif %}</h2>
+            <a href="{% url Kfet.GestionCommandes.views.listCommande 3 %}"><img src="/static/css/T_Shirt/css/images/terminee.png" alt="Stocks" height="130px"><br/></a> 
+            <h1>Terminées</h1>
+        </center>
+    </div>
+    
+    <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:250px;margin:20px">
+        <center>
+            <h2>{{ nb_annulee }} commande{% if nb_annulee > 0 %}s{% endif %}</h2>
+            {% with code=-1 %}
+            <a href="{% url Kfet.GestionCommandes.views.listCommande code %}"><img src="/static/css/T_Shirt/css/images/annulee.svg" alt="Stocks" height="130px"><br/></a> 
+            {% endwith%}
+            <h1>Annulées</h1>
+        </center>
+    </div>
+
+</div>
+
+{% endblock %}

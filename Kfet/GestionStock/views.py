@@ -5,7 +5,6 @@ from Kfet.Commun.models import Categorie, CreationCategorieForm
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import login_required
 import os
 from django.utils.html import escape
 from django.db.models.loading import get_models, get_apps

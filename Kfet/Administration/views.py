@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from Kfet.Commun.models.TypeMenu import TypeMenu, TypeMenuForm
 from Kfet.Commun.models.Commande import Commande
@@ -214,3 +213,4 @@ def ventes(request):
             ca += commande.prix
 
         return render_to_response('Administration/ventes.html', { 'ventes':ventes, 'commandes':commandes, 'ca':ca }, context_instance=RequestContext(request))
+

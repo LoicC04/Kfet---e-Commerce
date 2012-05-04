@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %} Kfet - Gestion des commandes{% endblock %}
+
+{% block content %}
+<h1>Kfet Gestion des commandes</h1>
+
+<p>{{ error }}</p>
+
+
+{% if en_attente %}
+<table style="width:100%;text-align:center">
+    <tr>
+        <th>Numéro commande</th>
+        <th>Statut commande</th>
+        <th>Date</th>
+        <th>Type de règlement</th>
+        <th>Total</th>
+    </tr>
+    {% for c in en_attente.object_list %}
+    <tr>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
+                {{ c.id }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
+                {{ c.status_commande.label }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
+                {{ c.date }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url Kfet.Commandes.views.confirmationPanier c.id %}">
+            {{ c.reglement.type }}
+            </a>
+        </td>
+        <td><strong>{{ c.prix }}€</strong></td>
+    </tr>
+    {% endfor %}
+</table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if en_attente.has_previous %}
+                <a href="?page={{ en_attente.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ en_attente.number }} / {{ en_attente.paginator.num_pages }}.
+            </span>
+
+            {% if en_attente.has_next %}
+                <a href="?page={{ en_attente.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% else %}
+    <p>Il n'y a aucune commande en cours</p>
+{% endif %}
+
+<div>
+    <a href="{% url Kfet.GestionCommandes.views.index %}">Revenir à la gestion des commandes</a>
+</div>
+
+
+{% endblock %}

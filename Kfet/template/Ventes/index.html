@@ -32,7 +32,7 @@
             <select size="5" style="width:250px" name="nomDette">
                 {% for user in users %}
                 <option value="{{ user.user_id }}" onclick="
-                    for (i=0; i <= {{ produits|length }}; i++){
+                    for (i=0; i <= {{ produit|length }}; i++){
                         document.forms['form'][i].elements['nomDette'].value = '{{ user.user_id }}'
                     }
                 ">{{ user.user.first_name }} {{ user.user.last_name }} ( Dette : {{ user.dette }} € )</option>

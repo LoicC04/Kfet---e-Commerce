@@ -8,7 +8,7 @@
 <p>{{ error }}</p>
 
 {% if vente.id %}
-    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp {% if vente.user_id %} ( Mis en dette à {{ vente.user.user.first_name }} {{ vente.user.user.last_name }} ) {% endif %} &nbsp &nbsp <a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
+    <p>Dernière vente (n° : {{ vente.id }}) : {{ vente.produit }} * {{ vente.quantite }} &nbsp &nbsp {% if vente.user %} ( Mis en dette à {{ vente.user.user.first_name }} {{ vente.user.user.last_name }} ) {% endif %} &nbsp &nbsp <a href="{% url Kfet.Ventes.views.annuler_vente vente.id %}" style="decoration:none;color:red">Annuler la vente</a></p>
 {% endif %}
 
 <input type="button" id="voir" value="Dettes" onClick="divaffiche()" style="display:inline;"/> 
@@ -31,7 +31,7 @@
     <div style="float:left;padding:10px;width:130px;margin:20px">
             <select size="5" style="width:250px" name="nomDette">
                 {% for user in users %}
-                <option value="{{ user.user_id }}" onclick="
+                <option onclick="
                     for (i=0; i <= {{ produit|length }}; i++){
                         document.forms['form'][i].elements['nomDette'].value = '{{ user.user_id }}'
                     }

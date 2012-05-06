@@ -36,14 +36,32 @@
             \end{frame}
 
 
-	\section<presentation>{Le framework Django}
+	\section<presentation>{Le framework Django}%{{{
         %Seb
             \begin{frame}
-                \begin{block}{}
-
+                \frametitle{Présentation de Django}
+                \begin{block}{Django}
+                    "The web framework for perfectionists with deadlines." Django est un framework basé sur la structure du MVC.\pause                    
                 \end{block}
-                \beamerannot{}
-            \end{frame}
+                \begin{itemize}
+                    \item Un langage de template.
+                    \item Un contrôleur.
+                    \item Une API d'accès aux données.
+                \end{itemize}
+                \hfill \includegraphics[width=4cm]{logos/pony.jpg}
+                \beamerannot{
+                    Framework MVT ou MVC\\
+                    \begin{itemize}
+                        \item Un langage de template : flexible, genere html ou xml
+                        \item Un contrôleur : fournis sous forme de remapping d'url avec expressions regulières
+                        \item Une API d'accès aux données : Inutile d'ecrire les requetes SQL ...
+                    \end{itemize} 
+                    Conçu pour les perfectionnistes pressés (slogan)\\
+                    Framework Python développé sous licence BSD.\\
+                    Forces : Vues génériques (pagination simple, lister objets orga selon date ...), système d'authentification, création de page statique, documentation, gestion des exceptions poussée. Nombreux avantaes autres : serveur web intégré, système de formulaire ...\\
+                    Faiblesses : Ajax pas prévu, Migration des modèles.\\
+                }
+            \end{frame}%}}}
 
         \section<presentation>{Fonctionnalités à destination des Kfetier}
         %Loic

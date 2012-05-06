@@ -17,16 +17,16 @@
 
 \begin{document}
 
-        \frame{\titlepage}
+        \frame{\titlepage}%{{{
 
 		
 	\section<presentation>*{Plan}
             \begin{frame}<beamer>
                 \frametitle{Plan}
                 \tableofcontents
-            \end{frame}
+            \end{frame}%}}}
 
-        \section<presentation>{Présentation des objectifs}
+        \section<presentation>{Présentation des objectifs}%{{{
         %Seb
             \begin{frame}
                 \begin{block}{}
@@ -34,7 +34,7 @@
                 \end{block}
                 \beamerannot{}
             \end{frame}
-
+%}}}
 
 	\section<presentation>{Le framework Django}%{{{
         %Seb
@@ -63,42 +63,94 @@
                 }
             \end{frame}%}}}
 
-        \section<presentation>{Fonctionnalités à destination des Kfetier}
-        %Loic
-            \begin{frame}
-                \begin{block}{}
+        \section<presentation>{Travail réalisé}%{{{
 
-                \end{block}
-                \beamerannot{}
-            \end{frame}
+            \subsection<presentation>{Fonctionnalités à destination des Kfetier}%{{{
+            %Loic
+                \begin{frame}
+                    \begin{block}{}
 
-	\section<presentation>{Fonctionnalités de gestion de la Kfet}
-        %Loic
-            \begin{frame}
-                \begin{block}{}
+                    \end{block}
+                    \beamerannot{}
+                \end{frame}
+    %}}}
 
-                \end{block}
-                \beamerannot{}
-            \end{frame}
+            \subsection<presentation>{Fonctionnalités de gestion de la Kfet}%{{{
+            %Loic
+                \begin{frame}
+                    \begin{block}{}
 
-	\section<presentation>{Expérience utilisateur}
+                    \end{block}
+                    \beamerannot{}
+                \end{frame}%}}}
+
+            \subsection<presentation>{Expérience utilisateur}%{{{
+            %Seb
+                \begin{frame}
+                    \begin{block}{Gestion de son compte}
+                        Un étudiant possédera un compte permettant de commander des pizza et consulter sa dette. Un enseignant pourra en plus augmenter sa dette.
+                    \end{block}
+                    \begin{itemize}
+                        \item Module complet de gestion de dette.
+                        \item Module complet d'identification.
+                    \end{itemize}
+                    \beamerannot{
+                        \begin{itemize}
+                            \item Module dette : ajout de dette, retirer dette, historique et avertissement dans le futur. Distinction prof étudiant à ajouter. Actuellement Ajout de dette possible et retrait aussi par les kftier.
+                            \item Module auth : fournis par django, simple d'utilisation, permet d'avoir différents niveaux de rôles, extenction du modèle pour ajouter des informations sur l'user.
+                        \end{itemize}
+                    }
+                \end{frame}
+                \begin{frame}
+                    \begin{block}{Commande des pizzas}
+                        Pouvoir commander sa pizza à la pose de 10h30 grâce à son pc portable.
+                    \end{block}
+                    \begin{itemize}
+                        \item Moins de queue, de bouculades.
+                        \item Gestion plus simple pour les Kftier.
+                        \item Module complet d'ecommerce
+                    \end{itemize}
+                    \beamerannot{                
+                        \begin{itemize}
+                            \item 15 pizza : 10 web + 5 comptoir
+                            \item Pas de papier à recopier ou moins, le cuistot peut débuter direct, gestion informatique des commandes, qui a pris quoi ou pas
+                            \item Panier, validation de commande, paiement de la commande (direct via dette ou moneo au comptoir)
+                        \end{itemize}                        
+                    }
+                \end{frame}
+                \begin{frame}
+                    \begin{center}
+                        Démonstration
+                    \end{center}
+                \end{frame}%}}}%}}}
+
+	\section<presentation>*{Conclusion}%{{{
         %Seb
             \begin{frame}
-                \begin{block}{}
+                \begin{itemize}
+                    \item Compétences techniques acquises :
+                        \begin{itemize}
+                            \item Python
+                            \item Django / Développement web
+                            \item E-commerce
+                        \end{itemize}       
+                        ~\\
+                    \item Apport à l'école.
+                    \item Finalisation du site à réaliser, bénévolat ?
+                    \item Mie en place.
+                \end{itemize}
+                \beamerannot{
+                    \begin{itemize}
+                        \item Dev python, langage de plus en plus utilisé, offre d'emploi en rapport. Dev Web reelle expérience d'e-commerce.
+                        \item Ex trésorier, finalité en tant que kftier
+                        \item Certains fonctionnalités encore à écrire, bénévolat cette été pour le terminer.
+                        \item Serveur OVH payé par la KFet ? Serveur à l'école/université ? Acclimatation des utilisateurs.                            
+                    \end{itemize}
 
-                \end{block}
-                \beamerannot{}
+                    $\Rightarrow$ Reste beaucoup à faire mais il y a avait beaucoup à faire !
+                }
             \end{frame}
-
-	\section<presentation>*{Conclusion}
-        %Seb
-            \begin{frame}
-                \begin{block}{}
-
-                \end{block}
-                \beamerannot{}
-            \end{frame}
-
+%}}}
 
 
 

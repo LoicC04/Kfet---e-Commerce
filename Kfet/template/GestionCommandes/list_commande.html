@@ -16,6 +16,7 @@
         <th>Date</th>
         <th>Type de règlement</th>
         <th>Total</th>
+        <th>Actions</th>
     </tr>
     {% for c in en_attente.object_list %}
     <tr>
@@ -40,6 +41,15 @@
             </a>
         </td>
         <td><strong>{{ c.prix }}€</strong></td>
+        <td>
+            <a href="{% url Kfet.GestionCommandes.views.annuler c.id %}">Annuler</a>
+            <form action="{% url Kfet.GestionCommandes.views.changerEtatCommande c.id %}" method="POST">{% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+                <input type="submit" value="ok">
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>

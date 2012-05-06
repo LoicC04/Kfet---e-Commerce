@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 
 
@@ -9,4 +10,4 @@ class Status_Commande(models.Model):
             app_label = 'Commun'
 
         def __unicode__(self):
-                   return unicode(self.code);
+            return unicode(self.label);

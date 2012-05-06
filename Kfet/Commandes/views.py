@@ -98,8 +98,8 @@ def panier(request, erreur=None):
     return render_to_response('Commandes/panier.html', context, context_instance=RequestContext(request) )
 
 @login_required
-def panier_ajout(request):    
-    if request.method == 'POST':        
+def panier_ajout(request):
+    if request.method == 'POST':
         quantite = request.POST['quantite']
         produit_id = request.POST['produit']
         user = request.user
@@ -139,7 +139,7 @@ def panier_maj(request, produit_panier_id):
         produit_panier = get_object_or_404(Produit_Panier, pk=produit_panier_id)
         produit = get_object_or_404(Produit, pk=produit_panier.produit_id)
         quantite = request.POST['quantite']
-        if quantite:       
+        if quantite:
             if produit.quantite >= int(quantite):
                 if int(quantite) <= 0:
                     erreur = 12
@@ -186,10 +186,10 @@ def validerPanier(request):
     else:
         # Type de paiement incorrect
         return HttpResponseRedirect(reverse('Kfet.Commandes.views.panier', args=[10]))
-    
+
     # On récupère le status de la commande : "En cours" pour la première étape
     try:
-        status_encours = get_object_or_404(Status_Commande,label="En cours")
+        status_encours = get_object_or_404(Status_Commande,code=1)
     except Http404:
         return HttpResponse("Aucun status de commande n'est défini (En Cours est celui par défaut)")
     commande.status_commande = status_encours
@@ -259,7 +259,7 @@ def choisirMenu(request, typeMenu_id, menu_id=None):
         menu = Menu()
         menu.typeMenu_id = typeMenu_id
         menu.panier = request.user.get_profile().panier
-    
+
     if request.method=='POST':
         form = ChoisirMenuForm(plat=typeMenu.categorie.nom,data=request.POST, instance=menu)
         if form.is_valid():
@@ -290,7 +290,7 @@ def confirmationPanier(request, commande_id):
     prixMenus = 0
     for m in menus:
         prixMenus+=m.typeMenu.prix
-    
+
     return render_to_response('Commandes/confirmationPanier.html', {'commande':commande, "panier_produit":panier_produit, "nbProduits":nbProduits, "menus":menus, "prixProduits":prixProduits, "prixMenus":prixMenus}, context_instance=RequestContext(request))
 
 
@@ -303,7 +303,7 @@ def comm_suppr(request, comm_id):
     produit = Produit.objects.get(pk=comm.produit_id)
 
     if profile.id == comm.profile_id or user.is_staff:
-        comm.delete()        
+        comm.delete()
     return HttpResponseRedirect(reverse('Kfet.Commandes.views.produit', args=[produit.id]))
 
 @login_required

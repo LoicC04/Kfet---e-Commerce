@@ -3,7 +3,7 @@ from django.template import RequestContext
 from Kfet.Commun.models  import TypeMenu, Produit, TypeMenu, Categorie
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
+from django.db.models import Q
 
 def home(request):
     return render_to_response('Kfet/home.html', {}, context_instance=RequestContext(request) ) 
@@ -53,6 +53,6 @@ def recherche(request):
                     if test == 0:
                         produit += pro
 
-        menu = TypeMenu.objects.filter(nom__icontains=keyword)
+        menu = TypeMenu.objects.filter(Q(description__icontains=keyword) | Q(nom__icontains=keyword))
     return render_to_response('recherche.html', {'produit':produit, 'menu':menu, 'keyword':keyword, 'category':category}, context_instance=RequestContext(request) )
 

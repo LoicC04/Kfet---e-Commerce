@@ -12,7 +12,7 @@
 {% endif %}
 <table border=0 style="width:100%">
 {% for pro in produit %}
-    <tr><td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td><td>{{ pro.prix }}</td></tr>
+    <tr><td><a href="{% url Kfet.Commandes.views.produit pro.id %}">{{ pro.nom }}</a></td><td>{{ pro.prix }} €</td></tr>
 {% endfor %}
 </table>
 <br/>
@@ -22,7 +22,9 @@
 <p>Aucun menus trouvés</p>
 {% endif %}
 
+<table border=0 style="width:100%">
 {% for men in menu %}
-    {{ men.nom }}
+    <tr><td><a href="{% url Kfet.Commandes.views.choisirMenu men.id %}">{{ men.nom }}</a></td><td>{{ men.description }}</td><td>{{ men.prix }} €</td></tr>
 {% endfor %}
+</table>
 {% endblock %}

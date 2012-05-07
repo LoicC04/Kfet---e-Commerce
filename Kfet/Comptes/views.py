@@ -97,13 +97,15 @@ def gestion(request):
     if profile.dette != 0:
         context["decimale"]=str(profile.dette%1).split(".")[1]
 
-    try:
-        encours = Status_Commande.objects.get(code=1)
-    except Status_Commande.DoesNotExist:
-        encours=None
+#    try:
+#        encours = Status_Commande.objects.get(code=1)
+#    except Status_Commande.DoesNotExist:
+#        encours=None
         #return HttpResponse("Aucun status de commande n'est défini n'est défini (En cours est celui par défaut)")
-    if encours!=None:
-        commandes = Commande.objects.filter(status_commande=encours).filter(user=user)
+#    if encours!=None:
+    if True:
+        #commandes = Commande.objects.filter(status_commande=encours).filter(user=user)
+        commandes = Commande.objects.filter(user=user)
     
         paginator = Paginator(commandes, 10) # Show 10 items per page
         page = request.GET.get('page',1)

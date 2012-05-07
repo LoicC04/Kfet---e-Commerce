@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 
+{% block script %} 
+
+<script type="text/javascript"> 
+    <!--// [CDATA[ 
+        function divaffiche(){ 
+            document.getElementById("popup").style.display = "block"; 
+            document.getElementById("cache").style.display = "inline"; 
+            document.getElementById("voir").style.display = "none"; 
+        } 
+        function divcache(){ 
+            document.getElementById("popup").style.display = "none"; 
+            document.getElementById("cache").style.display = "none"; 
+            document.getElementById("voir").style.display = "inline"; 
+        } 
+    // ]] --> 
+</script>
+
+{% endblock %}
+
+
 {% block title %} Kfet - Vente Kfetier{% endblock %}
 
 {% block content %}

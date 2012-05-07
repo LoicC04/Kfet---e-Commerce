@@ -16,30 +16,9 @@
         
         <script src="{{ ADMIN_MEDIA_PREFIX }}js/admin/RelatedObjectLookups.js"></script>
 
+        {% block script %}
 
-
-        <script type="text/javascript"> 
-            <!--// [CDATA[ 
-                function divaffiche(){ 
-                    document.getElementById("popup").style.display = "block"; 
-                    document.getElementById("cache").style.display = "inline"; 
-                    document.getElementById("voir").style.display = "none"; 
-                } 
-                function divcache(){ 
-                    document.getElementById("popup").style.display = "none"; 
-                    document.getElementById("cache").style.display = "none"; 
-                    document.getElementById("voir").style.display = "inline"; 
-                } 
-            // ]] --> 
-        </script>
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script> 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js"></script>
-        <script type="text/javascript">
-                $(document).ready(function(){
-                $("#date").datepicker({ showOn: 'button', buttonImageOnly: true, buttonImage: '/static/css/T_Shirt/css/images/cal_icon.gif' });
-                });
-        </script>
+        {% endblock %}
 
         <!-- include -->
         <link rel="stylesheet" href="/static/css/T_Shirt/css/style.css" />
@@ -180,7 +159,6 @@
                                                             <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" width="234px" />
                                                             <div class="pr-info">
                                                                 <h4>{{ produit.nom }}</h4>
-                                                                <p>{{ produit.info }}</p>
                                                                 <span class="pr-price">{{ produit.prix|stringformat:"d" }}€<sup>{{ produit.decimal }}</sup></span>
                                                             </div>
                                                         </div>

@@ -45,6 +45,7 @@
 <div style="padding:30px; min-height:400px">
     {% for pro in produit.object_list %}
     <div style="float:left;padding:10px;border:2px outset blue;border-radius:10px;width:130px;margin:20px">
+            <center><strong style="font-size:1.5em">{{ pro.prix }}€</strong></center>
             <form id="form.{{pro.id}}" name="form"  action="{% url Kfet.Ventes.views.produit_vente pro.id %}" method="POST">{% csrf_token %}
                 {% ifequal  pro.quantite 0 %}
                 <center><a href="#"><img src="/static/css/T_Shirt/css/images/out.jpg" alt="Image" height="100px"></a></center>

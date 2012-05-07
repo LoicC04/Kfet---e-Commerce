@@ -86,6 +86,13 @@
                                                             </a>
                                                         </li>
                                                         {% endif %}
+                                                        {% if user.is_staff and not user.is_superuser%}
+                                                        <li>
+                                                            <a href="{% url Kfet.GestionCommandes.views.index %}" title="Gestion Commandes">
+                                                                <span>Commandes</span>
+                                                            </a>
+                                                        </li>
+                                                        {% endif %}
 
                                                         {% if user.is_superuser %}
                                                         <li>
@@ -94,7 +101,11 @@
                                                             </a>
                                                         </li>
                                                         {% endif %}
-                                                        <li><a href="#" title="Page de contact"><span>Contact</span></a></li>
+                                                        {% if user.is_super_user or user.is_staff %}
+                                                        <li><a href="{% url Kfet.Administration.views.dettes %}" title="Gestion des dettes"><span>Dettes</span></a></li>
+                                                        {% else %}
+                                                            <li><a href="#" title="Page de contact"><span>Contact</span></a></li>
+                                                        {% endif %}
                                                 </ul>
                                                 <div class="cl">&nbsp;</div>
                                         </nav>

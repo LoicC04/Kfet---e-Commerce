@@ -117,7 +117,7 @@ def supprimerReglement(request, reglement_id):
 class DetteForm(forms.Form):
     dette_a_enlever = forms.DecimalField(max_digits=5, decimal_places=2,  widget=forms.TextInput(attrs={'size':'8'}))
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def dettes(request, user_id=None, montant=None):
     context={}
     context["form"] = DetteForm()
@@ -165,14 +165,14 @@ def dettes(request, user_id=None, montant=None):
 
     return render_to_response('Administration/dettes.html', context, context_instance=RequestContext(request))
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def effacerDette(request,user_id):
     profile = UserProfile.objects.get(user=user_id)
     profile.dette = 0
     profile.save()
     return dettes(request, user_id=profile.user.id)
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def enleverDeDette(request, user_id):
     if request.method == "POST":
         profile = UserProfile.objects.get(user=user_id)

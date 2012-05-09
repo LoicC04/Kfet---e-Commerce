@@ -101,7 +101,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 \chapter{Le framework Django}
-% TODO Loic
 
 \section{Présentation}
 Afin de réalisrer notre site web, nous avons choisi d'utiliser Django. Django est un framework web Python de haut niveau qui a comme slogan :\\
@@ -129,6 +128,7 @@ Le framework Django est composé d'une multitude d'outils très puissant. De plu
 \paragraph{Pourquoi avoir choisir Django ?} Étant en école d'ingénieurs, il est très important d'avoir la volonté d'apprendre constamment de nouvelles technologies. Et cette année, nous avons entendu parlé du langage Python. Python est un langage très simple et très facile à apprendre.
 
 
+
 \section{Outils très utiles}
 Django possède toute une panoplie d'outils très utiles. Voici quelques uns des outils que nous avons utilisé :
 \begin{itemize}
@@ -139,6 +139,8 @@ Django possède toute une panoplie d'outils très utiles. Voici quelques uns des
     \item Moteur de formulaire ;
     \item Interface d'administration.
 \end{itemize}
+
+Dans cette section sera décrit brièvement chacun des outils afin de comprendre la facilité d'usage de Django. On peut retrouver facilement sur le site officiel de Django \url{https://www.djangoproject.com/} toute la documentation ainsi que des tutoriels permettant d'apprendre son fonctionnement.
 
     \subsection{Moteur de réécriture d'URL}
 Afin d'accéder à toutes les pages, Django possède un moteur d'analyse et de réécriture des URL. En effet, dans chaque module du site web, un fichier "url.py" permet d'associer une URL et une fonction. À chaque fois qu'un utilisateur demande une URL qui est spécifier dans ce fichier, alors le serveur web appelle la fonction que lui a associé.
@@ -199,7 +201,13 @@ Ces quelques lignes ne créent pas seulement un formulaire mais aussi tout ce qu
     \subsection{Interface d'administration}
 Habituellement, quand on développe un site web on passe toujours du temps à réaliser une interface d'administration afin de pouvoir créer les objets de la base de données. Django propose une interface d'administration générée automatiquement. On peut y spécifier chacun des objets que l'on souhaite voir apparaître dans l'interface d'administration.
 
-Par exemple
+Par exemple, si on souhaite ajouter/modifier/supprimer un produit à partir de l'interface d'administration, il suffit de déclarer l'objet dans le fichier "admin.py".
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{./logos/admin.png}
+    \caption{L'interface d'administrationn}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
@@ -320,6 +328,53 @@ Par exemple
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 \chapter{Module Gestion Stocks}
 % TODO Loïc
+
+Le module de gestions des stocks, comme son nom l'indique, permet de gérer les stocks de la Kfet. Ce module a été en grande partie développer au cours des TP de la matière "Technologie Web Avancée".
+
+En plus de gérer les stocks de tous les produits, c'est dans ce module que l'on peut :
+\begin{itemize}
+    \item Créer/modifier/supprimer des fournisseurs ;
+    \item Attacher des produits à un fournisseur (création/modification/suppression) ;
+    \item Réapprovisionner les produits.
+\end{itemize}
+
+Comme on peut le deviner, nous avons choisi d'attacher un produit à un fournisseur. Donc un fournisseur possède 0 ou plusieurs produits, c'est une façon de bien différencier les produits et aussi de pourvoir dans le futur enregistrer les commandes que l'on effectue au sein même de notre application web.
+
+Pour l'instant, notre gestion de stock permet de réapprovisionner les stocks mais n'enregistre pas les commandes fournisseurs que l'on peut faire. Cette fonctionnalité sera développé dans le futur.
+
+\section{Fonction du module}
+    \subsection{Modèle de base de données}
+\paragraph{Un fournisseur}
+\begin{itemize}
+    \item Nom ;
+    \item Adresse ;
+    \item Téléphone ;
+    \item Mail ;
+    \item Description ;
+\end{itemize}
+
+\paragraph{Un produit}
+\begin{itemize}
+        \item nom ;
+        \item prix ;
+        \item articleDouble ;
+        \item info ;
+        \item ingredients ;
+        \item categorie : Chaque produit appartient à une catégorie (Pizza, Sandwich, Boisson, \ldots);
+        \item image : Chaque produit possède son image afin d'être visible sur le site ;
+        \item quantite : Quantité en stock;
+        \item quantiteCommandeFournisseur : Quantité actuellement en commande ;
+        \item fournisseur.
+\end{itemize}
+
+    \subsection{Fonctions du contrôleur}
+\paragraph{index} Cette fonction retourne la page d'accueil du module. Elle permet de visualiser immédiatement les produits qui sont actuellement en rupture ainsi que tous les produits que peut proposer le site. Une pagination est effectuée, bien entendu, car il ne serait pas très pratique d'afficher tous les objets sur une même page. La pagination permet de n'afficher que 10 produits à la fois.
+
+\paragraph{Creer/Modifier/Supprimer Fournisseur}
+
+\paragraph{Creer/Modifier/Supprimer Produit}
+
+\paragraph{Commander} Cette fonction permet de commander une certaine quantité d'un produit à son attribut quantiteCommandeFournisseur. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù

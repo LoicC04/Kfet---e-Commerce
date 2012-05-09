@@ -282,8 +282,8 @@
 	
 	% Affichage des tables et listes habituelles
 	\tableofcontents
-	\listoffigures
-	\listoftables
+%	\listoffigures
+%	\listoftables
 	% Et des non habituelles
 	\ifthenelse{\isundefined{\extratables}}
 	{}{\extratables}

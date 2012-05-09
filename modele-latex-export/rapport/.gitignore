@@ -1,7 +1,7 @@
-Modele_Rapport.aux
-Modele_Rapport.lof
-Modele_Rapport.lot
-Modele_Rapport.out
-Modele_Rapport.pdf
-Modele_Rapport.toc
-Modele_Rapport.log
+*.aux
+*.lof
+*lot
+*.out
+*.pdf
+*.toc
+*.log

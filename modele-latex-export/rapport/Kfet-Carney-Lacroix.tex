@@ -250,6 +250,71 @@ Par exemple
 \chapter{Module Commandes}
 % TODO Seb
 
+    \paragraph{}Ce module va apporter des fonctionnalités à la fois aux utilisateurs et aux kftier préparant les commandes.
+
+    \section{Partie Utilisateur}
+
+        \paragraph{}Un utilisateur pourra commander son menu pour le midi afin d'éviter de faire la queue. Cette commande se déroulera en plusieurs étapes : choix des produits, choix des menus, validation du panier.
+
+        \subsection{Produits}
+
+            \subsubsection{Fonctionnalités}
+
+                \paragraph{}Un utilisateur pourra choisir parmi des catégories définies par l'administrateur. Une fois la catégorie choisie il aura le choix entre plusieurs produits. Il pourra alors directement commander un produit ou obtenir des détails sur celui-ci en le sélectionnant. Parmi ces détails des commentaires sont présents, postés par les utilisateurs, supprimable par leurs auteurs ou l'administrateur afin d'éviter les propos déplacés.
+
+                \paragraph{}Enfin pour terminer sur l'aspect visuel présenté à l'utilisateur nous avons mis en place des publicités mettant en valeurs certains produits.            
+
+                \begin{center}
+                    \includegraphics[width=0.8\linewidth]{logos/commande.png}
+                \end{center}
+
+            \subsubsection{Développement}
+
+                \paragraph{}La liste des produits et des catégorie sont réalisées à partir d'une requête. Dans le cas des catégorie elle est réalisé lors du chargement de toutes les pages via un contextProcessor. Au contraire la liste des produits est réalisée une seule fois mais est paginée permettant d'avoir une page d'une hauteur convenable.
+
+                \paragraph{}Le détail d'un produit est réalisé à partir d'un requête sur ce produit. Les commentaire sont sauvegardés dans une table séparée relié par une clé étrangère au produit lui correspondant. Une vérification d'utilisateur est réalisée afin que seuls les auteurs d'un commentaire puissent le supprimer.
+
+                \paragraph{}Lorsqu'un produit est ajouté au panier, une nouvelle entrée produit\_panier est créé, reliée à un panier, lui-même relié à un utilisateur. Ces produits panier vont permettre de mettre en place le panier de l'utilisateur.
+
+        \subsection{Menus}
+
+            \subsubsection{Fonctionnalités}
+
+                \paragraph{}Les menus permettent de réunir plusieurs articles et d'obtenir une réduction sur le total de ceux-ci. L'utilisateur, via un choix de menu, choisir les différentes composantes de celui-ci. Il sera ensuite ajouté au panier.
+
+                \paragraph{}Le CSS de cette fonctionnalité est à finaliser afin de rendre plus ergonomique la sélection des différents articles.
+
+            \subsubsection{Développement}
+                
+                \paragraph{}Un menu sera ajouté dans la base de donnée sous la forme d'une entrée regroupant les différentes composantes de celui-ci. Différentes contraintes sont mises en place afin de limiter dans le choix des articles. Un menu correspond ainsi aux attentes des administrateurs de la Kfet.
+
+                \paragraph{}Lors de l'ajout au panier d'un menu, il est considéré comme un produit à part mais est tout de même pris en compte dans le total.            
+
+        \subsection{Panier}
+
+            \subsubsection{Fonctionnalités}
+                
+                \paragraph{}Le panier apporte les fonctionnalités de base à l'utilisateur : suppression, ajout, modification de la quantité. Il permet de choisir son mode de paiement et enfin de le valider. Une fois une commande validée par l'utilisateur, elle est mise en attente de validation par un Kftier.
+
+                \paragraph{}Un utilisateur pourra suivre l'état et l'historique de ses commandes dans son compte utilisateur.
+
+            \subsection{Développement}
+
+                \paragraph{}Au niveau de la validation du panier, un total de celui-ci est réalisé avant sa validation. Dans le cas d'une dette la dette est automatiquement ajoutée à l'utilisateur correspondant via une requête.
+
+                \paragraph{}Différentes requêtes permettent de modifier les entrées du panier.
+
+    \section{Partie Kftier}
+
+        \paragraph{}Une fois une commande validée un Kftier va la prendre en charge et la réaliser. Il va pour cela modifier son statut pour "En cours".
+
+        \paragraph{}Afin de gérer les commandes un Kftier aura un accès à un menu lui listant les différentes commandes en cours, validée ou annulée. Il pourra ainsi modifier l'état des commandes en fonction de leurs évolutions.
+
+        \begin{center}
+            \includegraphics[width=0.8\linewidth]{logos/gestionCommande.png}
+        \end{center}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù

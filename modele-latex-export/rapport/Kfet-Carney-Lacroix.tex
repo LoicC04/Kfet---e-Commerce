@@ -75,10 +75,10 @@
         
         \paragraph{}Afin de simplifier la gestion de stock et le fonctionnement de la Kfet nous avons voulu proposer des fonctionnalités de ventes. 
 
-        \paragraph{}La partie vente se décompose en deux type : les commande de menus le midi, et les ventes individuelles.
+        \paragraph{}La partie vente se décompose en deux types : les commandes de menus le midi, et les ventes individuelles.
 
         \subsection{Gestion des commandes}
-            \paragraph{}Les fonctionnalités permettant de gérer les commandes vont permettre de supprimer tous le système complexe et non productif des papier de commande. Nous proposons donc les fonctions suivantes :
+            \paragraph{}Les fonctionnalités permettant de gérer les commandes vont permettre de supprimer tous le système complexe et non productif des papiers de commande. Nous proposons donc les fonctions suivantes :
         
             \begin{itemize}
                 \item Gestion de commandes : validation, paiement, annulation ;\\                
@@ -92,7 +92,7 @@
 
         \paragraph{}Nous avons voulu proposer des fonctionnalités simplifiant la gestion de la Kfet, mais nous voulons aussi proposer des fonctionnalités intéressantes aux clients.
 
-        \paragraph{}Nous proposons pour cela de mettre en place un site de e-commerce permettant de réaliser n'importe qu'elle commande en avance. Cela évitera, par exemple, dans le cas de la vente de pizza la cohue au comptoir due au nombre limité de commande.
+        \paragraph{}Nous proposons pour cela de mettre en place un site de e-commerce permettant de réaliser n'importe quelle commande en avance. Cela évitera, par exemple, dans le cas de la vente de pizza la cohue au comptoir due au nombre limité de commande.
 
         \paragraph{}Un compte utilisateur permettra de plus de pouvoir consulter sa dette, voire de la régler par carte bleue ou paypal.
         %}}}
@@ -102,6 +102,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 \chapter{Le framework Django}
 % TODO Loic
+
+\section{Présentation}
 Afin de réalisrer notre site web, nous avons choisi d'utiliser Django. Django est un framework web Python de haut niveau qui a comme slogan :\\
 \begin{center}
     \begin{LARGE}
@@ -124,7 +126,81 @@ Le framework Django est composé d'une multitude d'outils très puissant. De plu
     \item Template : Spécifie la structure de la page HTML. On y indique commet et où afficher les variables sur la page.
 \end{itemize}
 
-\paragraph{Pourquoi avoir choisir Django ?} Étant en école d'ingénieurs, il est très important d'avoir la volonté d'apprendre constamment de nouvelles technologies. Et cette année, nous avons entendu parlé du langage Python. Python est un langage très simple et très facile à apprendre. Il permet de faire beaucoup de choses 
+\paragraph{Pourquoi avoir choisir Django ?} Étant en école d'ingénieurs, il est très important d'avoir la volonté d'apprendre constamment de nouvelles technologies. Et cette année, nous avons entendu parlé du langage Python. Python est un langage très simple et très facile à apprendre.
+
+
+\section{Outils très utiles}
+Django possède toute une panoplie d'outils très utiles. Voici quelques uns des outils que nous avons utilisé :
+\begin{itemize}
+    \item Moteur de réécriture d'URL ;
+    \item Moteur de template ;
+    \item Serveur web de développement ;
+    \item ORM compatible avec la base de données MySQL ;
+    \item Moteur de formulaire ;
+    \item Interface d'administration.
+\end{itemize}
+
+    \subsection{Moteur de réécriture d'URL}
+Afin d'accéder à toutes les pages, Django possède un moteur d'analyse et de réécriture des URL. En effet, dans chaque module du site web, un fichier "url.py" permet d'associer une URL et une fonction. À chaque fois qu'un utilisateur demande une URL qui est spécifier dans ce fichier, alors le serveur web appelle la fonction que lui a associé.
+
+    \subsection{Moteur de template}
+Afin d'afficher des pages HTML, Django possède un moteur de template. Les templates sont en réalité des pages HTML possédant des instructions spéciales que seul le moteur de template comprend.
+
+\lstset{language=HTML}
+\begin{lstlisting}
+<h1>{{ title }}</h1>
+\end{lstlisting}
+
+La variable "title" est une variable de contexte. Chaque page générée par Django possède son propre contexte. Le contexte est en réalité un ensemble de variables qui ont été définis auparavant dans la fonction qui a été appelée par l'utilisateur (L'utilisateur a fait appel à la fonction à travers l'URL).
+
+On peut rapprocher ce fonctionnement de celui d'une page PHP classique à ceci près que le traitement et la récupération des variables se fait dans le fichier de vue.
+
+    \subsection{Serveur de développement web}
+Le langage Python possède une bibliothèque permettant de créer un serveur HTTP. Django a repris cet outil simple et puissant et l'a transformé afin d'en faire son propre serveur qui dispose de toutes les fonctionnalités que Django peut proposer.
+
+    \subsection{ORM}
+Object-Relational Mapping est une technique de programmation permettant de communiquer avec une base de données. On manipule les entrées d'une base de données relationnelle comme s'ils étaient des objets.
+
+Grâce à cette technique, on ne s'embarasse pas d'écrire nos requêtes SQL. On manipule donc des objets que l'on appelle "modèle".
+
+\lstset{language=Python}
+\begin{lstlisting}
+from django.db import models
+class Produit(models.Model):
+        nom = models.CharField(max_length=200)
+                prix = models.DecimalField(max_digits=10, decimal_places=2)
+\end{lstlisting}
+
+Puis, si on a besoin des entrées de cet objet de la base de données :
+
+\begin{lstlisting}
+Produit.objects.all()
+\end{lstlisting}
+
+Cette ligne permet de récupérer au sein d'une toutes les entrées "Panier".
+
+    \subsection{Moteur de formulaire}
+Une fonctionnalité très pratique de Django est la génération automatique de formulaire.
+
+\begin{lstlisting}
+class CreationProduitForm(forms.ModelForm):
+    class Meta:
+        model = Produit
+        exclude=('fournisseur', 'quantite', 'quantiteCommandeFournisseur')
+
+    categorie = forms.ModelChoiceField(Categorie.objects, widget=SelectWithPopUp)
+    articleDouble = forms.BooleanField(required=False, label="Article compte double dans un menu ?")
+\end{lstlisting}
+
+On créé donc une nouvelle classe en lui indiquant qu'on souhaite créer un formulaire à partir de la classe "Produit". On peut lui préciser d'exclure certains attributs et en personnaliser d'autres.
+
+Ces quelques lignes ne créent pas seulement un formulaire mais aussi tout ce qui va avec : validation des données, fonctions de vérifications de type(si on demande un entier, une chaîne de caractères, une adresse mail), \ldots.
+
+    \subsection{Interface d'administration}
+Habituellement, quand on développe un site web on passe toujours du temps à réaliser une interface d'administration afin de pouvoir créer les objets de la base de données. Django propose une interface d'administration générée automatiquement. On peut y spécifier chacun des objets que l'on souhaite voir apparaître dans l'interface d'administration.
+
+Par exemple
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
@@ -152,7 +228,7 @@ Le framework Django est composé d'une multitude d'outils très puissant. De plu
 
     \section{Création de compte}
 
-        \paragraph{}Afin de créer la page de création de compte nous avons utiliser Django qui nous permet de créer des formulaires complet à partir d'un modèle de base de données. Django permet notamment d'implémenter un formulaire vérifiant la validité des champs.
+        \paragraph{}Afin de créer la page de création de compte nous avons utilisé Django qui nous permet de créer des formulaires complet à partir d'un modèle de base de données. Django permet notamment d'implémenter un formulaire vérifiant la validité des champs.
 
         \paragraph{}Lors de la validation du formulaire les champs sont vérifiés afin de tenir compte de plusieurs contraintes. Le nom d'utilisateur ne doit pas déjà être présent dans la base de données, de même pour l'adresse email. Les deux champs mot de passe doivent de plus correspondre. Si ces contraintes sont vérifiées une entrée dans la base de données est créé pour cet utilisateur.
 

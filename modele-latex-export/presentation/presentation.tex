@@ -1,15 +1,5 @@
 \documentclass{polytech-presentation}
 \usepackage{pgfpages}
-\setbeameroption{show notes on second screen}
-\newcommand{\beamerannot}[1]{
-    \note{#1}
-    %%      \pdfannot {
-    %%              /Subtype /Text
-    %%              /Name /BeamerNote
-    %%              /H Y
-    %%              /Contents (#1)
-    %%      }
-}
 
 \title{Réalisation d'un site web de gestion pour la Kfet}
 \author{Loïc Carney et Lacroix Sébastien}
@@ -35,16 +25,7 @@
                     \item Back-office de la Kfet.
                 \end{itemize}
                 \hfill \includegraphics[width=0.4\linewidth]{logos/logo.png}
-                \beamerannot{
-                
-                    \begin{itemize}
-                        \item Gestion Stocks, CA, ventes, commandes.
-                        \item Pouvoir commander sa pizza à l'avance.
-                        \item Simplfier la vie des kftier du midi.
-                    \end{itemize}
-
-                }
-            \end{frame}
+              \end{frame}
 %}}}
 
 	\section<presentation>{Le framework Django}%{{{
@@ -60,19 +41,7 @@
                     \item Une API d'accès aux données.
                 \end{itemize}
                 \hfill \includegraphics[width=4cm]{logos/pony.jpg}
-                \beamerannot{
-                    Framework MVT ou MVC\\
-                    \begin{itemize}
-                        \item Un langage de template : flexible, genere html ou xml
-                        \item Un contrôleur : fournis sous forme de remapping d'url avec expressions regulières
-                        \item Une API d'accès aux données : Inutile d'ecrire les requetes SQL ...
-                    \end{itemize} 
-                    Conçu pour les perfectionnistes pressés (slogan)\\
-                    Framework Python développé sous licence BSD.\\
-                    Forces : Vues génériques (pagination simple, lister objets orga selon date ...), système d'authentification, création de page statique, documentation, gestion des exceptions poussée. Nombreux avantaes autres : serveur web intégré, système de formulaire ...\\
-                    Faiblesses : Ajax pas prévu, Migration des modèles.\\
-                }
-            \end{frame}%}}}
+                    \end{frame}%}}}
 
         \section<presentation>{Travail réalisé}%{{{
 
@@ -93,8 +62,7 @@ midi.
 		       \item Gestion des dettes.
 		      \end{itemize}
                     \end{block}
-                    \beamerannot{}
-                \end{frame}
+                           \end{frame}
     %}}}
 
             \subsection<presentation>{Fonctionnalités de gestion de la Kfet}%{{{
@@ -109,8 +77,7 @@ midi.
 		       \item Le secrétaire.
 		      \end{itemize}
                     \end{block}
-                    \beamerannot{}
-                \end{frame}
+                            \end{frame}
                 
                 \begin{frame}
                  \frametitle{Les fonctionnalités de l'administrateur}
@@ -138,13 +105,7 @@ midi.
                         \item Module complet de gestion de dette ;
                         \item Module complet d'identification.
                     \end{itemize}
-                    \beamerannot{
-                        \begin{itemize}
-                            \item Module dette : ajout de dette, retirer dette, historique et avertissement dans le futur. Distinction prof étudiant à ajouter. Actuellement Ajout de dette possible et retrait aussi par les kftier.
-                            \item Module auth : fournis par django, simple d'utilisation, permet d'avoir différents niveaux de rôles, extenction du modèle pour ajouter des informations sur l'user.
-                        \end{itemize}
-                    }
-                \end{frame}
+                            \end{frame}
                 \begin{frame}
                     \frametitle{E-commerce}
                     \begin{block}{Commande des pizzas}
@@ -155,14 +116,7 @@ midi.
                         \item Gestion plus simple pour les Kftier ;
                         \item Module complet d'e-commerce.
                     \end{itemize}
-                    \beamerannot{                
-                        \begin{itemize}
-                            \item 15 pizzas : 10 web + 5 comptoir
-                            \item Pas de papier à recopier ou moins, le cuistot peut débuter direct, gestion informatique des commandes, qui a pris quoi ou pas
-                            \item Panier, validation de commande, paiement de la commande (direct via dette ou moneo au comptoir), recherche
-                        \end{itemize}                        
-                    }
-                \end{frame}
+                            \end{frame}
                 \begin{frame}
                     \begin{center}
                         Démonstration
@@ -184,17 +138,7 @@ midi.
                     \item Finalisation du site à réaliser, bénévolat ; 
                     \item Mise en place.
                 \end{itemize}
-                \beamerannot{
-                    \begin{itemize}
-                        \item Dev python, langage de plus en plus utilisé, offre d'emploi en rapport. Dev Web reelle expérience d'e-commerce.
-                        \item Ex trésorier, finalité en tant que kftier
-                        \item Certains fonctionnalités encore à écrire, bénévolat cette été pour le terminer.
-                        \item Serveur OVH payé par la KFet ? Serveur à l'école/université ? Acclimatation des utilisateurs.                            
-                    \end{itemize}
-
-                    $\Rightarrow$ Reste beaucoup à faire mais il y a avait beaucoup à faire !
-                }
-            \end{frame}
+                         \end{frame}
 %}}}
 
 
